@@ -1,60 +1,73 @@
-# Agent Things 🚀
+# Flutter Skills 🚀
 
-A high-quality library of modular AI Skills designed for precise, production-ready Agentic AI workflows. This repository provides structured knowledge and development guidelines that allow AI Agents to execute complex tasks with expert-level proficiency across various technical domains.
+A high-quality library of modular AI Skills designed for precise, production-ready Agentic AI workflows. This repository provides structured knowledge and development guidelines that allow AI Agents (and senior developers) to execute complex tasks with expert-level proficiency across the Flutter & Dart ecosystem.
 
 ---
 
 ## 🏗️ Skill Architecture
 
-All skills in this library are meticulously crafted following the **Anthropic SKILL structure**. This ensures that AI Agents can reliably parse, understand, and apply the rules defined within each module.
+All skills in this library are meticulously crafted following a modular, flat structure designed for maximum LLM-readability and developer clarity.
 
 ### Directory Structure
 ```text
-skills/
-└── <category>/
-    └── <skill-name>/
-        ├── SKILL.md        # Entry point with goals, instructions, and metadata.
-        ├── references/     # (Optional) In-depth documentation for sub-modules.
-        └── resources/      # (Optional) Static assets, templates, or helper scripts.
+skills/flutter/
+└── <skill-name>/
+    ├── SKILL.md        # Entry point: Goals, Instructions, and Constraints.
+    └── references/     # Granular documentation for sub-modules (No numbering).
 ```
 
-### Core Components
-1.  **SKILL.md**: The primary definition file. It uses YAML Frontmatter for identification and contains the core logic (Goal, Instructions, Constraints).
-2.  **References**: Complex skills (like `supabase` or `flutter-expert`) are decomposed into granular modules within the `references` folder to maintain clarity and focus.
-3.  **Standardized Metadata**: Every document includes a `metadata` block to track provenance and updates, ensuring the Agent always operates on the latest standards.
+### Core Design Principles
+1.  **Minimalist Logic**: We reject over-engineering. Code is direct, flat, and avoids unnecessary abstractions.
+2.  **LLM-First Formatting**: Documents are optimized for AI context windows—no complex numbering systems, just semantic, meaningful headings.
+3.  **Credential Bridge Pattern**: Standardized patterns for integrating native social providers and backend services (Firebase/Supabase/Serverpod).
 
 ---
 
-## 🛠️ Featured Technical Skills
+## 🛠️ Skill Categories
 
-The library currently focuses on a comprehensive Flutter and full-stack ecosystem:
+### 1. Core Framework & UI/UX
+- **`flutter-expert`**: Advanced layouts, animations (3.41+), platform views, and performance scaling.
+- **`flutter-routing`**: Mastering `go_router` with type-safe parameters and dynamic redirects.
+- **`flutter-responsive`**: Handling multi-screen layouts with professional breakpoints.
+- **`flutter-animate`**: High-performance micro-animations and physics-based effects.
+- **`shadcn-flutter`**: Modern, accessible UI components with robust theming.
+- **`flutter-hooks`**: Clean implementation of functional widget lifecycle management.
 
-### 1. Flutter Core & Architecture
-- **`flutter-expert`**: Advanced UI/UX, animations, native platform interop, and performance scaling.
-- **`flutter-routing`**: Mastering `go_router` for robust navigation and dynamic parameter handling.
-- **`flutter-state-management`**: Clean implementations of modern state management (Provider, Riverpod, BLoC).
+### 2. State & Data Persistence
+- **`flutter-state-management`**: Provider and Riverpod best practices (AsyncNotifier, StreamProvider).
+- **`flutter-db`**: Secure storage, Shared Preferences, and complex database architectures.
+- **`freezed`**: Professional immutable models and Union types with Dart 3 pattern matching.
+- **`fpdart`**: Functional programming patterns (Option, Either, Task) for resilient logic.
+- **`openapi-to-dart`**: Efficient API client generation from OpenAPI/Swagger specs.
 
-### 2. Ecosystem & Third-Party Integration
-- **`supabase`**: Full-stack integration covering Auth, Realtime Postgres, and Edge Functions.
-- **`firebase`**: Professional setup for Analytics, Messaging, and Cloud Storage.
-- **`flutter-deeplink`**: Specialized configuration for Android App Links and iOS Universal Links.
-- **`revenuecat-flutter`**: Implementation of robust in-app subscription and payment systems.
+### 3. Backend & Authentication
+- **`supabase`**: Realtime Postgres, Edge Functions, and native authentication flows.
+- **`serverpod`**: Full-stack Dart architecture (v2/v3) including migrations and testing.
+- **`firebase`**: Professional setup for Analytics, Crashlytics, and App Check security.
+- **`flutter-social-auth`**: Native integration for Google, Apple, Facebook, and LINE login.
+- **`flutter-deeplink`**: Specialized configuration for App Links and Universal Links.
 
-### 3. Engineering & Automation
-- **`flutter-testing`**: Comprehensive automation strategies including Unit, Widget, and Golden tests.
-- **`codemagic` / `github-actions`**: Modern CI/CD pipeline configurations for mobile and web.
-- **`fastlane`**: Streamlined deployment processes for the App Store and Google Play.
+### 4. Utilities, Marketing & Web
+- **`flutter-testing`**: Automation strategies: Unit, Widget, integration (Patrol), and Golden tests.
+- **`sentry-flutter`**: Advanced observability and error trapping.
+- **`revenuecat-flutter`**: Subscription-based billing and payment gateway integration.
+- **`flutter-ads`**: Professional monetization using AdMob and Mediation.
+- **`jaspr`**: High-performance web development with Dart-only SSR/SPA (Jaspr framework).
+- **`fastlane` / `codemagic`**: Automated CI/CD and production deployment pipelines.
 
 ---
 
 ## 🎨 Development Philosophy
 
-- **Minimalist Seniority**: We prioritize direct, flat code over unnecessary abstractions.
-- **Self-Explaining Design**: Architecture that is intuitive for both humans and AI.
-- **Production-Ready**: Every line of code and instruction follows current industry best practices, avoiding technical debt from the start.
+> "If the code isn't as simple as it can be, it's not finished."
+
+- **Senior Minimalist Approach**: We focus on the core user experience rather than engineer-favored abstractions.
+- **Modern Best Practices**: We strictly follow current stable releases (e.g., `google_sign_in` v7.x, `supabase` v2.x).
+- **Zero Placeholder Policy**: Every reference contains working, production-ready snippets, not "todo" comments.
 
 ---
 
-> [!NOTE]
+> [!IMPORTANT]
 > All documents in this repository follow the metadata convention:
 > `metadata.last_modified: "YYYY-MM-DD HH:MM:SS (GMT+8)"`
+
