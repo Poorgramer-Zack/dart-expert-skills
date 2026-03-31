@@ -68,7 +68,7 @@ jobs:
           - Follow all standards in .github/instructions/skills.instructions.md." \
             --model claude-sonnet-4.6 \
             --allow-tool='shell(curl:*)' \
-            --allow-tool=write \
+            --allow-tool='write(skills/**,CHANGELOG.md)' \
             --no-ask-user \
             -s
 
