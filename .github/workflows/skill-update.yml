@@ -30,14 +30,16 @@ jobs:
           channel: stable
           cache: true
 
-      # Cache Dart pub packages separately (used by dart mcp-server internals)
+      # Cache Dart pub packages separately (used by dart mcp-server internals).
+      # This repo has no pubspec.lock so we use a static key.
       - name: Cache pub packages
         uses: actions/cache@v4
         with:
           path: ~/.pub-cache
-          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}
+          key: pub-${{ runner.os }}-v1
           restore-keys: |
             pub-${{ runner.os }}-
+            pub-
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -52,6 +54,7 @@ jobs:
           key: npm-copilot-${{ runner.os }}
           restore-keys: |
             npm-copilot-${{ runner.os }}-
+            npm-
 
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
