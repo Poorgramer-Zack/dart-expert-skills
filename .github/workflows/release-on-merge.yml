@@ -1,0 +1,33 @@
+name: Release on Skill Update Merge
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  release:
+    # Only run when a skill-update/* branch is merged (not just closed)
+    if: github.event.pull_request.merged == true && startsWith(github.event.pull_request.head.ref, 'skill-update/')
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DATE="${{ github.event.pull_request.head.ref }}"
+          DATE="${DATE#skill-update/}"
+
+          # Extract the first entry block from CHANGELOG.md (up to the next "## [" or EOF)
+          awk '/^## \[/{if(found) exit; found=1} found{print}' CHANGELOG.md > /tmp/release-notes.md
+
+          gh release create "v$DATE" \
+            --title "Weekly Skill Update $DATE" \
+            --notes-file /tmp/release-notes.md
