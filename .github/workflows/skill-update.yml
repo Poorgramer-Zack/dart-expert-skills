@@ -57,6 +57,7 @@ jobs:
           - Only write files that actually changed.
           - Keep all existing SKILL.md content and structure intact.
           - Do not invent version numbers; use only what pub.dev returns." \
+            --model claude-sonnet-4.6 \
             --allow-tool='shell(curl:*)' \
             --allow-tool=write \
             --no-ask-user \
