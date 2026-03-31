@@ -41,7 +41,7 @@ jobs:
 
       - name: Scan skills and update dependencies
         env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
         run: |
           copilot -p "You are maintaining a Flutter/Dart skills library. Each skill lives in skills/<name>/SKILL.md.
 
