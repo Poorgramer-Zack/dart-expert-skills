@@ -1,6 +1,6 @@
 ---
 name: "dart-best-practices"
-description: "When code quality is critical, Dart 3 modern syntax needs adoption, or you're upgrading legacy patterns. Apply when records, patterns, extensions, or latest Dart 3 features need safe implementation or code review matters."
+description: "Dart 3 modern features and Effective Dart best practices including records, patterns, sealed classes, and extension types. Use when adopting Dart 3 syntax, improving code quality, or reviewing Dart code conventions."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

@@ -1,6 +1,6 @@
 ---
 name: "github-actions-best-practices"
-description: "When CI/CD automation is needed, deployment reliability matters, or manual testing drains productivity. Apply when GitHub Actions workflows need configuration or testing automation is critical for release quality."
+description: "GitHub Actions CI/CD workflows for Flutter projects including automated testing, building, and deployment. Use when setting up continuous integration, configuring release pipelines, or automating Flutter build processes."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

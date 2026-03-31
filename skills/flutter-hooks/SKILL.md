@@ -1,6 +1,6 @@
 ---
 name: "flutter-hooks-best-practices"
-description: "When StatefulWidget boilerplate kills readability or you need React-style hooks in Flutter. Eliminates widget complexity and state management overhead. Apply when code readability suffers from traditional widget patterns."
+description: "React-style hooks for Flutter using the flutter_hooks package with HookWidget, useState, useEffect, and custom hooks. Use when reducing StatefulWidget boilerplate or reusing stateful UI logic across widgets."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

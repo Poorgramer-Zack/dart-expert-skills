@@ -1,6 +1,6 @@
 ---
 name: "flutter-setup"
-description: "When environment setup breaks your build, this eliminates configuration chaos across Linux, macOS, Windows. Apply when paths conflict, builds fail mysteriously, or optimizing fresh machines."
+description: "Flutter SDK and IDE environment setup for Linux, macOS, and Windows. Use when configuring a new development machine, resolving SDK path conflicts, or fixing build environment issues."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

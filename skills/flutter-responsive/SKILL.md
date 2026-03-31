@@ -1,6 +1,6 @@
 ---
 name: "flutter-responsive"
-description: "When responsive design breaks across devices, layouts crumble on tablets, or screenutil/sizer confuses you. Prevents layout disasters with correct responsive patterns. Apply when multi-screen support needs implementation or UI breaks on different resolutions."
+description: "Responsive and adaptive layout design for Flutter using flutter_screenutil, sizer, and responsive_framework. Use when supporting multiple screen sizes, tablets, or fixing layout issues across different resolutions."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

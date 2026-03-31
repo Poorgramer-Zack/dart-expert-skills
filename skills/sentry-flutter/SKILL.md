@@ -1,6 +1,6 @@
 ---
 name: "sentry-flutter"
-description: "When production crashes go undetected, error tracking is needed, or you must prevent silent app failures. Apply immediately if crashes escape to users or error monitoring infrastructure doesn't exist."
+description: "Sentry error tracking and performance monitoring integration for Flutter using sentry_flutter. Use when setting up crash reporting, configuring session replay, monitoring app performance, or capturing diagnostic breadcrumbs."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

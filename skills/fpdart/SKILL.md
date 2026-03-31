@@ -1,6 +1,6 @@
 ---
 name: "fpdart"
-description: "When exception handling is messy, null safety needs enforcement, or functional error handling matters. Apply when bulletproof error management is critical or you need Either/Option patterns for type-safe code."
+description: "Functional error handling in Dart using the fpdart package with Either, Option, TaskEither, and Do notation. Use when replacing try-catch with type-safe error handling or composing async operations functionally."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

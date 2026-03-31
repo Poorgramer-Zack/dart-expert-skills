@@ -1,6 +1,6 @@
 ---
 name: "flutter-routing"
-description: "When navigation crashes, deep links fail, or routing guards need implementation. Eliminates navigation chaos with type-safe GoRouter/AutoRoute patterns. Critical when app crashes during route transitions or deep-link handling breaks."
+description: "Declarative routing and navigation for Flutter using GoRouter and AutoRoute. Use when implementing navigation guards, nested routes, type-safe routing, or deep link handling."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

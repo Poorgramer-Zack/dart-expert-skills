@@ -1,6 +1,6 @@
 ---
 name: "flutter-testing"
-description: "Apply when test coverage is poor, bugs escape to production, or release-day crashes need prevention. Enables comprehensive unit, widget, integration testing. Essential when quality assurance matters more than shipping speed."
+description: "Flutter testing across the testing pyramid — unit, widget, integration, and golden tests. Use when writing tests with mocktail, applying AAA pattern, improving test coverage, or setting up test infrastructure."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

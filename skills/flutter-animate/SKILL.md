@@ -1,6 +1,6 @@
 ---
 name: "flutter-animate"
-description: "When animations lag, app looks boring, or visual polish is needed urgently. Prevents animation jank with performant flutter_animate patterns. Apply when UI needs visually complex effects or animation performance matters."
+description: "Declarative animation patterns using the flutter_animate package. Use when adding UI animations, transitions, staggered effects, or fixing animation performance (jank)."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

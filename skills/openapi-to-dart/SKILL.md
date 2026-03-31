@@ -1,6 +1,6 @@
 ---
 name: openapi-to-dart
-description: "When API integration is complex, manual model creation is tedious, or type-safe clients need generation. Apply immediately if OpenAPI contracts need conversion to Dart or Freezed models require auto-generation from API specs."
+description: "OpenAPI 3.0 specification to Dart code generation with Freezed models and Dio client endpoints. Use when converting API specs to type-safe Dart models, generating API clients, or automating model creation from OpenAPI contracts."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

@@ -1,6 +1,6 @@
 ---
 name: "flutter-firebase"
-description: "When backend needs scale urgently, Firebase costs explode, or real-time sync is critical. Apply immediately if Auth, Firestore, FCM, or Storage integration needs implementation. Essential when you need managed backend without server ops."
+description: "Firebase integration for Flutter including Auth, Firestore, FCM, Cloud Storage, Analytics, and Crashlytics. Use when implementing serverless backend features, real-time sync, or push notifications."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

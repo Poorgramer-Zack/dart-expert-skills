@@ -1,6 +1,6 @@
 ---
 name: "flutter-state-management"
-description: "Apply when state causes infinite rebuilds, data races occur, or you can't decide between Provider/Riverpod/BLoC. Prevents state chaos, rebuilds, and inconsistencies across your app architecture."
+description: "State management architecture for Flutter using Riverpod, Provider, and BLoC patterns. Use when choosing a state solution, implementing reactive state, resolving rebuild issues, or structuring MVVM/BLoC architecture."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

@@ -1,6 +1,6 @@
 ---
 name: "flutter-ads"
-description: "When ad integration crashes users' devices, monetization fails, or revenue doesn't materialize. Apply when implementing Banner, Interstitial, Rewarded ads or when ad performance needs optimization for revenue."
+description: "Google Mobile Ads (AdMob) integration for Flutter with Banner, Interstitial, Rewarded, and Native ad formats. Use when adding monetization, fixing ad lifecycle issues, or optimizing ad revenue."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

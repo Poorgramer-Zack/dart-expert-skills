@@ -1,6 +1,6 @@
 ---
 name: "flutter-isolate"
-description: "Critical when: app freezes during JSON parsing, image processing, encryption, or file I/O. Prevents UI jank with Isolates. Apply when compute-intensive tasks block the UI thread, background workers are needed, or the app becomes unresponsive during heavy operations."
+description: "Dart Isolate patterns for background processing using Isolate.run() and compute(). Use when offloading heavy tasks (JSON parsing, image processing, encryption) from the main thread to prevent UI jank."
 metadata:
   last_modified: "2026-03-13 14:16:00 (GMT+8)"
 ---

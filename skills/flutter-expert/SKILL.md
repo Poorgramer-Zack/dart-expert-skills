@@ -1,6 +1,6 @@
 ---
 name: "flutter-expert"
-description: "Apply when your app is slow, state management is broken, architecture needs redesign, or performance bottlenecks cause freezes. Essential for expert-level decisions on scaling, routing, native integration, and avoiding rookie mistakes."
+description: "Advanced Flutter architecture, performance optimization, and native platform integration. Use when scaling app architecture, debugging performance bottlenecks, or making expert-level design decisions."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

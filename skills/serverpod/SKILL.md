@@ -1,6 +1,6 @@
 ---
 name: "serverpod-best-practices"
-description: "When full-stack Dart development matters, JavaScript-free backends are needed, or type-safe API servers are critical. Apply when building scalable backend infrastructure with Dart or eliminating JavaScript from your stack."
+description: "Serverpod backend framework for full-stack Dart development with PostgreSQL, Redis, and Docker. Use when building type-safe API endpoints, configuring Serverpod auth, or deploying Dart backend infrastructure."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

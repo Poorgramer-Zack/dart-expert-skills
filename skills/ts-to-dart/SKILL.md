@@ -1,6 +1,6 @@
 ---
 name: "ts-to-dart"
-description: "Convert TypeScript code to idiomatic Dart 3 code. Use this skill whenever the user wants to translate TypeScript snippets, interfaces, types, classes, or entire modules into Dart. Also apply when migrating frontend logic to Flutter/Dart, when the user pastes TypeScript code and asks for a Dart equivalent, or when comparing TypeScript and Dart syntax. Trigger on any mention of 'TypeScript to Dart', 'TS to Dart', 'convert to Dart', or when TypeScript code is provided with a request for Dart translation."
+description: "TypeScript to idiomatic Dart 3 code conversion including syntax mapping, type system translation, and module migration. Use when translating TypeScript interfaces, classes, or modules to Dart, or migrating frontend logic to Flutter."
 metadata:
   last_modified: "2026-03-16 22:20:00 (GMT+8)"
 ---

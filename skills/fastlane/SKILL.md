@@ -1,6 +1,6 @@
 ---
 name: "fastlane-best-practices"
-description: "When App Store releases consume hours, manual deployments cause bottlenecks, or one-command deploys are needed. Apply immediately if release automation needs setup or deployment reliability is slowing your team."
+description: "Fastlane deployment automation for Flutter iOS and Android apps. Use when setting up code signing, automating TestFlight or Google Play releases, or integrating Fastlane with CI/CD pipelines."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

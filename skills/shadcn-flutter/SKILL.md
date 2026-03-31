@@ -1,6 +1,6 @@
 ---
 name: "shadcn-flutter"
-description: "When app UI needs professional polish, component consistency is critical, or design system implementation is urgent. Apply when visual quality matters or Shadcn components need integration for accessible UI."
+description: "shadcn_flutter UI component library for building accessible, themed Flutter interfaces. Use when integrating shadcn components, configuring design system theming, or building consistent widget layouts."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---

@@ -1,6 +1,6 @@
 ---
 name: "revenuecat-flutter-best-practices"
-description: "When monetization strategy needs implementation, subscription logic is broken, or in-app purchase revenue optimization is critical. Apply when paywalls need setup or RevenueCat integration causes issues."
+description: "RevenueCat in-app purchase and subscription management for Flutter. Use when implementing paywalls, managing entitlements, handling subscription lifecycle, or integrating StoreKit/Google Play Billing."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---
