@@ -36,6 +36,14 @@ jobs:
         run: |
           copilot -p "You are maintaining a Flutter/Dart skills library. Each skill lives in skills/<name>/SKILL.md.
 
+          SKILL AUTHORING STANDARDS (read .github/instructions/skills.instructions.md for full rules):
+          - SKILL.md frontmatter: name (gerund form, lowercase-hyphenated, max 64 chars), description (third-person, max 1024 chars, includes discovery triggers), metadata.last_modified.
+          - Keep body under 500 lines. Split large content to references/ files.
+          - All reference links must be one level deep from SKILL.md.
+          - Use consistent terminology throughout each file.
+          - For MAJOR bumps: move old patterns to an 'Old Patterns' section instead of deleting.
+          - Never over-explain things Claude already knows.
+
           Your job:
           1. Scan every skills/*/SKILL.md file.
           2. Extract all pub.dev package names and their currently pinned versions from pubspec.yaml code blocks inside each file.
@@ -44,8 +52,8 @@ jobs:
              The response JSON contains .latest.version for the latest version.
              Also fetch https://pub.dev/packages/{package_name}/changelog to read breaking changes and new features.
           4. Compare versions:
-             - MAJOR bump (breaking change): update version pins in SKILL.md, revise code examples and description if APIs changed.
-             - MINOR bump (new feature): update version pins in SKILL.md.
+             - MAJOR bump (breaking change): update version pins in SKILL.md, revise code examples and description if APIs changed, move old patterns to 'Old Patterns' section, update metadata.last_modified.
+             - MINOR bump (new feature): update version pins in SKILL.md, update metadata.last_modified.
              - PATCH only: skip.
           5. For every SKILL.md that changed, prepend a new dated entry to CHANGELOG.md at the repo root (the file already exists).
 
@@ -56,7 +64,8 @@ jobs:
           Rules:
           - Only write files that actually changed.
           - Keep all existing SKILL.md content and structure intact.
-          - Do not invent version numbers; use only what pub.dev returns." \
+          - Do not invent version numbers; use only what pub.dev returns.
+          - Follow all standards in .github/instructions/skills.instructions.md." \
             --model claude-sonnet-4.6 \
             --allow-tool='shell(curl:*)' \
             --allow-tool=write \
