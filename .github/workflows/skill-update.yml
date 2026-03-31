@@ -22,19 +22,11 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      # Flutter brings Dart SDK into PATH — required for `dart mcp-server`.
-      # cache disabled to avoid conflicts with the pub cache step below.
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      # Only cache npm — Flutter/pub caching caused post-job save conflicts.
       - name: Cache npm global
         uses: actions/cache@v4
         with:
@@ -47,10 +39,6 @@ jobs:
       - name: Install Copilot CLI
         run: npm install -g @github/copilot
 
-      # .mcp.json at repo root is auto-detected by Copilot CLI.
-      # It spawns `dart mcp-server` (now in PATH via Flutter step) which
-      # provides pub.dev query tools used inside the prompt below.
-      # Note: -s (silent) is intentionally omitted so errors are visible in logs.
       - name: Scan skills and update dependencies
         env:
           COPILOT_GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
@@ -60,7 +48,10 @@ jobs:
           Your job:
           1. Scan every skills/*/SKILL.md file.
           2. Extract all pub.dev package names and their currently pinned versions from pubspec.yaml code blocks inside each file.
-          3. For each package, use the dart MCP pub_dev tools to fetch the latest stable version and its CHANGELOG from pub.dev.
+          3. For each package, fetch its latest stable version and CHANGELOG by running:
+             curl -s https://pub.dev/api/packages/{package_name}
+             The response JSON contains .latest.version for the latest version.
+             Also fetch https://pub.dev/packages/{package_name}/changelog to read breaking changes and new features.
           4. Compare versions:
              - MAJOR bump (breaking change): update version pins in SKILL.md, revise code examples and description if APIs changed.
              - MINOR bump (new feature): update version pins in SKILL.md.
@@ -76,7 +67,7 @@ jobs:
           - Keep all existing SKILL.md content and structure intact.
           - Do not invent version numbers; use only what pub.dev returns." \
             --model claude-sonnet-4.6 \
-            --allow-tool='dart:*' \
+            --allow-tool='shell(curl:*)' \
             --allow-tool=write \
             --no-ask-user \
             -s
