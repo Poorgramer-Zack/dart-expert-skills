@@ -25,7 +25,7 @@ jobs:
 
       - name: Run Copilot CLI (official example)
         env:
-          COPILOT_GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
         run: |
           copilot -p "List the files in the current directory and tell me how many there are." \
             --allow-tool='shell(ls:*)' \
