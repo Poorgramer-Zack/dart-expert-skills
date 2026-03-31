@@ -1,11 +1,11 @@
 ---
 name: "flutter-ads"
-description: "Google Mobile Ads (AdMob) integration for Flutter with Banner, Interstitial, Rewarded, and Native ad formats. Use when adding monetization, fixing ad lifecycle issues, or optimizing ad revenue."
+description: "Google Mobile Ads (AdMob) integration for Flutter using google_mobile_ads v7.x with Banner, Interstitial, Rewarded, Rewarded Interstitial, and Native ad formats. Use this skill whenever implementing app monetization, fixing ad loading errors, managing ad lifecycle (preload/dispose), optimizing fill rates and eCPM, handling GDPR/ATT consent, troubleshooting AdMob dashboard integration, or debugging ad performance issues. Supports Android (GMA SDK 24.9+) and iOS (GMA SDK 12.14+)."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 10:30:00 (GMT+8)"
 ---
 
-# Flutter Ads Implementation (`google_mobile_ads`)
+# Flutter Ads Implementation (`google_mobile_ads` v7.x)
 
 ## Goal
 Integrate Google Mobile Ads securely and efficiently. Prevent memory leaks by strictly managing `AdWidget` lifecycles and ensure high fill-rates by pre-loading full-screen ads before they are needed.

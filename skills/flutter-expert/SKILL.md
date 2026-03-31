@@ -1,8 +1,8 @@
 ---
 name: "flutter-expert"
-description: "Advanced Flutter architecture, performance optimization, and native platform integration. Use when scaling app architecture, debugging performance bottlenecks, or making expert-level design decisions."
+description: "Elite Flutter mastery for production-grade apps: architecture decisions (Clean/Layered/Hexagonal/Feature-First), advanced state management patterns (BLoC/Riverpod/GetX), performance optimization (eliminating jank, memory profiling, reducing rebuild overhead), code review with design patterns enforcement, scalability assessments, native platform integration (MethodChannel/EventChannel/FFI), complex UI challenges (custom render objects, slivers), testing strategies (unit/widget/integration/golden), CI/CD pipeline architecture, build optimization, and accessibility compliance. Triggers: 'architecture decision', 'design pattern', 'performance issue', 'code review', 'production problem', 'scaling concerns', 'best practices', 'technical debt', 'refactoring strategy'. Essential for complex enterprise apps, critical production debugging, architectural refactors, or when choosing between competing technical approaches."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 10:45:00 (GMT+8)"
 ---
 
 # Flutter Expert Guide
@@ -23,7 +23,7 @@ Architecting a phenomenal scalable Flutter application involves orchestrating mu
 
 #### 1.1 Core Architectural Design
 Determine whether to utilize feature-first or layer-first file structures natively. Architect your Domain, Data, and Presentation layers securely. 
-- **Reference**: `architecture.md`
+- **References**: `architecture.md`, `architecture-decision-matrix.md`
 
 ---
 
@@ -69,6 +69,7 @@ Leverage these discrete specialized resource documents dynamically orchestrating
 
 ### Architecture Foundations
 - [🏗️ Architectural Foundations](./references/architecture.md)
+- [🎯 Architecture Decision Matrix](./references/architecture-decision-matrix.md)
 
 ### Visual Presentation (UI/UX)
 - [🎨 Layout Foundations](./references/layout.md)

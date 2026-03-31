@@ -1,5 +1,5 @@
 ---
-name: "dart-best-practices"
+name: "effective-dart"
 description: "Dart 3 modern features and Effective Dart best practices including records, patterns, sealed classes, and extension types. Use when adopting Dart 3 syntax, improving code quality, or reviewing Dart code conventions."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

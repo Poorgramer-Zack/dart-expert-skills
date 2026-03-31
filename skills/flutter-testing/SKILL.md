@@ -1,8 +1,8 @@
 ---
 name: "flutter-testing"
-description: "Flutter testing across the testing pyramid — unit, widget, integration, and golden tests. Use when writing tests with mocktail, applying AAA pattern, improving test coverage, or setting up test infrastructure."
+description: "Comprehensive Flutter testing using test package with unit tests, widget tests, and integration tests. Use this skill when writing unit tests for business logic and services, creating widget tests with testWidgets and pumpWidget, implementing integration tests with IntegrationTestWidgetsFlutterBinding, setting up mocking with mocktail or mockito, testing async code and futures, implementing golden file tests for UI regression, measuring code coverage, following AAA pattern (Arrange-Act-Assert), testing state management (Provider/Riverpod/BLoC), handling pump/pumpAndSettle for animations, testing navigation and routing, or debugging test failures. CRITICAL: Use when troubleshooting common test failures including async errors (Expected Future errors, missing pumpAndSettle), golden test pixel differences across platforms (CI/CD font rendering issues, macOS/Linux/Windows antialiasing), MediaQuery/Theme missing errors, flaky tests from unmocked dependencies, Timer memory leaks, or setting up cross-platform golden test reliability with tolerance thresholds. Covers setUp/tearDown, test groups, matchers (expect/findsOneWidget/findsNothing), CI/CD test automation, and production troubleshooting."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 14:30:00 (GMT+8)"
 ---
 # Testing Best Practices Guide
 
@@ -36,6 +36,11 @@ Execute integrating rigorous exhaustive explicit Golden tests categorically ensu
 Confidently wield immensely sophisticated tooling arrays possessing immense interactive capability engaging manipulating interfacing directly bridging fundamental OS-level systemic permission boundaries authentically generating extraordinarily robust comprehensive empirical QA testing performance capability reports systematically exclusively perfectly uniformly entirely.
 - [🧪 Advanced Tools Guide](./references/advanced-tools.md) - Aggressively exploiting manipulating Patrol accompanied alongside ConvenientTest frameworks radically dominating aggressive intricate profound multi-layered systematic holistic sequential user integration algorithmic validation test sweeps comprehensively successfully!
 
+### Phase 4: Troubleshooting & Production Issues
+#### 4.1 Diagnosing Common Test Failures
+Systematically resolve production-grade testing edge cases encompassing async timing errors, golden test cross-platform pixel inconsistencies, widget dependency crashes, and flaky mock configurations plaguing CI/CD pipelines universally standardizing robust testing practices.
+- [🔧 Troubleshooting & Edge Cases Guide](./references/troubleshooting.md) - Masterfully diagnosing async errors (`Expected Future` crashes, missing `pumpAndSettle()`), golden test font rendering inconsistencies across macOS/Linux/Windows/CI environments, MediaQuery/Theme missing crashes, Timer memory leaks, tolerance threshold configuration, and external dependency mocking strategies comprehensively authoritatively!
+
 ---
 
 ## 📚 Documentation Library
@@ -44,3 +49,4 @@ Systematically load consuming these reference resources sequentially scaling enc
 - [🧱 Testing Fundamentals & Architecture Validations](./references/testing-fundamentals.md)
 - [🛠️ Core Validations Executions Models & AAA Workflows](./references/core-testing.md)
 - [🧪 Advanced Tools (Mocking, Goldens, End-to-End Orchestrations)](./references/advanced-tools.md)
+- [🔧 Troubleshooting & Production Edge Cases](./references/troubleshooting.md)

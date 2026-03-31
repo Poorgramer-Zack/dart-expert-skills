@@ -1,8 +1,8 @@
 ---
 name: "flutter-google-sign-in"
-description: "Best practices for implementing Google Sign-In in Flutter apps using google_sign_in v7.x. Includes stream-based auth flow, Android/iOS/Web configuration, authorization scopes, and server auth code exchange."
+description: "Best practices for implementing Google Sign-In in Flutter apps using google_sign_in v7.x. Includes stream-based auth flow, Android/iOS/Web configuration, authorization scopes, server auth code exchange, minimal viable examples, comprehensive error handling patterns, and common gotchas."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 20:19:44 (GMT+8)"
 ---
 
 # Google Sign-In Best Practices
@@ -172,6 +172,262 @@ final serverAuth = await account.authorizationClient.authorizeServer(scopes);
 
 ### Q: Silent login doesn't restore session on cold start?
 **A:** Ensure `attemptLightweightAuthentication()` is called after `initialize()` completes. This triggers `authenticationEvents` with the cached user without showing any UI.
+
+---
+
+---
+
+## 🎯 Minimal Viable Example
+
+### Complete Working Implementation
+```dart
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class GoogleAuthService {
+  final GoogleSignIn _googleSignIn = GoogleSignIn.instance;
+  GoogleSignInAccount? _currentUser;
+
+  // Initialize and listen to auth events
+  Future<void> init() async {
+    await _googleSignIn.initialize();
+    
+    _googleSignIn.authenticationEvents.listen(
+      (event) {
+        if (event is GoogleSignInAuthenticationEventSignIn) {
+          _currentUser = event.user;
+          print('✅ Signed in: ${event.user.email}');
+        } else if (event is GoogleSignInAuthenticationEventSignOut) {
+          _currentUser = null;
+          print('👋 Signed out');
+        }
+      },
+      onError: (error) {
+        print('❌ Auth error: $error');
+      },
+    );
+
+    // Try silent sign-in for returning users
+    await _googleSignIn.attemptLightweightAuthentication();
+  }
+
+  // Sign-in with comprehensive error handling
+  Future<GoogleSignInAccount?> signIn() async {
+    if (!_googleSignIn.supportsAuthenticate()) {
+      throw UnsupportedError('Platform does not support authenticate()');
+    }
+
+    try {
+      await _googleSignIn.authenticate();
+      return _currentUser;
+    } on PlatformException catch (e) {
+      _handlePlatformException(e);
+      return null;
+    } catch (e) {
+      print('❌ Unexpected error: $e');
+      return null;
+    }
+  }
+
+  // Sign-out
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+  }
+
+  // Get current user
+  GoogleSignInAccount? get currentUser => _currentUser;
+}
+
+// Error handler with specific cases
+void _handlePlatformException(PlatformException e) {
+  switch (e.code) {
+    case 'sign_in_canceled':
+      print('ℹ️ User canceled sign-in');
+      break;
+    case 'sign_in_failed':
+      print('❌ Sign-in failed: ${e.message}');
+      break;
+    case 'network_error':
+      print('🌐 Network error during sign-in');
+      break;
+    default:
+      print('❌ Platform error ${e.code}: ${e.message}');
+  }
+}
+
+// UI Widget Example
+class GoogleSignInButton extends StatelessWidget {
+  final GoogleAuthService authService;
+
+  const GoogleSignInButton({required this.authService});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: () async {
+        final user = await authService.signIn();
+        if (user != null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Welcome ${user.displayName}!')),
+          );
+        }
+      },
+      icon: Icon(Icons.login),
+      label: Text('Sign in with Google'),
+    );
+  }
+}
+```
+
+---
+
+## 🚨 Error Handling Patterns
+
+### Common Error Codes & Solutions
+
+| Error Code | Description | Solution |
+|------------|-------------|----------|
+| `ApiException: 10` | Developer error / OAuth misconfiguration | Verify SHA fingerprints + complete OAuth consent screen |
+| `sign_in_canceled` | User closed the sign-in dialog | Handle gracefully, no retry needed |
+| `sign_in_failed` | Generic sign-in failure | Check network, app configuration |
+| `network_error` | No internet connection | Show offline UI, allow retry |
+| `invalid_account` | Account doesn't exist or is disabled | Prompt user to select different account |
+
+### Error Handler Implementation
+```dart
+class GoogleSignInErrorHandler {
+  static String getUserMessage(dynamic error) {
+    if (error is PlatformException) {
+      switch (error.code) {
+        case 'sign_in_canceled':
+          return 'Sign-in was canceled. Please try again.';
+        case 'network_error':
+          return 'No internet connection. Check your network.';
+        case 'sign_in_failed':
+          return 'Sign-in failed. Please try again later.';
+        default:
+          return 'An error occurred. Please try again.';
+      }
+    }
+    
+    if (error.toString().contains('ApiException: 10')) {
+      return 'Configuration error. Please contact support.';
+    }
+    
+    return 'Unexpected error. Please try again.';
+  }
+
+  static bool shouldRetry(dynamic error) {
+    if (error is PlatformException) {
+      return error.code == 'network_error' || error.code == 'sign_in_failed';
+    }
+    return false;
+  }
+}
+```
+
+---
+
+## ⚠️ Common Gotchas
+
+### 1. **ApiException: 10 (Most Common)**
+**Cause**: SHA fingerprint mismatch or incomplete OAuth consent screen.
+
+**Solution**:
+```bash
+# Get debug SHA-1
+cd android && ./gradlew signingReport
+
+# Get release SHA-1 (if using Google Play App Signing)
+# Go to Play Console → Setup → App signing → App signing key certificate
+```
+Then:
+- Add BOTH debug AND release SHA-1 to Firebase/Google Cloud Console
+- Fill **every** field in OAuth consent screen (support email, app logo, domain)
+- Wait 5-10 minutes after configuration changes
+
+### 2. **Silent Sign-In Not Working**
+**Cause**: `attemptLightweightAuthentication()` not called after `initialize()`.
+
+**Solution**:
+```dart
+await _googleSignIn.initialize();
+// MUST call this to restore previous session
+await _googleSignIn.attemptLightweightAuthentication();
+```
+
+### 3. **Web Access Token Expires After 1 Hour**
+**Cause**: Web tokens expire in 3600s and aren't auto-refreshed.
+
+**Solution**:
+```dart
+Future<String?> getValidAccessToken(GoogleSignInAccount account) async {
+  try {
+    final auth = await account.authorizationClient
+        .authorizationForScopes(['email']);
+    
+    // Check if token is still valid
+    if (auth != null && _isTokenExpired(auth.accessToken)) {
+      // Re-request to get fresh token
+      final newAuth = await account.authorizationClient
+          .authorizeScopes(['email']);
+      return newAuth.accessToken;
+    }
+    
+    return auth?.accessToken;
+  } catch (e) {
+    // Token expired or revoked, re-authenticate
+    await GoogleSignIn.instance.signOut();
+    return null;
+  }
+}
+```
+
+### 4. **Server Auth Code Only Available Once**
+**Cause**: Server auth codes may only be issued on first sign-in.
+
+**Solution**:
+```dart
+// Request immediately after successful sign-in
+_googleSignIn.authenticationEvents.listen((event) async {
+  if (event is GoogleSignInAuthenticationEventSignIn) {
+    // Request server auth code NOW
+    final serverAuth = await event.user.authorizationClient
+        .authorizeServer(['profile', 'email']);
+    
+    if (serverAuth != null) {
+      // Send to backend IMMEDIATELY
+      await _sendToBackend(serverAuth.serverAuthCode);
+    }
+  }
+});
+```
+
+### 5. **iOS URL Scheme Missing**
+**Cause**: `REVERSED_CLIENT_ID` not added to `Info.plist`.
+
+**Solution**:
+```xml
+<!-- In ios/Runner/Info.plist -->
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <!-- Get this from GoogleService-Info.plist -->
+      <string>com.googleusercontent.apps.123456789-abcd</string>
+    </array>
+  </dict>
+</array>
+```
+
+### 6. **Android Missing google-services.json**
+**Cause**: Firebase config file not in correct location.
+
+**Solution**:
+- Download from Firebase Console
+- Place at `android/app/google-services.json` (NOT `android/`)
+- Verify `apply plugin: 'com.google.gms.google-services'` in `android/app/build.gradle`
 
 ---
 

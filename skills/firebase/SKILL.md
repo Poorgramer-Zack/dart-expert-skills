@@ -1,5 +1,5 @@
 ---
-name: "flutter-firebase"
+name: "firebase"
 description: "Firebase integration for Flutter including Auth, Firestore, FCM, Cloud Storage, Analytics, and Crashlytics. Use when implementing serverless backend features, real-time sync, or push notifications."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

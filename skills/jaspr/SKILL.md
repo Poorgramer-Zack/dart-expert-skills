@@ -1,5 +1,5 @@
 ---
-name: "jaspr-best-practices"
+name: "jaspr"
 description: "Jaspr web framework for building SEO-friendly web applications with Dart server-side rendering. Use when creating Dart-based websites, implementing semantic HTML components, or building full-stack Dart web apps with server components."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

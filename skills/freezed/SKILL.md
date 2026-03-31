@@ -1,5 +1,5 @@
 ---
-name: "freezed-best-practices"
+name: "freezed"
 description: "Freezed code generation for immutable Dart data classes with copyWith, union types, and json_serializable integration. Use when creating data models, enforcing immutability, or generating fromJson/toJson serialization."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

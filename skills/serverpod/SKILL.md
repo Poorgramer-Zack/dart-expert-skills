@@ -1,5 +1,5 @@
 ---
-name: "serverpod-best-practices"
+name: "serverpod"
 description: "Serverpod backend framework for full-stack Dart development with PostgreSQL, Redis, and Docker. Use when building type-safe API endpoints, configuring Serverpod auth, or deploying Dart backend infrastructure."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

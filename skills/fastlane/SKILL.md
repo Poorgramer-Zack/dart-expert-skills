@@ -1,5 +1,5 @@
 ---
-name: "fastlane-best-practices"
+name: "fastlane"
 description: "Fastlane deployment automation for Flutter iOS and Android apps. Use when setting up code signing, automating TestFlight or Google Play releases, or integrating Fastlane with CI/CD pipelines."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

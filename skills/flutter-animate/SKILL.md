@@ -1,11 +1,11 @@
 ---
 name: "flutter-animate"
-description: "Declarative animation patterns using the flutter_animate package. Use when adding UI animations, transitions, staggered effects, or fixing animation performance (jank)."
+description: "Declarative animation patterns using flutter_animate v4.5.x with composable effects (fade, scale, slide, shimmer, shake, blur), GLSL fragment shaders, and scroll-synchronized animations. Use this skill for adding UI animations and transitions, building staggered or sequenced effects, creating custom animation effects, fixing animation jank or performance issues, implementing shimmer loading states, or adding scroll-driven animations. Supports delays, curves, adaptive effects, and easy extension method chaining (.animate())."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 10:30:00 (GMT+8)"
 ---
 
-# Flutter Animate Implementation
+# Flutter Animate Implementation (v4.5.x)
 
 ## Goal
 Implement highly performant, composable, and declarative animations in Flutter using the `flutter_animate` package. The goal is to aggressively reduce boilerplate by utilizing `.animate()` extension methods on Widgets rather than manually orchestrating `AnimationController` and `StatefulWidget` mechanics.

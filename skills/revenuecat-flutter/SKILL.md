@@ -1,5 +1,5 @@
 ---
-name: "revenuecat-flutter-best-practices"
+name: "revenuecat-flutter"
 description: "RevenueCat in-app purchase and subscription management for Flutter. Use when implementing paywalls, managing entitlements, handling subscription lifecycle, or integrating StoreKit/Google Play Billing."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

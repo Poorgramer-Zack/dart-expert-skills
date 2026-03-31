@@ -1,11 +1,11 @@
 ---
 name: "flutter-deeplink"
-description: "Deep linking setup for Flutter with Android App Links and iOS Universal Links. Use when configuring GoRouter deep link handling, domain association, or routing external URLs into the app."
+description: "Deep linking setup for Flutter with Android App Links and iOS Universal Links integrated with GoRouter v17.x navigation. Use this skill when setting up HTTPS domain association (assetlinks.json, apple-app-site-association), handling magic links or email verification links, routing marketing campaign URLs (Google Ads, Facebook Ads) into the app, implementing password reset or invite flows via deep links, fixing deep link verification failures, or troubleshooting GoRouter deep link integration. Avoids deprecated custom URL schemes (myapp://)."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 10:30:00 (GMT+8)"
 ---
 
-# Flutter Deep Linking
+# Flutter Deep Linking (with GoRouter v17.x)
 
 ## Goal
 Implement secure, professional Deep Links (HTTPS Domain Association) to successfully route organic URLs, marketing campaigns (Google Ads), and Magic Link auth payloads directly into a Flutter application. Avoid older Custom URL Schemes (`myapp://`) whenever possible, guaranteeing a seamless fallback to web browsers if the app is currently uninstalled.

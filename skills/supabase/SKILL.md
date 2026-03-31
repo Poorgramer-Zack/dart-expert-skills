@@ -1,5 +1,5 @@
 ---
-name: "supabase-best-practices"
+name: "supabase"
 description: "Supabase Flutter integration for PostgreSQL, Auth, Realtime subscriptions, Storage, Edge Functions, and Row Level Security. Use when building backend features with supabase_flutter or configuring database policies."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

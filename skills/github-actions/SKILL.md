@@ -1,5 +1,5 @@
 ---
-name: "github-actions-best-practices"
+name: "github-actions"
 description: "GitHub Actions CI/CD workflows for Flutter projects including automated testing, building, and deployment. Use when setting up continuous integration, configuring release pipelines, or automating Flutter build processes."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"

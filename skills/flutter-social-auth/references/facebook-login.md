@@ -1,8 +1,8 @@
 ---
 name: "flutter-facebook-login"
-description: "Best practices for implementing Facebook Login using flutter_facebook_auth v7.x. Includes Android/iOS/Web configuration, iOS 17 App Tracking Transparency handling, Limited Login mode, and multi-provider Info.plist merging."
+description: "Best practices for implementing Facebook Login using flutter_facebook_auth v7.x. Includes Android/iOS/Web configuration, iOS 17 App Tracking Transparency handling, Limited Login mode, multi-provider Info.plist merging, minimal viable examples, comprehensive error handling patterns, and common gotchas."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-03-31 20:19:44 (GMT+8)"
 ---
 
 # Facebook Login Best Practices
@@ -202,6 +202,522 @@ await FacebookAuth.instance.webAndDesktopInitialize(
 
 ### Q: User's email is null even with `email` permission?
 **A:** Users may choose not to share their email during the Facebook login dialog. The `email` field will be `null`. Your app must handle this gracefully (e.g., prompt user to enter email manually).
+
+---
+
+---
+
+## 🎯 Minimal Viable Example
+
+### Complete Working Implementation
+```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+class FacebookAuthService {
+  // Check if user is logged in
+  Future<bool> isLoggedIn() async {
+    final token = await FacebookAuth.instance.accessToken;
+    return token != null;
+  }
+
+  // Sign-in with iOS 17 ATT handling
+  Future<FacebookSignInResult> signIn() async {
+    try {
+      // Request App Tracking Transparency (iOS 17+)
+      await Permission.appTrackingTransparency.request();
+
+      // Perform login
+      final LoginResult result = await FacebookAuth.instance.login(
+        permissions: ['email', 'public_profile'],
+      );
+
+      return _handleLoginResult(result);
+      
+    } on Exception catch (e) {
+      return FacebookSignInResult.error('Sign-in failed: $e');
+    }
+  }
+
+  // Handle different login result statuses
+  FacebookSignInResult _handleLoginResult(LoginResult result) {
+    switch (result.status) {
+      case LoginStatus.success:
+        final token = result.accessToken!;
+        
+        // Check token type (iOS 17 Limited Login)
+        if (token is ClassicToken) {
+          return FacebookSignInResult.success(
+            token: token,
+            isLimited: false,
+          );
+        } else if (token is LimitedToken) {
+          return FacebookSignInResult.success(
+            token: token,
+            isLimited: true,
+          );
+        }
+        return FacebookSignInResult.error('Unknown token type');
+
+      case LoginStatus.cancelled:
+        return FacebookSignInResult.canceled();
+
+      case LoginStatus.failed:
+        return FacebookSignInResult.error(
+          result.message ?? 'Login failed',
+        );
+
+      case LoginStatus.operationInProgress:
+        return FacebookSignInResult.error('Operation already in progress');
+
+      default:
+        return FacebookSignInResult.error('Unknown status');
+    }
+  }
+
+  // Get user data after successful login
+  Future<Map<String, dynamic>?> getUserData() async {
+    try {
+      return await FacebookAuth.instance.getUserData(
+        fields: 'email,name,picture.width(200),first_name,last_name',
+      );
+    } catch (e) {
+      print('Failed to get user data: $e');
+      return null;
+    }
+  }
+
+  // Logout
+  Future<void> logout() async {
+    await FacebookAuth.instance.logOut();
+  }
+
+  // Get current access token
+  Future<AccessToken?> getCurrentToken() async {
+    return FacebookAuth.instance.accessToken;
+  }
+}
+
+// Result class for type-safe handling
+class FacebookSignInResult {
+  final AccessToken? token;
+  final bool isLimited;
+  final String? error;
+  final bool isCanceled;
+
+  FacebookSignInResult._({
+    this.token,
+    this.isLimited = false,
+    this.error,
+    this.isCanceled = false,
+  });
+
+  factory FacebookSignInResult.success({
+    required AccessToken token,
+    required bool isLimited,
+  }) {
+    return FacebookSignInResult._(token: token, isLimited: isLimited);
+  }
+
+  factory FacebookSignInResult.canceled() {
+    return FacebookSignInResult._(isCanceled: true);
+  }
+
+  factory FacebookSignInResult.error(String message) {
+    return FacebookSignInResult._(error: message);
+  }
+
+  bool get isSuccess => token != null;
+}
+
+// UI Widget Example
+class FacebookSignInButton extends StatefulWidget {
+  final FacebookAuthService authService;
+
+  const FacebookSignInButton({required this.authService});
+
+  @override
+  _FacebookSignInButtonState createState() => _FacebookSignInButtonState();
+}
+
+class _FacebookSignInButtonState extends State<FacebookSignInButton> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton.icon(
+      onPressed: _isLoading ? null : _handleSignIn,
+      icon: _isLoading
+          ? SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          : Icon(Icons.facebook),
+      label: Text('Sign in with Facebook'),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Color(0xFF1877F2), // Facebook blue
+      ),
+    );
+  }
+
+  Future<void> _handleSignIn() async {
+    setState(() => _isLoading = true);
+
+    final result = await widget.authService.signIn();
+
+    setState(() => _isLoading = false);
+
+    if (!mounted) return;
+
+    if (result.isSuccess) {
+      if (result.isLimited) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Signed in with Limited Login mode'),
+            backgroundColor: Colors.orange,
+          ),
+        );
+      } else {
+        final userData = await widget.authService.getUserData();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Welcome ${userData?['name'] ?? 'User'}!'),
+          ),
+        );
+      }
+    } else if (!result.isCanceled && result.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: ${result.error}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+}
+
+// Web initialization (call before any login)
+Future<void> initializeFacebookWeb() async {
+  await FacebookAuth.instance.webAndDesktopInitialize(
+    appId: "YOUR_APP_ID",
+    cookie: true,
+    xfbml: true,
+    version: "v15.0",
+  );
+}
+```
+
+---
+
+## 🚨 Error Handling Patterns
+
+### Common Error Scenarios & Solutions
+
+| Error | Description | Solution |
+|-------|-------------|----------|
+| `No implementation found` | Missing config in `strings.xml` or `AndroidManifest.xml` | Add `facebook_app_id` AND `facebook_client_token` |
+| `LoginStatus.failed` | Generic login failure | Check network, app configuration, key hash |
+| `LoginStatus.cancelled` | User closed dialog | Handle gracefully, no retry |
+| `Invalid key hash` | Production keystore mismatch | Use Play Console SHA-1 for Play App Signing |
+| `Email is null` | User didn't share email | Handle null email gracefully |
+| Limited Login mode | ATT denied on iOS 17+ | Adapt features for limited access |
+
+### Comprehensive Error Handler
+```dart
+class FacebookErrorHandler {
+  static String getUserMessage(LoginResult result) {
+    switch (result.status) {
+      case LoginStatus.cancelled:
+        return 'Sign-in was canceled';
+      case LoginStatus.failed:
+        final message = result.message ?? '';
+        
+        if (message.contains('network')) {
+          return 'Network error. Check your connection.';
+        }
+        if (message.contains('key hash')) {
+          return 'Configuration error. Please update the app.';
+        }
+        return 'Sign-in failed. Please try again.';
+        
+      case LoginStatus.operationInProgress:
+        return 'Sign-in already in progress';
+      default:
+        return 'An error occurred';
+    }
+  }
+
+  static bool shouldRetry(LoginStatus status) {
+    return status == LoginStatus.failed;
+  }
+
+  static bool isConfigurationError(String? message) {
+    if (message == null) return false;
+    return message.contains('key hash') ||
+           message.contains('App ID') ||
+           message.contains('configuration');
+  }
+}
+```
+
+### Limited Login Mode Handler (iOS 17+)
+```dart
+class LimitedLoginHandler {
+  // Check if token is limited
+  bool isLimitedToken(AccessToken token) {
+    return token is LimitedToken;
+  }
+
+  // Adapt features based on token type
+  Future<void> handleTokenType(AccessToken token) async {
+    if (token is ClassicToken) {
+      // Full access: can use Graph API
+      await _fetchExtendedProfile(token.tokenString);
+      await _fetchFriendsList(token.tokenString);
+    } else if (token is LimitedToken) {
+      // Limited access: basic profile only
+      // Cannot make Graph API calls
+      // Can only use basic user info from getUserData()
+      await _handleLimitedAccess();
+    }
+  }
+
+  Future<void> _handleLimitedAccess() async {
+    // Show UI indicating limited features
+    // Suggest enabling tracking for full experience
+  }
+
+  Future<void> _fetchExtendedProfile(String token) async {
+    // Use token with Graph API
+  }
+
+  Future<void> _fetchFriendsList(String token) async {
+    // Use token with Graph API
+  }
+}
+```
+
+---
+
+## ⚠️ Common Gotchas
+
+### 1. **`No implementation found` (Android Startup Crash)**
+**Cause**: Missing `strings.xml` or incomplete `AndroidManifest.xml` configuration.
+
+**Solution**:
+```xml
+<!-- android/app/src/main/res/values/strings.xml -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">123456789012345</string>
+    <string name="facebook_client_token">abc123def456</string>
+</resources>
+
+<!-- android/app/src/main/AndroidManifest.xml -->
+<application>
+    <meta-data 
+        android:name="com.facebook.sdk.ApplicationId"
+        android:value="@string/facebook_app_id"/>
+    <meta-data 
+        android:name="com.facebook.sdk.ClientToken"
+        android:value="@string/facebook_client_token"/>
+</application>
+```
+
+**Critical**: Both `app_id` AND `client_token` are required. Missing either causes immediate crash.
+
+### 2. **Production Login Fails (Key Hash Mismatch)**
+**Cause**: Using debug key hash for production build.
+
+**Solution**:
+```bash
+# For Google Play App Signing (MOST COMMON):
+# 1. Go to Play Console → Setup → App signing
+# 2. Copy "App signing key certificate" SHA-1
+# 3. Convert to Base64:
+echo "AA:BB:CC:DD:..." | xxd -r -p | openssl base64
+
+# For local keystore (NOT recommended for production):
+keytool -exportcert -alias YOUR_ALIAS -keystore release.keystore | \
+  openssl sha1 -binary | openssl base64
+```
+
+Register ALL variants in Meta Console:
+- Debug key hash (for development)
+- Release key hash (Play Console SHA-1)
+- CI/CD key hash (if applicable)
+
+### 3. **Email is Null Even with Permission**
+**Cause**: User chose not to share email during login.
+
+**Solution**:
+```dart
+final userData = await FacebookAuth.instance.getUserData(
+  fields: 'email,name,picture',
+);
+
+if (userData['email'] == null) {
+  // User declined to share email
+  // Option 1: Request manually
+  final email = await showEmailDialog();
+  
+  // Option 2: Use Facebook ID as identifier
+  await createAccount(
+    fbId: userData['id'],
+    name: userData['name'],
+  );
+}
+```
+
+### 4. **iOS 17 Limited Login Mode**
+**Cause**: User denied App Tracking Transparency.
+
+**Solution**:
+```dart
+// Always request ATT before login
+final attStatus = await Permission.appTrackingTransparency.request();
+
+if (attStatus.isDenied) {
+  // Warn user about limited features
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      title: Text('Limited Login'),
+      content: Text(
+        'Without tracking permission, some features will be limited.'
+      ),
+    ),
+  );
+}
+
+// Proceed with login (will use Limited Login mode)
+final result = await FacebookAuth.instance.login(...);
+```
+
+### 5. **Multi-Provider URL Scheme Conflict**
+**Cause**: Duplicate `CFBundleURLTypes` in `Info.plist`.
+
+**Solution**:
+```xml
+<!-- ❌ WRONG: Duplicate keys -->
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array><string>fb123456</string></array>
+  </dict>
+</array>
+<key>CFBundleURLTypes</key>  <!-- DUPLICATE! -->
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array><string>com.googleusercontent...</string></array>
+  </dict>
+</array>
+
+<!-- ✅ CORRECT: Merge into one array -->
+<key>CFBundleURLTypes</key>
+<array>
+  <dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+      <string>fb123456</string>
+      <string>com.googleusercontent.apps.123-abc</string>
+    </array>
+  </dict>
+</array>
+```
+
+### 6. **Privacy Policy Required**
+**Cause**: Facebook requires privacy policy URL even for testing.
+
+**Solution**:
+- Add Privacy Policy URL in Meta Console → Settings → Basic
+- Use placeholder during development: `https://example.com/privacy`
+- Must be a real, accessible URL for production
+
+### 7. **Web Login Fails Silently**
+**Cause**: Forgot to initialize Facebook SDK for web.
+
+**Solution**:
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize for web before runApp
+  if (kIsWeb) {
+    await FacebookAuth.instance.webAndDesktopInitialize(
+      appId: "YOUR_APP_ID",
+      cookie: true,
+      xfbml: true,
+      version: "v15.0",
+    );
+  }
+  
+  runApp(MyApp());
+}
+```
+
+### 8. **Token Expiration Not Handled**
+**Cause**: Access tokens expire after ~60 days.
+
+**Solution**:
+```dart
+class TokenRefreshService {
+  Future<bool> refreshTokenIfNeeded() async {
+    final token = await FacebookAuth.instance.accessToken;
+    
+    if (token == null) return false;
+    
+    // Check if token is near expiration (e.g., within 7 days)
+    final expiresAt = token.expiresAt;
+    if (expiresAt != null) {
+      final daysUntilExpiry = 
+          expiresAt.difference(DateTime.now()).inDays;
+      
+      if (daysUntilExpiry < 7) {
+        // Re-login to get fresh token
+        await FacebookAuth.instance.logOut();
+        // Prompt user to log in again
+        return false;
+      }
+    }
+    
+    return true;
+  }
+}
+```
+
+### 9. **Graph API Calls Fail with Limited Token**
+**Cause**: Limited tokens cannot access Graph API.
+
+**Solution**:
+```dart
+Future<Map<String, dynamic>?> fetchUserData(AccessToken token) async {
+  if (token is LimitedToken) {
+    // Limited token: use getUserData() instead of Graph API
+    return await FacebookAuth.instance.getUserData();
+  }
+  
+  if (token is ClassicToken) {
+    // Classic token: can use Graph API
+    final response = await http.get(
+      Uri.parse(
+        'https://graph.facebook.com/me?fields=email,name,picture'
+        '&access_token=${token.tokenString}'
+      ),
+    );
+    
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    }
+  }
+  
+  return null;
+}
+```
 
 ---
 

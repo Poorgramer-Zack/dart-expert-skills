@@ -1,5 +1,5 @@
 ---
-name: "codemagic-best-practices"
+name: "codemagic"
 description: "Codemagic CI/CD pipeline setup for Flutter using YAML configuration. Use when automating builds, configuring code signing, or deploying to App Store and Google Play."
 metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
