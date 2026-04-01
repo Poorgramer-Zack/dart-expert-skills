@@ -1,14 +1,14 @@
 ---
-name: "codemagic"
-description: "Codemagic CI/CD pipeline setup for Flutter using YAML configuration. Use when automating builds, configuring code signing, or deploying to App Store and Google Play."
+name: "configuring-codemagic"
+description: "Configures Codemagic CI/CD pipelines for Flutter using `codemagic.yaml`. Use when setting up automated Flutter builds on Codemagic, configuring iOS code signing without Fastlane Match, deploying to App Store Connect or Google Play from Codemagic, caching pub dependencies in Codemagic, setting up encrypted environment variable groups, running tests with Codemagic's test dashboard, or choosing between Codemagic and GitHub Actions + Fastlane for a Flutter CI/CD pipeline."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter combined with Codemagic Best Practices (YAML approach)
 
 ## Goal
-Implements Codemagic YAML configurations for Flutter deployment. If GitHub Actions + Fastlane is a "DIY assembled vehicle", then [Codemagic](https://codemagic.io/) is a "luxury sports car built specifically for Flutter." It natively understands Flutter, requires no extra tooling, and features native Apple M-series machines for extremely fast compilation.
+Implements Codemagic YAML configurations for Flutter deployment. [Codemagic](https://codemagic.io/) natively understands Flutter, requires no extra tooling for code signing, and provides Apple M-series machines for fast iOS compilation.
 
 ## Instructions
 
@@ -124,4 +124,5 @@ Once the build concludes, declare the target artifacts, and automatically push d
 ```
 
 ## Constraints
-*   **Target Audience**: Utilize `codemagic.yaml` when working with pure Flutter teams possessing sufficient budget constraints requiring extensive pipeline speeds (M-chip), avoiding complex Fastlane configurations. Wait for further explicit overrides if needed.
+*   Prefer `codemagic.yaml` over the Codemagic UI workflow editor — keeping pipeline configuration in the repository alongside source code is the recommended "Infrastructure as Code" approach.
+*   For teams already using Fastlane, Codemagic can still call `bundle exec fastlane <lane>` from its `scripts` block; the two tools are not mutually exclusive.

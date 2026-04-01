@@ -1,8 +1,8 @@
 ---
-name: "flutter-secure-storage"
+name: "managing-secure-storage"
 description: "FlutterSecureStorage (v10.x) for encrypted key-value storage of sensitive data using platform-native secure enclaves with biometric authentication support. Use this skill when storing OAuth tokens (access tokens, refresh tokens, ID tokens), API keys and secrets, user passwords or PINs, session tokens, encryption keys, private keys for cryptography, certificate data, biometric enrollment data, banking credentials, health data, or any sensitive information requiring platform-level encryption (iOS Keychain with Secure Enclave, Android Keystore with Hardware-backed keys). Supports Touch ID, Face ID, and Android biometric prompt integration. Handles biometric change invalidation (resetOnError), data migration from SharedPreferences/EncryptedSharedPreferences, Google Drive backup exclusion, automatic key rotation, configurable encryption algorithms (AES), and prevents data extraction even on rooted/jailbroken devices. Essential for authentication flows, secure credential management, or compliance requirements (PCI DSS, HIPAA, GDPR data protection)."
 metadata:
-  last_modified: "2026-03-31 11:15:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # SecureStorage Encrypted Storage Guide (v10.x)

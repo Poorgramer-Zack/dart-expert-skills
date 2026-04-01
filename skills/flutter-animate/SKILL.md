@@ -1,19 +1,19 @@
 ---
-name: "flutter-animate"
+name: "animating-flutter-widgets"
 description: "Declarative animation patterns using flutter_animate v4.5.x with composable effects (fade, scale, slide, shimmer, shake, blur), GLSL fragment shaders, and scroll-synchronized animations. Use this skill for adding UI animations and transitions, building staggered or sequenced effects, creating custom animation effects, fixing animation jank or performance issues, implementing shimmer loading states, or adding scroll-driven animations. Supports delays, curves, adaptive effects, and easy extension method chaining (.animate())."
 metadata:
-  last_modified: "2026-03-31 10:30:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Animate Implementation (v4.5.x)
 
 ## Goal
-Implement highly performant, composable, and declarative animations in Flutter using the `flutter_animate` package. The goal is to aggressively reduce boilerplate by utilizing `.animate()` extension methods on Widgets rather than manually orchestrating `AnimationController` and `StatefulWidget` mechanics.
+Implement performant, composable, and declarative animations in Flutter using the `flutter_animate` package. The goal is to reduce boilerplate by using `.animate()` extension methods on widgets rather than manually orchestrating `AnimationController` and `StatefulWidget` mechanics.
 
 ## Instructions
 
 ### 1. The Core Extension Syntax
-Instead of wrapping widgets in an explicit `Animate` builder block, universally prefer the `.animate()` extension method on any Widget followed by chained effects.
+Prefer the `.animate()` extension method on any widget over explicit `Animate` builder blocks.
 
 **Correct Usage:**
 ```dart
@@ -34,7 +34,7 @@ Animate(
 ```
 
 ### 2. Time Extensions (num)
-Always utilize the provided `num` extensions for `Duration` assignments. This dramatically improves declarative readability.
+Always use the provided `num` extensions for `Duration` assignments. This improves readability.
 *   `500.ms` (Milliseconds)
 *   `2.seconds` (Seconds)
 *   `1.5.minutes` (Minutes)
@@ -55,7 +55,7 @@ Column(
 ```
 
 ### 4. Reactive State Animations (`target`)
-The most potent feature of `flutter_animate`. You can completely eliminate `AnimatedContainer` or `AnimatedOpacity` by using the `target` property. 
+The most powerful feature of `flutter_animate`. Completely eliminate `AnimatedContainer` or `AnimatedOpacity` by using the `target` property.
 When `target: 1`, the animation rests at its `end` values. When `target: 0`, the animation reverses cleanly to its `begin` values.
 
 ```dart

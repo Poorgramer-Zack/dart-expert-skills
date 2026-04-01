@@ -1,8 +1,8 @@
 ---
-name: "flutter-deeplink"
-description: "Deep linking setup for Flutter with Android App Links and iOS Universal Links integrated with GoRouter v17.x navigation. Use this skill when setting up HTTPS domain association (assetlinks.json, apple-app-site-association), handling magic links or email verification links, routing marketing campaign URLs (Google Ads, Facebook Ads) into the app, implementing password reset or invite flows via deep links, fixing deep link verification failures, or troubleshooting GoRouter deep link integration. Avoids deprecated custom URL schemes (myapp://)."
+name: "configuring-deep-links"
+description: "Configures deep linking in Flutter using Android App Links (assetlinks.json) and iOS Universal Links (apple-app-site-association) integrated with GoRouter v17.x navigation. Use this skill when setting up HTTPS domain association, handling magic links or email verification links, routing marketing campaign URLs (Google Ads, Facebook Ads) into the app, implementing password reset or invite flows via deep links, fixing deep link verification failures, troubleshooting GoRouter deep link integration, or any time the words 'deep link', 'universal link', 'app link', 'assetlinks', 'AASA', 'magic link', or 'deeplinking' appear in the request. Avoids deprecated custom URL schemes (myapp://)."
 metadata:
-  last_modified: "2026-03-31 10:30:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Deep Linking (with GoRouter v17.x)
@@ -78,7 +78,7 @@ You must host an AASA (Apple App Site Association) file proving ownership at exa
 - **Must not be gzipped** by the server (Apple's CDN rejects compresses formats silently).
 
 ### 3. Flutter Integration (GoRouter)
-By default, the Flutter Framework natively captures validated `Intents`/`NSUserActivity` payloads triggered by the operating systems. If your application properly utilizes `go_router` (refer to `@[flutter-expert]`), it will intercept the path and autonomously navigate if a matching `GoRoute` exists.
+By default, the Flutter Framework natively captures validated `Intents`/`NSUserActivity` payloads triggered by the operating systems. If your application uses `go_router`, it will intercept the path and autonomously navigate if a matching `GoRoute` exists.
 
 ```dart
 final router = GoRouter(

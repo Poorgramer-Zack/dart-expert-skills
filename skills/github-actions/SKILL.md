@@ -1,8 +1,8 @@
 ---
-name: "github-actions"
-description: "GitHub Actions CI/CD workflows for Flutter projects including automated testing, building, and deployment. Use when setting up continuous integration, configuring release pipelines, or automating Flutter build processes."
+name: "configuring-github-actions"
+description: "Configures GitHub Actions CI/CD workflows for Flutter projects. Use when creating or editing `.github/workflows/` YAML files for Flutter, integrating subosito/flutter-action, automating `flutter test`, `flutter analyze`, or `dart format` on push or pull_request events, running build_runner in CI, building Android AAB or iOS IPA artifacts, managing keystore or signing secrets in GitHub Secrets, or combining GitHub Actions with Fastlane or Codemagic for the deployment stage."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter combined with GitHub Actions Best Practices (CI/CD)

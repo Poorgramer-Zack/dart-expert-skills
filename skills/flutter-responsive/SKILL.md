@@ -1,8 +1,8 @@
 ---
-name: "flutter-responsive"
-description: "Responsive and adaptive layout design for Flutter using flutter_screenutil v5.9.x (pixel-perfect scaling), sizer v3.1.x (percentage-based), and responsive_framework v1.1.x (breakpoint-driven). Use this skill when building apps for multiple screen sizes (phones, tablets, foldables, desktop, web), fixing layout overflow or sizing issues, implementing breakpoint-based adaptive UI, creating pixel-perfect designs from Figma, handling orientation changes, or supporting Flutter web/desktop responsive layouts. Includes decision matrix for choosing the right package."
+name: "implementing-responsive-layouts"
+description: "Implements responsive and adaptive layouts in Flutter using flutter_screenutil v5.9.x (pixel-perfect scaling from Figma), sizer v3.1.x (percentage-based viewport), and responsive_framework v1.1.x (breakpoint-driven structure changes). Use this skill when building apps for multiple screen sizes (phones, tablets, foldables, desktop, web), fixing layout overflow or sizing issues, implementing breakpoint-based adaptive UI, creating pixel-perfect designs from Figma specs, handling orientation changes, supporting Flutter web or desktop responsive layouts, or any time the words 'responsive', 'screenutil', 'sizer', 'breakpoint', 'adaptive layout', or 'screen size' appear in the request. Includes a decision matrix for selecting the correct package per scenario."
 metadata:
-  last_modified: "2026-03-31 10:30:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Responsive Implementations (v5.9.x / v3.1.x / v1.1.x)

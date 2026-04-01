@@ -1,9 +1,6 @@
 ---
-name: "flutter-testing"
-description: "Add Flutter unit tests, widget tests, or integration tests"
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
-
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 # flutter-automated-testing
 

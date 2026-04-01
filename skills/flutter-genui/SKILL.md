@@ -1,8 +1,8 @@
 ---
-name: "flutter-genui"
+name: "generating-flutter-ui"
 description: "Generative UI (GenUI) for Flutter using AI models like Google Gemini, Anthropic Claude, or OpenAI via the genui package. Use this skill when building dynamic AI-driven interfaces, conversational UI flows, server-rendered screen layouts, LLM-powered dashboards, chat-based UI generation, or implementing prompt-to-UI systems. Supports AI-generated widgets, reactive data binding, ContentGenerator integration, and A2uiMessageProcessor for real-time UI updates from AI responses. Ideal for apps where UI structure is determined by AI/LLM output rather than hardcoded layouts."
 metadata:
-  last_modified: "2026-03-31 10:35:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Generative UI (GenUI) Best Practices

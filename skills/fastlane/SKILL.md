@@ -1,8 +1,8 @@
 ---
-name: "fastlane"
-description: "Fastlane deployment automation for Flutter iOS and Android apps. Use when setting up code signing, automating TestFlight or Google Play releases, or integrating Fastlane with CI/CD pipelines."
+name: "deploying-with-fastlane"
+description: "Automates Flutter iOS and Android deployment using Fastlane. Use when setting up `fastlane match` for iOS certificate and provisioning profile management, automating TestFlight uploads via `upload_to_testflight`, pushing Android releases to Google Play via `upload_to_play_store`, auto-incrementing build numbers, writing Fastfile lanes for Flutter release workflows, integrating Fastlane with GitHub Actions or Codemagic, or configuring App Store Connect API Key and Google Play Service Account JSON credentials."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter combined with Fastlane Best Practices (CI/CD - Deployment)

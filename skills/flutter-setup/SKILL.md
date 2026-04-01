@@ -1,8 +1,8 @@
 ---
-name: "flutter-setup"
+name: "setting-up-flutter"
 description: "Complete Flutter SDK installation, IDE configuration, and troubleshooting guide for Linux, macOS, and Windows. Use for installing Flutter SDK from scratch, configuring PATH environment variables across platforms, setting up VS Code/Android Studio/IntelliJ IDEA with Flutter plugins, resolving 'flutter command not found' errors, fixing flutter doctor warnings and errors, troubleshooting Android SDK/NDK installation issues, configuring Xcode and CocoaPods on macOS, installing Visual Studio C++ build tools on Windows, resolving PATH conflicts and SDK path issues, fixing network/proxy setup problems, debugging IDE plugin activation, configuring emulators and simulators, handling platform-specific build errors, resolving dependency conflicts, fixing certificate and signing issues, troubleshooting hot reload failures, and verifying successful installation with flutter doctor diagnostics."
 metadata:
-  last_modified: "2026-03-31 10:35:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 # Flutter Environment Setup & Troubleshooting Guide
 

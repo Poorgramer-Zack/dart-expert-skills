@@ -1,8 +1,8 @@
 ---
-name: "marionette"
+name: "testing-with-marionette"
 description: "AI-driven Flutter E2E testing via VM Service CLI. Control running Flutter apps in debug mode for smoke tests, regression checks, exploratory testing, and UI automation. Trigger when user mentions E2E testing, UI automation, smoke tests, integration testing, test automation, controlling Flutter apps, VM Service interaction, debugging UI flows, automated regression testing, CI sanity checks, or testing native dialogs/permissions/WebViews. Supports stateful named instances or stateless direct URI connections. Ideal for rapid test feedback, AI agent workflows, element discovery, screenshot capture, log collection, and scriptable UI interactions (tap, scroll, enterText). Use for troubleshooting flaky tests, automating repetitive manual tests, verifying app behavior after merges, or setting up automated QA pipelines."
 metadata:
-  last_modified: "2026-03-31 19:44:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Marionette CLI — AI Agent Reference

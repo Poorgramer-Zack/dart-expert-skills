@@ -1,8 +1,8 @@
 ---
-name: "flutter-isolate"
+name: "running-flutter-isolates"
 description: "Background processing and heavy computations using Dart Isolates with Isolate.run(), compute() function, and platform channels. Use this skill when performing CPU-intensive operations without blocking UI (image processing, data parsing, encryption), implementing background tasks that prevent jank or frame drops, handling large file operations (JSON parsing, database migrations), running parallel computations, fixing UI freezes caused by main thread blocking, using compute() for one-off background work, creating long-lived Isolates with ReceivePort/SendPort, implementing multi-threaded algorithms, debugging isolate communication issues, or preventing memory leaks from unclosed ReceivePorts. Covers isolate spawn, message passing, ReceivePort cleanup (CRITICAL for leak prevention), SendPort communication patterns, error handling, serialization rules, and performance optimization for compute-heavy operations."
 metadata:
-  last_modified: "2026-03-31 10:40:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Isolate

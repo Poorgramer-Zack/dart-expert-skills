@@ -1,8 +1,8 @@
 ---
-name: "ts-to-dart"
-description: "TypeScript to idiomatic Dart 3 code conversion including syntax mapping, type system translation, and module migration. Use when translating TypeScript interfaces, classes, or modules to Dart, or migrating frontend logic to Flutter."
+name: "converting-ts-to-dart"
+description: "Converts TypeScript to idiomatic Dart 3 code, covering syntax mapping, type system translation, async patterns, and module migration. Activates when translating TypeScript interfaces, classes, enums, generics, union types, async/await patterns, or modules to Dart; migrating frontend or Node.js logic to Flutter/Dart; converting RxJS Observables to Dart Streams; adapting TypeScript utility types to Dart equivalents; or producing idiomatic Dart 3 output (sealed classes, records, pattern matching) from TypeScript source."
 metadata:
-  last_modified: "2026-03-16 22:20:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # TypeScript to Dart 3 Conversion Guide

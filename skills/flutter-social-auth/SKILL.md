@@ -1,8 +1,8 @@
 ---
-name: "flutter-social-auth"
+name: "implementing-flutter-social-auth"
 description: "Social authentication and OAuth/SSO for Flutter supporting Google Sign-In, Apple Sign-In, Facebook Login, and LINE Login. Use when implementing social login, OAuth flows, sign-in with Google/Apple/Facebook/LINE, SSO integration, third-party authentication, platform credential configuration (SHA-1 fingerprint for Android, Service ID for Apple, App ID for Facebook, Channel ID for LINE), native auth flows, minimal viable examples, error handling patterns, or troubleshooting authentication failures, token handling, and sign-in errors (ApiException, PlatformException)."
 metadata:
-  last_modified: "2026-03-31 20:19:44 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Social Authentication Guide
@@ -48,4 +48,3 @@ Refer to these specialized resources for each identity provider:
 * **Security Awareness**: NEVER store raw AccessTokens in `SharedPreferences`. Use `Secure Storage` (encrypted).
 * **Privacy Compliance**: Ensure Apple Sign-In is implemented if any other 3rd party social login is offered on iOS.
 * **Error Resilience**: Always handle the `cancel` state gracefully when a user closes the auth popup.
-* **Metadata**: All reference documents must include standardized metadata with `last_modified` timestamp.

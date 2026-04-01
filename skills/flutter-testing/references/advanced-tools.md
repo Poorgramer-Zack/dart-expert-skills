@@ -105,45 +105,118 @@ void main() {
 > - **Mocktail**: Write and test instantly, no generation wait time. The trade-off is manually writing many `Fake` classes to `registerFallbackValue()` when encountering `any()` with custom objects.
 
 ### Patrol (Native E2E Testing Framework) - 🌟 Industry Preferred E2E
-The most fatal flaw of Flutter's native `integration_test` is the **inability to tap native system dialogs** (e.g., requesting location permissions, camera authorization, interacting with WebViews, push notifications, etc.). [Patrol](https://patrol.leancode.co/) perfectly solves this problem.
+The most fatal flaw of Flutter's native `integration_test` is the **inability to tap native system dialogs** (e.g., requesting location permissions, camera authorization, interacting with WebViews, push notifications). [Patrol](https://patrol.leancode.co/) solves this with a native automator bridge.
 
-#### 3.1 Core Advantages
-1. **Crossing Native Boundaries**: Can interact with iOS/Android system UI via Dart code.
-2. **More Concise Custom Finders**: Significantly reduces test code verbosity (using syntax like `$()`).
-3. **Device Farm Support**: Perfectly supports cloud device farm testing like Firebase Test Lab.
+**Two packages — choose based on your needs:**
+- `patrol` — full framework with native OS interaction, requires `patrol_cli` and platform setup
+- `patrol_finders` — lightweight custom finder API only, works with standard `flutter test`, no native setup
 
-#### 3.2 Syntax Comparison and Usage
-Use `patrolTest` instead of `testWidgets`:
+#### 3.1 patrol_finders (Widget Test Enhancement — No Native Setup Required)
+
+Drop-in enhancement for widget tests. Use `patrolWidgetTest` instead of `testWidgets`:
+
+```yaml
+dev_dependencies:
+  patrol_finders: ^3.2.0
+```
+
+```dart
+import 'package:flutter_test/flutter_test.dart';
+import 'package:patrol_finders/patrol_finders.dart';
+
+void main() {
+  patrolWidgetTest('login flow', ($) async {
+    await $.pumpWidgetAndSettle(const MyApp());
+
+    // Chain selectors — far more readable than nested find.descendant()
+    await $(#emailInput).enterText('user@test.com');
+    await $(#passwordInput).enterText('secret');
+    await $(Scaffold).$(#loginBox).$('Log in').tap();
+
+    // Contextual scroll finders
+    await $(Scrollable).containing(ElevatedButton).tap();
+
+    expect($(Text).containing('Welcome'), findsOneWidget);
+  });
+}
+```
+
+Run with standard `flutter test` — no extra CLI needed.
+
+#### 3.2 patrol (Full E2E with Native Interactions)
+
+Use `patrolTest` for flows that cross the Flutter/OS boundary:
+
+```yaml
+dev_dependencies:
+  patrol: ^4.5.0
+```
+
+```bash
+# Install patrol CLI
+dart pub global activate patrol_cli
+
+# Run patrol tests (NOT flutter test)
+patrol test --target integration_test/app_test.dart
+```
 
 ```dart
 import 'package:patrol/patrol.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:my_app/main.dart' as app;
 
 void main() {
   patrolTest(
-    'Complete registration flow and accept system permission prompt',
-    ($) async { // 🌟 Notice the special "$" symbol; this is the PatrolFinder
-      
-      app.main();
-      await $.pumpAndSettle();
+    'notification permission flow',
+    ($) async {
+      await $.pumpWidgetAndSettle(const MyApp());
 
-      // Extremely concise tap and enter text syntax
-      await $(#emailTextField).enterText('test@email.com');
-      await $('Login').tap();
+      await $(#enableNotifications).tap();
 
-      // 🌟🌟 Killer feature: Interacting with native system dialogs!
-      if (await $.native.isPermissionDialogVisible()) {
-        await $.native.grantPermissionWhenInUse(); // Taps the system's "Allow"
-      }
-      
-      // Verify push notification appearance
-      await $.native.openNotifications();
-      // ...
+      // Platform API (patrol 4.0+) — replaces deprecated $.native.*
+      await $.platform.mobile.grantPermissionWhenInUse();
+
+      // Press Home, open notification tray, tap notification
+      await $.platform.mobile.pressHome();
+      await $.platform.mobile.openNotifications();
+      await $.platform.tap(Selector(text: 'New message'));
+
+      expect($('Chat'), findsOneWidget);
     },
   );
 }
 ```
+
+#### 3.3 Patrol 4.0 Platform API Reference
+
+Patrol 4.0 reorganized native interactions into semantic categories. `$.native` is **deprecated**.
+
+```dart
+// Mobile (both Android + iOS)
+await $.platform.mobile.pressHome();
+await $.platform.mobile.pressBack();
+await $.platform.mobile.openNotifications();
+await $.platform.mobile.grantPermissionWhenInUse();
+await $.platform.mobile.grantPermissionAlways();
+await $.platform.mobile.denyPermission();
+await $.platform.mobile.pressDoubleRecentApps();
+
+// Android-specific
+await $.platform.android.openNotifications();
+await $.platform.android.tap(Selector(text: 'Allow'));
+
+// iOS-specific
+await $.platform.iOS.dismissSafariPrompt();
+
+// Web
+await $.platform.web.clearCookies();
+
+// Cross-platform (same as old $.native at the top level)
+await $.platform.openNotifications();
+await $.platform.tap(Selector(text: 'OK'));
+```
+
+> **When to use each:**
+> - `patrol_finders` — widget tests needing cleaner finder syntax, no CI complexity
+> - `patrol` (full) — integration tests requiring permission dialogs, push notifications, WebViews, deep links
 
 ### Convenient Test (Enhancing Development and CI Experience)
 [convenient_test](https://pub.dev/packages/convenient_test) is a heavy-duty testing plugin designed to solve the issues of "debugging difficulties" and "slow execution" in Flutter testing.
@@ -434,7 +507,9 @@ docker run --rm -v $(pwd):/app -w /app cirrusci/flutter:stable \
 
 ## Constraints
 * Prefer `Mocktail` when rapid iteration speed is the top priority and manual fallback configuration is acceptable. Use `Mockito` when type-safety and automatic generation are preferred.
-* Utilize `Patrol` for CI environments specifically whenever there are system-level components (location, permissions, webviews, notification trays) involved in user flows.
+* Use `patrol_finders` (`patrolWidgetTest`) for widget tests that need cleaner finder syntax — no native setup required, runs with `flutter test`.
+* Use full `patrol` package (with `patrol test` CLI) **only** when the test flow requires native OS interaction (permissions, push notifications, WebViews, system dialogs).
+* **NEVER use `$.native.*`** — deprecated since Patrol 4.0. Use `$.platform.mobile.*`, `$.platform.android.*`, `$.platform.iOS.*`, or `$.platform.web.*` instead.
 * **ALWAYS use `loadAppFonts()` in `test/flutter_test_config.dart`** when implementing golden tests to prevent font rendering inconsistencies.
 * **Set explicit `surfaceSize`** in golden tests to ensure cross-platform pixel-perfect consistency.
 * **Use tolerance thresholds (0.01-0.05)** for golden comparators to handle minor antialiasing differences across platforms.

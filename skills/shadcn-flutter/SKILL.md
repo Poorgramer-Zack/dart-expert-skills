@@ -1,8 +1,8 @@
 ---
-name: "shadcn-flutter"
+name: "building-shadcn-flutter-ui"
 description: "shadcn_flutter UI component library for building accessible, themed Flutter interfaces. Use when integrating shadcn components, configuring design system theming, or building consistent widget layouts."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Shadcn UI Architecture Guide

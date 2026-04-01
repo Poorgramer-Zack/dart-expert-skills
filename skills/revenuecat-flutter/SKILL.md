@@ -1,14 +1,14 @@
 ---
-name: "revenuecat-flutter"
-description: "RevenueCat in-app purchase and subscription management for Flutter. Use when implementing paywalls, managing entitlements, handling subscription lifecycle, or integrating StoreKit/Google Play Billing."
+name: "integrating-revenuecat"
+description: "Integrates RevenueCat in-app purchases and subscriptions into Flutter apps using `purchases_flutter`. Use when implementing paywalls, checking entitlements via `CustomerInfo`, configuring `PurchasesConfiguration` for iOS or Android, displaying paywalls with `purchases_ui_flutter`, handling purchase errors via `PurchasesErrorHelper`, restoring purchases, integrating RevenueCat with Riverpod or Bloc, presenting the Customer Center, handling web purchase redemption, or calling `Purchases.logIn` for cross-device purchase sync."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # RevenueCat (Flutter) Latest Version Best Practices Guide (v9.13.x)
 
 ## Goal
-RevenueCat is the industry standard solution for handling "In-App Purchases (IAP)" and "Subscriptions" in mobile applications. In Flutter, the official package is `purchases_flutter`. The current latest version is roughly **9.13.x**.
+RevenueCat is the industry-standard solution for handling In-App Purchases (IAP) and subscriptions in mobile applications. In Flutter, the official package is `purchases_flutter` (paired with `purchases_ui_flutter` for pre-built paywall UI).
 
 ## Instructions
 

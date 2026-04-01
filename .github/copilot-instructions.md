@@ -26,12 +26,15 @@ All skills follow a standardized format:
 - **Description field**: Acts as primary triggering mechanism for AI agents - includes both what the skill does AND specific contexts for when to use it
 - **Body sections**: Goal, Process, Reference Documentation, Constraints
 - **Progressive disclosure**: Keep SKILL.md under 500 lines; split larger content into `references/` directory
+- **One-level-deep references only**: All reference files must link directly from SKILL.md. Avoid `SKILL.md → A.md → B.md` chains — Claude may only partially read nested files
+- **Table of contents for long references**: Any reference file exceeding 100 lines must include a ToC at the top so Claude can navigate without reading the entire file
 
 ### Key Design Principles
 1. **Single Responsibility**: Each skill focuses on one technology/framework
 2. **LLM-Optimized**: Semantic headings, structured for AI context windows
 3. **Production-Ready**: Working code snippets with latest stable versions
 4. **Version-Aware**: All packages use latest stable versions (last updated 2026-03-31)
+5. **Concise is Key**: The context window is shared. Every token in SKILL.md competes with conversation history and other skills. Default assumption: Claude is already very smart — only add context Claude doesn't already have. Challenge each paragraph: *"Does Claude need this, or does it already know it?"*
 
 ## Working with Skills
 
@@ -43,6 +46,22 @@ All skills follow a standardized format:
 3. Include version numbers in package references (e.g., "Riverpod v3.3.1")
 4. Add trigger keywords in description for precise AI activation
 5. Keep descriptions "pushy" to combat under-triggering - be explicit about when to use
+6. **Always write descriptions in third person** — the description is injected into the system prompt; inconsistent POV breaks discovery. ✅ "Processes Excel files..." ❌ "I can help you process Excel files"
+7. **Use gerund form for skill names**: `processing-pdfs`, `testing-code`, `managing-state` — not vague terms like `helper`, `utils`, or `tools`
+
+### Degrees of Freedom in Instructions
+
+Match instruction specificity to the task's fragility:
+
+- **High freedom** (plain text guidance): Use when multiple approaches are valid or context determines the best approach. Example: code reviews.
+- **Medium freedom** (pseudocode/template with parameters): Use when a preferred pattern exists but variation is acceptable.
+- **Low freedom** (exact commands, no deviation): Use when operations are fragile and consistency is critical. Example: database migrations, release scripts.
+
+### Content Guidelines
+
+- **Avoid time-sensitive conditions**: Don't write "if you're doing this before August 2025..." — instead use an "Old patterns" `<details>` section for deprecated info
+- **Use consistent terminology**: Choose one term per concept and use it throughout. Never mix "API endpoint" / "URL" / "API route" within the same skill
+- **Use workflows for complex tasks**: Break multi-step processes into numbered checklists Claude can track. Implement feedback loops: run validator → fix errors → repeat
 
 ### Skill Categories
 
@@ -138,6 +157,14 @@ When working with Flutter code:
 - Deep linking requires platform-specific setup (covered in flutter-deeplink)
 
 ## Version History
+
+**2026-04-01 Skill Authoring Best Practices Injection**:
+- Injected Claude official skill authoring best practices (platform.claude.com/docs)
+- Added "Concise is Key" + "Claude is already smart" principle to Key Design Principles
+- Added third-person rule and gerund naming convention for skill authoring
+- Added Degrees of Freedom framework (high/medium/low) for instruction specificity
+- Added Content Guidelines: avoid time-sensitive info, consistent terminology, workflow checklists
+- Added one-level-deep reference rule and ToC requirement for files >100 lines
 
 **2026-03-31 Fleet Mode Deep Update**:
 - 8 core skills updated with production best practices

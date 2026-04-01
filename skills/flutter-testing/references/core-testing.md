@@ -143,7 +143,7 @@ void main() {
 flutter test integration_test/app_test.dart -d <device_id>
 ```
 
-> **Note**: Native `integration_test` currently struggles with native system dialogs (e.g., notification permissions, camera permissions) or WebViews reliably. If these are required, explore advanced tools like `Patrol`.
+> **Note**: Native `integration_test` cannot interact with native system dialogs (e.g., notification permissions, camera permissions, WebViews). Use full `patrol` package with `patrol test` CLI for these cases. See [Advanced Tools](./advanced-tools.md#patrol).
 
 ### Common Pain Points and Async Troubleshooting Guide
 In StackOverflow and GitHub communities, the most common issues when testing Flutter are Timeouts or Memory Leak warnings caused by `Timer` or `Future.delayed`.

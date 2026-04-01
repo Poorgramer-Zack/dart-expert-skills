@@ -1,8 +1,8 @@
 ---
-name: "flutter-ads"
-description: "Google Mobile Ads (AdMob) integration for Flutter using google_mobile_ads v7.x with Banner, Interstitial, Rewarded, Rewarded Interstitial, and Native ad formats. Use this skill whenever implementing app monetization, fixing ad loading errors, managing ad lifecycle (preload/dispose), optimizing fill rates and eCPM, handling GDPR/ATT consent, troubleshooting AdMob dashboard integration, or debugging ad performance issues. Supports Android (GMA SDK 24.9+) and iOS (GMA SDK 12.14+)."
+name: "integrating-google-ads"
+description: "Integrates Google Mobile Ads (AdMob) into Flutter using google_mobile_ads v7.x with Banner, Interstitial, Rewarded, and Native ad formats. Use this skill whenever implementing app monetization, adding AdMob ads to Flutter, fixing ad loading or display errors, managing ad lifecycle (preload/dispose), preventing memory leaks from undisposed ads, handling GDPR/ATT consent flows, troubleshooting AdMob dashboard integration, or any time the words 'AdMob', 'google_mobile_ads', 'banner ad', 'interstitial', 'rewarded ad', 'native ad', or 'ad monetization' appear in the request. Supports Android (GMA SDK 24.9+) and iOS (GMA SDK 12.14+)."
 metadata:
-  last_modified: "2026-03-31 10:30:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Ads Implementation (`google_mobile_ads` v7.x)
@@ -232,7 +232,7 @@ void _showRewardedAd() {
 
 ---
 
-### 5. Native Ads (Seamless Integration)
+### 6. Native Ads (Seamless Integration)
 Native ads match the look and feel of your app. Google now provides `NativeTemplateStyle` to avoid writing complex custom Java/Swift factories unless absolutely necessary.
 
 ```dart
@@ -246,7 +246,7 @@ void _loadNativeAd() {
         ? 'ca-app-pub-3940256099942544/2247696110' 
         : 'ca-app-pub-3940256099942544/3986624511',
     request: const AdRequest(),
-    // 🌟 Use predefined templates for zero native code
+    // Use predefined templates for zero native code
     nativeTemplateStyle: NativeTemplateStyle(
       templateType: TemplateType.medium,
       mainBackgroundColor: Colors.white,

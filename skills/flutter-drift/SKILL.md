@@ -1,8 +1,8 @@
 ---
-name: "flutter-drift"
-description: "Drift (v2.32.x) type-safe reactive SQL database for Flutter built on SQLite with automatic code generation. Use this skill when implementing complex relational database schemas, writing type-safe SQL queries with joins and subqueries, handling database migrations with ALTER TABLE and Drift 2.32+ breaking changes, using reactive stream queries (watch() for live updates), implementing ACID transactions, defining foreign key constraints and cascade deletes, creating indexes for query optimization, using DAOs (Data Access Objects) for organized query separation, handling batch inserts and updates, enabling WAL mode for performance optimization, debugging SQL query errors, migrating from sqlite3 v2 to v3, troubleshooting type safety issues with generated files, or building offline-first apps with structured relational data. Ideal for apps requiring strong data integrity, complex relationships (one-to-many, many-to-many), SQL power with Dart type safety, WAL mode concurrent read/write performance, or migrating from sqflite to a type-safe solution."
+name: "persisting-data-with-drift"
+description: "Implements type-safe reactive SQL persistence in Flutter using Drift v2.32 (formerly Moor) built on SQLite with automatic code generation. Activates when defining table schemas with Drift DSL, writing type-safe join or subquery operations, handling schema migrations with MigrationStrategy, using reactive watch() streams for live UI updates, implementing ACID transactions, defining foreign key constraints or cascade deletes, enabling WAL mode for write performance, troubleshooting generated .g.dart type mismatches, migrating from sqflite or sqlite3 v2 to v3, using DAOs for query separation, or building offline-first apps requiring strong relational data integrity and compile-time SQL verification."
 metadata:
-  last_modified: "2026-03-31 10:50:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Drift SQL Database Guide
@@ -16,13 +16,13 @@ Implement type-safe reactive SQL database using Drift (formerly Moor). Drift pro
 
 ```yaml
 dependencies:
-  drift: ^2.14.0
-  sqlite3_flutter_libs: ^0.5.0
+  drift: ^2.32.0
+  sqlite3_flutter_libs: ^0.5.20
   path_provider: ^2.1.0
   path: ^1.8.0
 
 dev_dependencies:
-  drift_dev: ^2.14.0
+  drift_dev: ^2.32.0
   build_runner: ^2.4.0
 ```
 

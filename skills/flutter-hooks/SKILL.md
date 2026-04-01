@@ -1,8 +1,8 @@
 ---
-name: "flutter-hooks"
-description: "React-style hooks for Flutter using the flutter_hooks package with HookWidget, useState, useEffect, and custom hooks. Use when reducing StatefulWidget boilerplate or reusing stateful UI logic across widgets."
+name: "using-flutter-hooks"
+description: "Manages local UI state and side effects in Flutter using the flutter_hooks package (v0.21.x) with HookWidget, useState, useEffect, useMemoized, useAnimationController, and custom hooks. Use this skill when replacing StatefulWidget boilerplate with hooks, reusing stateful UI logic across widgets, managing controller lifecycles (TextEditingController, AnimationController, ScrollController) without manual dispose, implementing countdown timers or subscriptions in widgets, mixing flutter_hooks with Riverpod via HookConsumerWidget, or any time the words 'flutter hooks', 'useEffect', 'useState', 'HookWidget', or 'flutter_hooks' appear in the request."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Flutter Hooks Latest Version Best Practices Guide (v0.21.x)
@@ -147,8 +147,8 @@ class _MyComplexHookState extends HookState<int, _MyComplexHook> {
 
 ### 5. Conclusion: Integration with Riverpod (The God-tier Combination)
 `flutter_hooks` is not designed to replace BLoC or Riverpod. The optimal modern Flutter development architecture:
-*   **Global Business Logic and Shared State** $\rightarrow$ `Riverpod` (`riverpod_generator`)
-*   **Complex In-Page UI Control and Animation** $\rightarrow$ `flutter_hooks` (`useAnimationController`, `useTextEditingController`)
+*   **Global Business Logic and Shared State** → `Riverpod` (`riverpod_generator`)
+*   **Complex In-Page UI Control and Animation** → `flutter_hooks` (`useAnimationController`, `useTextEditingController`)
 
 By combining the two, your project will practically contain zero `StatefulWidget`s. All Widgets can remain clean, focusing purely on their primary duty (drawing the screen), thereby yielding the highest quality Flutter applications.
 

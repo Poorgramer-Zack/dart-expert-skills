@@ -1,8 +1,8 @@
 ---
-name: "flutter-shared-preferences"
+name: "managing-shared-preferences"
 description: "SharedPreferences (v2.5.5) for Flutter providing simple persistent key-value storage for non-sensitive user settings and app preferences. Use this skill when storing user preferences (theme mode, language selection, font size), app settings and configuration, feature flags or A/B test assignments, simple cache data, onboarding completion status, last selected values (filters, sort options), user consent flags, or any non-sensitive data that survives app restarts. Supports String, int, double, bool, and StringList types. NOT suitable for storing tokens, passwords, API keys, or any sensitive/encrypted data (use flutter_secure_storage instead). Ideal for quick persistent storage without database overhead."
 metadata:
-  last_modified: "2026-03-31 10:45:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # SharedPreferences Simple Storage Guide

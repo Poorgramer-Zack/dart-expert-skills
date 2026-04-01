@@ -1,16 +1,14 @@
 ---
-name: "freezed"
-description: "Freezed code generation for immutable Dart data classes with copyWith, union types, and json_serializable integration. Use when creating data models, enforcing immutability, or generating fromJson/toJson serialization."
+name: "generating-freezed-models"
+description: "Generates immutable Dart data classes, sealed union types, and deep copyWith using Freezed (v3.2.x) with optional json_serializable integration. Use when creating DTOs, API response models, app state classes, or any model requiring immutability, pattern matching, or JSON serialization. Activates on: @freezed annotation, freezed_annotation import, immutable data class request, copyWith deep nesting, union/sealed types for loading/data/error states, generic response wrappers, or build_runner code generation for models."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
-# Freezed Latest Version Best Practices Guide (v3.2.x)
+# Freezed Guide (v3.2.x)
 
 ## Goal
-Freezed is a highly popular code-generation package in Flutter utilized for fabricating Immutable data structures and Union Types. The current latest version is roughly **3.2.5**.
-
-Even though Dart 3 natively supports Records and `sealed` classes, Freezed stubbornly retains an irreplaceable absolute advantage when handling complex API response models, deep copying (`copyWith`), and perfectly integrating with JSON serialization.
+Generate immutable data classes, union types, and deep `copyWith` using Freezed v3.2.x. Complements Dart 3 `sealed` classes by adding `copyWith`, `==`/`hashCode`, and JSON serialization via `json_serializable`.
 
 ## Instructions
 
@@ -28,8 +26,7 @@ dev_dependencies:
   json_serializable: ^6.8.0 # If mutual conversion with JSON is required
 ```
 
-### 2. Defining an Immutable Data Class (Best Practices)
-This is Freezed's most common utility. It automatically generates `==`, `hashCode`, `toString`, and the superbly useful `copyWith` for you.
+### 2. Defining an Immutable Data Class
 
 ```dart
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -38,35 +35,31 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'user_model.freezed.dart';
 part 'user_model.g.dart'; // If utilizing JSON serialization
 
-// 🌟 Best Practices and Freezed 3.x Requirements: It is strongly recommended (and mandatory in specific scenarios) that the class invariably includes a `sealed` or `abstract` modifier.
-// This ensures superior type safety, enables precise Pattern matching, and prohibits direct invalid instantiations.
+// Freezed 3.x: prefer `sealed` modifier for exhaustive pattern matching
 @freezed
 sealed class UserModel with _$UserModel {
-  // Best Practice: Utilize `const factory` to declare constructors
   const factory UserModel({
     required String id,
     required String name,
-    // Default values paired with the @Default annotation
     @Default(18) int age,
-    // If identifying a JSON field name differs from the Dart variable name, utilize @JsonKey
     @JsonKey(name: 'is_active') @Default(true) bool isActive,
   }) = _UserModel;
 
-  // Prerequisite for JSON Serialization
+  // Required for JSON serialization
   factory UserModel.fromJson(Map<String, Object?> json) => 
       _$UserModelFromJson(json);
 }
 ```
 
-> **Crucial Tip**: Every time you modify the model, invariably execute `dart run build_runner build -d`.
+> After every model change, run `dart run build_runner build -d`.
 
-### 3. Advanced Usage: Custom Getters and Methods
-By default, the properties of a `@freezed` class are pure data. If you wish to append Computed properties or encapsulate distinct business logic methodologies, you **MUST append a private, parameterless constructor**.
+### 3. Custom Getters and Methods
+To add computed properties or methods, add a private parameterless constructor.
 
 ```dart
 @freezed
 abstract class Product with _$Product {
-  // 🌟 You MUST insert this private empty constructor; it notifies Freezed to authorize you to append custom internal methods safely
+  // private constructor required to add custom methods
   const Product._();
   
   const factory Product({
@@ -82,12 +75,11 @@ abstract class Product with _$Product {
 }
 ```
 
-### 4. Advanced Usage: Generic Types Support (Generic Types)
-Freezed supports generics flawlessly, which is extraordinarily useful when architecting API Response wrappers or formulating universal lists.
+### 4. Generic Types Support
 
 ```dart
 @freezed
-@JsonSerializable(genericArgumentFactories: true) // 🌟 This ensures Generics fully support JSON parsing logic
+@JsonSerializable(genericArgumentFactories: true) // required for generic JSON parsing
 sealed class PaginatedResponse<T> with _$PaginatedResponse<T> {
   const factory PaginatedResponse({
     required int currentPage,
@@ -95,7 +87,7 @@ sealed class PaginatedResponse<T> with _$PaginatedResponse<T> {
     required List<T> data,
   }) = _PaginatedResponse<T>;
 
-  // ⚠️ The fromJson implementation for generics is slightly unique; it mandates passing a specialized conversion function
+  // fromJson for generics requires a conversion function parameter
   factory PaginatedResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object? json) fromJsonT,
@@ -103,8 +95,8 @@ sealed class PaginatedResponse<T> with _$PaginatedResponse<T> {
 }
 ```
 
-### 5. Advanced Usage: Union Types (State Types) and Dart 3 Pattern Matching
-Although Dart 3's native `sealed class` is phenomenally potent, when intersecting with legacy API architectures or when demanding the voluminous generation of state boilerplates at compile time, Freezed's Union Types remain fiercely versatile.
+### 5. Union Types and Dart 3 Pattern Matching
+Use Freezed union types for sealed state modeling with automatic subtypes.
 
 ```dart
 @freezed
@@ -115,8 +107,7 @@ sealed class ApiResponse with _$ApiResponse {
 }
 ```
 
-**✅ Best Practice: Leverage Dart 3 Native Pattern Matching**
-Freezed automatically declares subclasses, allowing it to seamlessly combine instantly with Dart 3's `switch` expressions:
+**Use Dart 3 native pattern matching with Freezed union types:**
 
 ```dart
 Widget buildStatus(ApiResponse response) {
@@ -127,55 +118,53 @@ Widget buildStatus(ApiResponse response) {
   };
 }
 ```
-*💡 Note: The official documentation **strongly recommends** eliminating Freezed's legacy `.when()` or `.map()`, pivoting entirely toward native `switch` expressions to acquire superior compiler performance optimization and stringent exhaustion checking.*
+> Prefer native `switch` expressions over `.when()` / `.map()` — better compiler exhaustiveness checking.
 
-### 6. Deep Copy (`copyWith`) vs `@unfreezed` Trade-offs
+### 6. Deep Copy (`copyWith`) vs `@unfreezed`
 
 #### 6.1 Automatic Deep CopyWith
-If your Data Class encapsulates another Freezed class (e.g., Company encompasses an Address class), Freezed will autonomously fabricate a deep chaining invocation API for you.
+When a Freezed class contains another Freezed class, deep `copyWith` chaining is generated automatically.
 
 ```dart
-// Suppose `user` embraces property `address`, and `address` possesses `city`.
-// Previously you penned: user.copyWith(address: user.address.copyWith(city: 'Taipei'));
-// 🌟 Invoking Freezed's deep copyWith intuitively:
+// Instead of: user.copyWith(address: user.address.copyWith(city: 'Taipei'))
 final newUser = user.copyWith.address(city: 'Taipei');
 ```
 
-#### 6.2 When to unleash `@unfreezed`?
-*   **Default Baseline**: It is vehemently advised to respect the core intentions of the package; **eternally use `@freezed` (immutable)**.
-*   `@unfreezed` authorizes you to declare non-final variables, permitting direct destructive value modifications such as `user.age = 20`.
-*   **👉 Best Practice Trade-offs**: This is categorically an **Anti-pattern** under strict State Management Architectures (like Riverpod/BLoC), as it utterly obliterates unidirectional data flow predictability constraints. Normally, use it prudently ONLY when aggressively wrestling with **hyper-frequently mutated colossal local forms (Forms) or isolated caches**, and exclusively when deep-copying incites indisputable phenomenological performance bottlenecks. Simultaneously, be aware it refuses to generate `==` and `hashCode` overrides (because the object inherently is mutable).
+#### 6.2 When to use `@unfreezed`
+- **Default:** Always use `@freezed` (immutable).
+- `@unfreezed` allows mutable fields (`user.age = 20`) but skips `==`/`hashCode` generation.
+- **Anti-pattern** in Riverpod/BLoC — breaks unidirectional data flow. Only consider for large mutable forms where deep-copying causes measurable performance issues.
 
-### 7. JSON Serialization Intricate Calibrations
-If you routinely entail customizing parsing logic, brilliantly harness `@JsonKey`:
+### 7. JSON Serialization with `@JsonKey`
+Use `@JsonKey` to customize field serialization:
 
-*   **Ignores specific fields entirely**: `@JsonKey(includeFromJson: false, includeToJson: false)`
-*   **Customization Conversion Logic (Custom Converters)**: Confronting bizarre formats returned from backends (e.g., a date string formatted `"2024/01-01"` urgently demanding conversion to `DateTime`), you can forge customized `JsonConverter` subclasses:
+- **Ignore a field:** `@JsonKey(includeFromJson: false, includeToJson: false)`
+- **Custom converter** for non-standard formats (e.g., date strings):
 
 ```dart
 class MyDateConverter implements JsonConverter<DateTime, String> {
   const MyDateConverter();
   @override
-  DateTime fromJson(String json) => /* Custom parsing logic execution */;
+  DateTime fromJson(String json) => DateTime.parse(json.replaceAll('/', '-'));
   @override
-  String toJson(DateTime object) => /* Revert string serialization logic */;
+  String toJson(DateTime object) => object.toIso8601String();
 }
 
 @freezed
 sealed class Event with _$Event {
   const factory Event({
-    @MyDateConverter() required DateTime eventDate, // Applying custom conversion annotation
+    @MyDateConverter() required DateTime eventDate,
   }) = _Event;
   // ... fromJson ...
 }
 ```
 
 ### 8. Summary
-1. Virtually all Data Transfer Objects (DTOs) and APP states (States) should be generated using Freezed.
-2. Expand capabilities using private constructors to insert custom Methods, ensuring Data Classes elevate beyond simplistic structures.
-3. Throw `.when()` resolutely into the trash bin; embrace the Dart 3 `switch` pattern matching paradigm exhaustively.
-4. Adhere steadfastly to `@freezed` (Immutable), maintaining a rigid distance from `@unfreezed` to preserve architectural purity and impregnable safety.
+1. Use Freezed for all DTOs and app state classes.
+2. Add a private constructor (`const ClassName._()`) to enable custom getters/methods.
+3. Use `switch` expressions instead of `.when()` / `.map()`.
+4. Default to `@freezed` (immutable); avoid `@unfreezed` in app state.
 
 ## Constraints
-* Ensure that utilizing generics within Freezed inevitably encompasses specifying `@JsonSerializable(genericArgumentFactories: true)` when implementing JSON translations.
-* Completely prohibit `unfreezed` implementations inside all application-level state definitions, excepting ultra-niche granular massive-form handling architectures.
+* Generics with JSON: always add `@JsonSerializable(genericArgumentFactories: true)`.
+* Avoid `@unfreezed` in app state; use only for mutable form models where deep-copy performance is proven problematic.

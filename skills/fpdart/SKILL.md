@@ -1,8 +1,8 @@
 ---
-name: "fpdart"
+name: "using-fpdart"
 description: "Functional error handling in Dart using the fpdart package with Either, Option, TaskEither, and Do notation. Use when replacing try-catch with type-safe error handling or composing async operations functionally."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Functional Programming with fpdart

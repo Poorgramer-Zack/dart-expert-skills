@@ -1,8 +1,8 @@
 ---
-name: "flutter-provider"
+name: "managing-flutter-provider-state"
 description: "Provider (v6.x) state management for Flutter using ChangeNotifier and InheritedWidget with MVVM architecture pattern. Use this skill when implementing Provider-based state management, using Consumer/Consumer2 widgets for targeted rebuilds, accessing state with context.read/context.watch/context.select, setting up ChangeNotifierProvider or StateNotifierProvider, configuring MultiProvider for multiple providers, implementing ProxyProvider for dependent state, using Selector for optimized rebuilds, migrating from StatefulWidget to reactive state, maintaining legacy Provider codebases, debugging provider not found errors, preventing memory leaks with proper ChangeNotifier disposal, fixing context access issues in initState, or resolving .value constructor anti-patterns. Essential for apps with shared state across widgets (shopping carts, authentication, global settings, form state, theme management), when teaching state management fundamentals, or when debugging memory leaks and resource cleanup in Provider-based applications."
 metadata:
-  last_modified: "2026-03-31 10:45:00 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Provider State Management Guide (v6.x)

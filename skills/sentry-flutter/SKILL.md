@@ -1,8 +1,8 @@
 ---
-name: "sentry-flutter"
-description: "Sentry error tracking and performance monitoring integration for Flutter using sentry_flutter. Use when setting up crash reporting, configuring session replay, monitoring app performance, or capturing diagnostic breadcrumbs."
+name: "integrating-sentry"
+description: "Integrates Sentry error tracking and performance monitoring into Flutter apps using `sentry_flutter`. Use when setting up crash reporting in Flutter, calling `SentryFlutter.init`, adding `SentryNavigatorObserver` to GoRouter, tracing HTTP requests with `sentry_dio`, capturing handled exceptions via `Sentry.captureException`, adding breadcrumbs, configuring session replay (`replay.onErrorSampleRate`), tuning `tracesSampleRate` or `profilesSampleRate`, controlling PII with `sendDefaultPii`, or setting user context after login and logout."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # Sentry Flutter Integration Guide (`sentry_flutter`)

@@ -1,8 +1,8 @@
 ---
-name: openapi-to-dart
-description: "OpenAPI 3.0 specification to Dart code generation with Freezed models and Dio client endpoints. Use when converting API specs to type-safe Dart models, generating API clients, or automating model creation from OpenAPI contracts."
+name: "converting-openapi-to-dart"
+description: "Converts OpenAPI 3.0 specifications into null-safe Dart 3 models using Freezed and json_annotation, alongside Dio-based endpoint structures. Use this skill when generating Dart types from an OpenAPI file, converting a swagger spec to Dart models, creating Freezed classes from an API schema, automating type-safe API client creation, or any time the words 'openapi', 'swagger', 'generate dart', 'freezed models from spec', 'api contract', or 'openapi-to-dart' appear in the request. Handles $ref resolution, oneOf union types, enums, and request/response naming conventions."
 metadata:
-  last_modified: "2026-03-12 11:18:17 (GMT+8)"
+  last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
 # OpenAPI to Dart 3 (Effective Dart & Freezed)
