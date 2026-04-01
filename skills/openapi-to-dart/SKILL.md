@@ -1,230 +1,291 @@
 ---
-name: "converting-openapi-to-dart"
-description: "Converts OpenAPI 3.0 specifications into null-safe Dart 3 models using Freezed and json_annotation, alongside Dio-based endpoint structures. Use this skill when generating Dart types from an OpenAPI file, converting a swagger spec to Dart models, creating Freezed classes from an API schema, automating type-safe API client creation, or any time the words 'openapi', 'swagger', 'generate dart', 'freezed models from spec', 'api contract', or 'openapi-to-dart' appear in the request. Handles $ref resolution, oneOf union types, enums, and request/response naming conventions."
+name: "implementing-openapi-in-dart"
+description: "Reads an OpenAPI 3.0 specification and manually implements a type-safe Dart API layer using Dio for HTTP, Freezed or Equatable for models, and json_serializable for serialisation. Use when given an OpenAPI/Swagger file (JSON or YAML) and asked to implement the API in Flutter/Dart, create Dart models from an API schema, build a Dio API client, implement endpoints from a spec, convert openapi to dart, or set up a data/network layer from an API contract. Handles $ref resolution, oneOf union types, enums, query params, request bodies, and DioException error mapping."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-01 16:00:00 (GMT+8)"
 ---
 
-# OpenAPI to Dart 3 (Effective Dart & Freezed)
+# Implementing OpenAPI 3.0 in Dart
 
-Converts OpenAPI 3.0 specifications into robust, null-safe Dart 3 models leveraging `freezed` and `json_annotation`, alongside standardized Dio network endpoint structures.
+Given an OpenAPI 3.0 spec, implement a type-safe Dart API layer with:
+- **Freezed** (or **Equatable**) for models
+- **Dio** for HTTP with interceptors and error handling
+- **json_serializable** for JSON serialisation
 
-**Input:** OpenAPI file (JSON or YAML)
-**Output:** Dart file(s) containing Freezed models and API structures.
+## Process
 
-## When to Use
+1. Read the OpenAPI spec — parse `components/schemas` for models, `paths` for endpoints.
+2. Map schemas → Dart models (Freezed or Equatable — see [Model Strategy](#model-strategy)).
+3. Map paths → Dio service methods.
+4. Add a repository layer that wraps the service.
+5. Wire error handling via `DioException` → domain `ApiError`.
 
-- "generate dart types from openapi"
-- "convert openapi to dart"
-- "create API models in dart"
-- "generate freezed classes from spec"
+---
 
-## Workflow
+## Dependencies
 
-1. Request the OpenAPI file path (if not provided).
-2. Read and validate the file (must be OpenAPI 3.0.x).
-3. Extract schemas from `components/schemas`.
-4. Extract endpoints from `paths` (request/response types).
-5. Generate Dart 3 files adhering to Effective Dart best practices.
-6. Ask where to save (default: `lib/data/network/api.dart` or separated domain files).
-7. Write the file(s).
+```yaml
+dependencies:
+  dio: ^5.4.0
+  freezed_annotation: ^2.4.1   # if using Freezed
+  json_annotation: ^4.9.0
+  equatable: ^2.0.5             # if using Equatable
 
-## OpenAPI Validation
-
-Check before processing:
-
-```json
-- Field "openapi" must exist and start with "3.0"
-- Field "paths" must exist
-- Field "components.schemas" must exist (if there are types)
+dev_dependencies:
+  build_runner: ^2.4.0
+  freezed: ^2.5.2               # if using Freezed
+  json_serializable: ^6.8.0
 ```
 
-If invalid, report the error distinctly and halt execution.
+---
 
-## Type Mapping (Dart 3 System)
+## Directory Structure
+
+```
+lib/
+└── data/
+    ├── network/
+    │   ├── dio_client.dart          # Dio instance + interceptors
+    │   ├── api_error.dart           # global error model
+    │   └── services/
+    │       └── product_service.dart # one file per resource tag
+    └── models/
+        ├── product.dart
+        └── ...
+```
+
+---
+
+## Dio Client Setup
+
+```dart
+import 'package:dio/dio.dart';
+
+Dio createDioClient({required String baseUrl, String? accessToken}) {
+  final dio = Dio(BaseOptions(
+    baseUrl: baseUrl,
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
+    headers: {'Content-Type': 'application/json'},
+  ));
+
+  dio.interceptors.add(InterceptorsWrapper(
+    onRequest: (options, handler) {
+      if (accessToken != null) {
+        options.headers['Authorization'] = 'Bearer $accessToken';
+      }
+      handler.next(options);
+    },
+    onError: (error, handler) {
+      // Convert DioException to domain ApiError before propagating
+      handler.next(error);
+    },
+  ));
+
+  return dio;
+}
+```
+
+---
+
+## Model Strategy
+
+| Use case | Package | When |
+|---|---|---|
+| Needs `copyWith`, pattern matching, union types (`oneOf`) | **Freezed** | Complex domain models |
+| Only needs value equality (`==` / `hashCode`) | **Equatable** | Simple request/response DTOs |
+
+### Freezed Model (complex / union types)
+
+```dart
+// OpenAPI: components/schemas/Product
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'product.freezed.dart';
+part 'product.g.dart';
+
+@freezed
+sealed class Product with _$Product {
+  const factory Product({
+    required String id,
+    required String title,
+    required double price,
+    @JsonKey(name: 'created_at') DateTime? createdAt, // snake_case from spec
+  }) = _Product;
+
+  factory Product.fromJson(Map<String, dynamic> json) =>
+      _$ProductFromJson(json);
+}
+```
+
+### Equatable Model (simple DTO)
+
+```dart
+// OpenAPI: components/schemas/CreateProductRequest
+import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'create_product_request.g.dart';
+
+@JsonSerializable()
+class CreateProductRequest extends Equatable {
+  const CreateProductRequest({required this.title, required this.price});
+
+  final String title;
+  final double price;
+
+  Map<String, dynamic> toJson() => _$CreateProductRequestToJson(this);
+
+  @override
+  List<Object?> get props => [title, price];
+}
+```
+
+---
+
+## Type Mapping
 
 ### Primitives
 
-| OpenAPI     | Dart 3       |
-|-------------|--------------|
-| `string`    | `String`     |
-| `number`    | `double`     |
-| `integer`   | `int`        |
-| `boolean`   | `bool`       |
-| `null`      | `Null`       |
+| OpenAPI | Dart |
+|---|---|
+| `string` | `String` |
+| `integer` | `int` |
+| `number` | `double` |
+| `boolean` | `bool` |
+| `string` / `format: date-time` | `DateTime` |
+| `string` / `format: uuid` | `String` |
+| `string` / `format: uri` | `Uri` |
 
-### Format Modifiers
+### Nullability
 
-| Format        | Dart 3                  |
-|---------------|-------------------------|
-| `uuid`        | `String`                |
-| `date`        | `DateTime`              |
-| `date-time`   | `DateTime`              |
-| `email`       | `String`                |
-| `uri`         | `Uri` (or `String`)     |
+- Property in `required` array → non-nullable (`String id`)
+- Property NOT in `required` → nullable (`String? name`)
 
-### Complex Types (Freezed Execution)
+### Enum
 
-**Object (Generating Freezed Data Classes):**
 ```dart
-// OpenAPI: type: object, properties: {id, name}, required: [id]
-
-import 'package:freezed_annotation/freezed_annotation.dart';
-
-part 'example.freezed.dart';
-part 'example.g.dart';
-
-@freezed
-sealed class Example with _$Example {
-  const factory Example({
-    required String id,      // required: enforce non-nullable & required
-    String? name,            // optional: omit required, make nullable `?`
-  }) = _Example;
-
-  factory Example.fromJson(Map<String, dynamic> json) => _$ExampleFromJson(json);
-}
-```
-
-**Array (Lists):**
-```dart
-// OpenAPI: type: array, items: {type: string}
-// Represented as `List<String>` wherever consumed.
-typedef Names = List<String>;
-```
-
-**Enum (Enhanced Dart 3 Enums):**
-```dart
-// OpenAPI: type: string, enum: [active, draft]
+// OpenAPI: type: string, enum: [active, draft, archived]
 @JsonEnum(fieldRename: FieldRename.snake)
-enum Status {
-  active,
-  draft,
-}
+enum ProductStatus { active, draft, archived }
 ```
 
-**oneOf (Union Types mapped via Freezed):**
+### oneOf / Union Types → Freezed sealed
+
 ```dart
 // OpenAPI: oneOf: [{$ref: Cat}, {$ref: Dog}]
 @freezed
 sealed class Pet with _$Pet {
   const factory Pet.cat(Cat data) = _PetCat;
   const factory Pet.dog(Dog data) = _PetDog;
-  
+
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 }
-```
 
-## Code Generation Strict Guidelines
-
-### File Header
-
-```dart
-// Auto-generated from: {source_file}
-// Generated at: {timestamp}
-//
-// DO NOT EDIT MANUALLY - Regenerate from OpenAPI schema
-```
-
-### Models (from components/schemas)
-
-For each schema in `components/schemas`, utilize `@freezed`:
-
-```dart
-@freezed
-sealed class Product with _$Product {
-  const factory Product({
-    /// Product unique identifier
-    required String id,
-
-    /// Product title
-    required String title,
-
-    /// Product price
-    required double price,
-
-    /// Created timestamp. Map from snake_case automatically using JsonSerializable.
-    @JsonKey(name: 'created_at') DateTime? createdAt,
-  }) = _Product;
-
-  factory Product.fromJson(Map<String, dynamic> json) => _$ProductFromJson(json);
+// Exhaustive pattern matching at the call site:
+switch (pet) {
+  case Pet(:final cat): ...
+  case Pet(:final dog): ...
 }
 ```
 
-*   **Effective Dart Mapping**: Default properties to `lowerCamelCase` inside the Freezed class. Use `@JsonKey(name: '...')` if the OpenAPI spec provides `snake_case` or `kebab-case`.
-*   **Documentation**: Transport OpenAPI `description` attributes directly into Dart triple-slash `///` doc comments.
-*   **Immutability**: Freezed classes natively satisfy Effective Dart's immutability mandates avoiding unwarranted explicit Setters.
+### $ref Resolution
 
-### Request/Response Endpoint Structures (Dio Blueprint)
+`{"$ref": "#/components/schemas/Product"}` → use `Product` class directly. Never inline duplicate definitions.
 
-For each endpoint inside `paths`, generate clear structures.
+---
+
+## Service Layer (Dio)
+
+One service class per OpenAPI tag. Method signatures follow: `{httpMethod}{Resource}`.
 
 ```dart
-// GET /products - query params
-@freezed
-sealed class GetProductsRequest with _$GetProductsRequest {
-  const factory GetProductsRequest({
-    int? page,
-    int? limit,
-  }) = _GetProductsRequest;
+// Covers: GET /products, POST /products, GET /products/{id}
+class ProductService {
+  const ProductService(this._dio);
+  final Dio _dio;
 
-  factory GetProductsRequest.fromJson(Map<String, dynamic> json) => _$GetProductsRequestFromJson(json);
+  Future<List<Product>> getProducts({int page = 1, int limit = 20}) async {
+    final response = await _dio.get<List<dynamic>>(
+      '/products',
+      queryParameters: {'page': page, 'limit': limit},
+    );
+    return response.data!.map((e) => Product.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  Future<Product> getProduct(String id) async {
+    final response = await _dio.get<Map<String, dynamic>>('/products/$id');
+    return Product.fromJson(response.data!);
+  }
+
+  Future<Product> createProduct(CreateProductRequest request) async {
+    final response = await _dio.post<Map<String, dynamic>>(
+      '/products',
+      data: request.toJson(),
+    );
+    return Product.fromJson(response.data!);
+  }
 }
-
-// GET /products - response 200
-typedef GetProductsResponse = List<Product>;
-
-// POST /products - request body
-@freezed
-sealed class CreateProductRequest with _$CreateProductRequest {
-  const factory CreateProductRequest({
-    required String title,
-    required double price,
-  }) = _CreateProductRequest;
-
-  factory CreateProductRequest.fromJson(Map<String, dynamic> json) => _$CreateProductRequestFromJson(json);
-}
-
-// POST /products - response 201
-typedef CreateProductResponse = Product;
 ```
 
-Naming convention mandate:
-*   `{Method}{Path}Request` for params/body mappings.
-*   `{Method}{Path}Response` for responses.
+---
 
-### Error Type Handling (Global Catch)
+## Error Handling
 
-Always furnish a baseline error catching model complying with the API's global error formats.
+Define a global error model matching the spec's error schema:
 
 ```dart
 @freezed
 sealed class ApiError with _$ApiError {
   const factory ApiError({
     required int status,
-    required String error,
+    required String message,
     String? detail,
   }) = _ApiError;
 
-  factory ApiError.fromJson(Map<String, dynamic> json) => _$ApiErrorFromJson(json);
+  factory ApiError.fromJson(Map<String, dynamic> json) =>
+      _$ApiErrorFromJson(json);
 }
 ```
-*Note: Type guards (like `isProduct` in TypeScript) are intrinsically navigated in Dart through native `is` keyword checking (e.g., `if (response is ApiError)`) coupled with Dart 3 exhaustive pattern matching utilizing `sealed` classes or unified Results.*
 
-## $ref Resolution Strategy
-
-Upon discovering `{"$ref": "#/components/schemas/Product"}`:
-1. Extract the class terminology (`Product`).
-2. Implement the type reference directly preventing inline resolutions duplicating structures recursively.
+Wrap Dio calls in the repository to catch `DioException`:
 
 ```dart
-// OpenAPI: items: {$ref: "#/components/schemas/Product"}
-// Dart:
-final List<Product> items;
+class ProductRepository {
+  const ProductRepository(this._service);
+  final ProductService _service;
+
+  Future<List<Product>> fetchProducts({int page = 1}) async {
+    try {
+      return await _service.getProducts(page: page);
+    } on DioException catch (e) {
+      if (e.response?.data != null) {
+        throw ApiError.fromJson(e.response!.data as Map<String, dynamic>);
+      }
+      rethrow;
+    }
+  }
+}
 ```
 
-## Constraints & Effective Dart Adherence
-*   `UpperCamelCase` for Classes/Enums/Typedefs. `lowerCamelCase` for properties and functions.
-*   Enforce `required` directives rigorously eliminating null-assertion operator (`!`) risks entirely out of the pipeline.
-*   Never manually forge `.fromJson` parsers string-by-string; exclusively generate `@freezed` + `@JsonSerializable` boilerplates cleanly supporting `json_serializable` ecosystem standards securely.
-*   **Freezed 3.0 Mandate**: All generated `@freezed` classes must explicitly be declared as `sealed` or `abstract` (prioritize `sealed class`) to satisfy compiler constraints mapping correctly with Freezed 3.0+.
-*   If an Unknown OpenAPI type is encountered, fallback to Dart's `dynamic` but firmly warn the user.
+---
+
+## Naming Conventions
+
+| OpenAPI element | Dart name |
+|---|---|
+| `components/schemas/ProductItem` | `class ProductItem` |
+| `POST /products` request body | `CreateProductRequest` |
+| `GET /products` response | `List<Product>` or `typedef GetProductsResponse = List<Product>` |
+| `snake_case` JSON key | `@JsonKey(name: 'snake_case')` on camelCase field |
+
+---
+
+## Constraints
+
+- **No `!` operator**: rely on nullability — if spec says required, make it non-nullable.
+- **Never duplicate `$ref` schemas**: reference the class; do not inline.
+- **Use `@JsonKey(name: ...)` for naming mismatches** — do not rename the JSON key, rename the Dart field.
+- **Equatable vs Freezed**: default to Freezed for domain models; use Equatable for pure request DTOs that don't need `copyWith`.
+- **DioException always caught at repository level** — services throw raw, repositories map to `ApiError`.
+- Run `dart run build_runner build --delete-conflicting-outputs` after generating models.
