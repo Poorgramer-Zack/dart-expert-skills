@@ -59,6 +59,9 @@ skills/
 - **`shadcn-flutter`**: Modern accessible UI components with theming
 - **`effective-dart`**: Dart 3.10 best practices — dot shorthands, null-aware collection elements, wildcard variables, records, patterns, sealed classes
 
+### Data Visualization
+- **`fl-chart`**: FL Chart (v1.2.0) — Line, Bar, Pie, Scatter, Radar, Candlestick charts with implicit animations, touch tooltips, and pan/zoom transformations
+
 ### Backend Integration
 - **`supabase`**: Realtime Postgres, Edge Functions, Authentication
 - **`serverpod`**: Full-stack Dart server with type-safe endpoints
@@ -95,7 +98,16 @@ skills/
 
 ---
 
-## 🚀 Recent Updates (2026-04-01)
+## 🚀 Recent Updates (2026-04-02)
+
+### fl-chart — Flutter Data Visualization (v1.2.0)
+- ✅ **6 chart types**: LineChart, BarChart, PieChart, ScatterChart, RadarChart, CandlestickChart
+- ✅ **Quick start examples** for all chart types with production-ready code
+- ✅ **Common config patterns**: titles/axes, grid, border, extra lines, touch interactivity, animations, pan/zoom
+- ✅ **Advanced patterns**: stacked bars with per-layer tooltip, multi-series gradient lines, donut chart touch expansion, multi-dataset radar overlay, horizontal bar rotation
+- ✅ **7 reference files**: full API property tables for each chart type + shared base components
+
+### Previous Updates (2026-04-01)
 
 ### Fleet Mode Quality Audit — All 36 Skills
 - ✅ **36 SKILL.md files** audited and standardized to Agent Skill Best Practices
