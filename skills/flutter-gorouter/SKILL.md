@@ -2,7 +2,7 @@
 name: "routing-with-gorouter"
 description: "Implements declarative Flutter routing using GoRouter v17 with URL-based navigation, deep linking, and authentication guards. Activates when configuring GoRoute path patterns, setting up StatefulShellRoute for persistent bottom navigation state, implementing ShellRoute for shared nested layouts, adding redirect guards with loop prevention (idempotent redirects), configuring deep links for iOS (FlutterDeepLinkingEnabled) or Android (intent-filters), debugging redirect loops or navigation stack issues, handling 404 error routes with errorBuilder, using named routes with path/query/extra parameters, or migrating from imperative Navigator.push to declarative routing. Ideal for Flutter web apps requiring URL bar synchronization, mobile apps with universal links or app links, or multi-level navigation hierarchies."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-13 15:10:00 (GMT+8)"
 ---
 
 # GoRouter Declarative Navigation Guide (v17.x)
@@ -16,7 +16,7 @@ Implement declarative routing using GoRouter, the official Flutter navigation so
 
 ```yaml
 dependencies:
-  go_router: ^17.1.0
+  go_router: ^17.2.0
 
 dev_dependencies:
   go_router_builder: ^4.0.0  # Optional: for type-safe routes
