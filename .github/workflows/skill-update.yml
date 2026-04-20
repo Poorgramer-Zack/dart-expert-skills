@@ -28,7 +28,7 @@ jobs:
           node-version: '22'
 
       - name: Install Copilot CLI
-        run: npm install -g @github/copilot
+        run: curl -fsSL https://gh.io/copilot-install | bash
 
       - name: Scan skills, update dependencies, and create PR
         env:
