@@ -86,6 +86,6 @@ jobs:
           - Do not invent version numbers; use only what pub.dev returns.
           - Follow all standards in .github/instructions/skills.instructions.md." \
             --model claude-sonnet-4.6 \
-            --allow-tool='*' \
+            --allow-all-tools \
             --no-ask-user \
             -s
