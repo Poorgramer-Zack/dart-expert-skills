@@ -2,7 +2,7 @@
 name: "building-jaspr-web-apps"
 description: "Builds SEO-friendly web applications with Dart using the Jaspr framework. Use when creating Dart-based websites, blogs, or landing pages requiring semantic HTML output; implementing server-side rendering (SSR) or static site generation (SSG); adding Tailwind CSS via jaspr_tailwind; routing with jaspr_router; testing components with jaspr_test; or building full-stack Dart web apps where Flutter Web's canvas rendering is unsuitable."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Jaspr Web Architecture Guide (v0.22.x)
@@ -61,7 +61,7 @@ Jaspr provides official Tailwind CSS integration via `jaspr_tailwind`.
 #### 2.1 Installation & Setup
 ```yaml
 dev_dependencies:
-  jaspr_tailwind: ^0.1.0
+  jaspr_tailwind: ^0.3.6
 ```
 
 Create `web/styles.tw.css` with the Tailwind v4 CSS-first syntax:
@@ -102,7 +102,7 @@ Jaspr’s routing mirrors `go_router` with a declarative API.
 #### 3.1 Installation & Setup
 ```yaml
 dependencies:
-  jaspr_router: ^0.2.0
+  jaspr_router: ^0.8.2
 ```
 
 ```dart

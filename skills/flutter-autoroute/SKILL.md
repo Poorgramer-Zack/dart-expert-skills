@@ -2,7 +2,7 @@
 name: "routing-with-autoroute"
 description: "Implements type-safe Flutter routing using AutoRoute v11 with code generation and @RoutePage annotations. Activates when setting up AutoRoute navigation, configuring AutoRouterConfig or RootStackRouter, generating route files with build_runner, using @RoutePage, @PathParam, or @QueryParam annotations, implementing AutoTabsRouter for bottom navigation tabs, adding navigation guards with AutoRouteGuard, setting up nested or child routes, handling type-safe route parameters, or migrating from string-based Navigator routing to compile-time-verified routes. Ideal for large apps requiring refactoring confidence and zero string-based routing errors."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # AutoRoute Type-Safe Navigation Guide (v11.x)
@@ -20,7 +20,7 @@ dependencies:
 
 dev_dependencies:
   auto_route_generator: ^11.1.0
-  build_runner: ^2.4.0
+  build_runner: ^2.14.1
 ```
 
 ### Phase 2: Annotate Pages

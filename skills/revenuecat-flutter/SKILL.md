@@ -1,11 +1,11 @@
 ---
 name: "integrating-revenuecat"
-description: "Integrates RevenueCat in-app purchases and subscriptions into Flutter apps using `purchases_flutter`. Use when implementing paywalls, checking entitlements via `CustomerInfo`, configuring `PurchasesConfiguration` for iOS or Android, displaying paywalls with `purchases_ui_flutter`, handling purchase errors via `PurchasesErrorHelper`, restoring purchases, integrating RevenueCat with Riverpod or Bloc, presenting the Customer Center, handling web purchase redemption, or calling `Purchases.logIn` for cross-device purchase sync."
+description: "Integrates RevenueCat in-app purchases and subscriptions into Flutter apps using `purchases_flutter` (v10.x). Use when implementing paywalls, checking entitlements via `CustomerInfo`, configuring `PurchasesConfiguration` for iOS or Android, displaying paywalls with `purchases_ui_flutter`, handling purchase errors via `PurchasesErrorHelper`, restoring purchases, integrating RevenueCat with Riverpod or Bloc, presenting the Customer Center, handling web purchase redemption, or calling `Purchases.logIn` for cross-device purchase sync."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
-# RevenueCat (Flutter) Latest Version Best Practices Guide (v9.13.x)
+# RevenueCat (Flutter) Latest Version Best Practices Guide (v10.x)
 
 ## Goal
 RevenueCat is the industry-standard solution for handling In-App Purchases (IAP) and subscriptions in mobile applications. In Flutter, the official package is `purchases_flutter` (paired with `purchases_ui_flutter` for pre-built paywall UI).
@@ -27,9 +27,9 @@ In traditional IAP development, developers often focus on "which Product ID the 
 #### 2.1 Install Packages
 ```yaml
 dependencies:
-  purchases_flutter: ^9.13.1
+  purchases_flutter: ^10.0.1
   # 🌟 Highly Recommended: Use the official native UI checkout templates (Paywalls) to reduce the pain of building your own UI
-  purchases_ui_flutter: ^9.13.1 
+  purchases_ui_flutter: ^10.0.1 
 ```
 
 #### 2.2 Platform Specific Configurations (Extremely Important)
@@ -70,9 +70,14 @@ Future<void> initPlatformState() async {
 ```
 
 > [!WARNING]
-> **Google Play Billing 8 Limitations (SDK v8/v9+)**: The latest Android underlying libraries completely eradicated APIs querying for expired subscriptions and *consumed* one-time products. 
+> **v10.0 Breaking Change — Min Android SDK 21 → 23**: purchases_flutter v10 updates to Billing Library 8.3.0, raising the minimum Android SDK from API 21 to API 23 (Android 6). Update your `android/app/build.gradle`:
+> ```gradle
+> defaultConfig {
+>     minSdkVersion 23  // was 21 in v9
+> }
+> ```
 > 
-> **CRITICAL**: If your App offers "Lifetime Unlock" products without a backend account system, you **MUST** strictly configure them as **Non-consumable** inside the RevenueCat dashboard. If labeled as consumable, RevenueCat consumes them instantly, and users will permanently lose the ability to `restorePurchases`!
+> **CRITICAL**: If your App offers "Lifetime Unlock" products without a backend account system, you **MUST** strictly configure them as **Non-consumable** inside the RevenueCat dashboard. If labeled as consumable, RevenueCat consumes them instantly, and users will permanently lose the ability to `restorePurchases`! This workaround (available in v9) is **completely removed** in v10.
 
 ### 3. Checking Entitlements and State Management (Best Practices)
 Integrate RevenueCat's state into your state management (like Riverpod / Bloc) to drive UI unlocking.
@@ -195,3 +200,15 @@ try {
 ## Constraints
 * Always check `entitlements.all['your_entitlement']?.isActive` instead of checking the presence of active subscriptions or product IDs.
 * Ensure you configure the `Purchases` singleton before making any other RevenueCat calls.
+* **v10+ Android**: `minSdkVersion` must be 23 or higher. Apps still targeting API 21/22 must remain on v9.
+
+## Old Patterns (pre-v10)
+
+```yaml
+# purchases_flutter v9.x — supports Android API 21+
+dependencies:
+  purchases_flutter: ^9.13.1
+  purchases_ui_flutter: ^9.13.1
+```
+
+In v9, a workaround allowed restoring consumed one-time products on Android. This workaround is removed in v10. If you relied on it, configure those products as non-consumable in the RevenueCat dashboard before upgrading.

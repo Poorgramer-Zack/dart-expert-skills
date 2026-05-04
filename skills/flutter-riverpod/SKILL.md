@@ -2,7 +2,7 @@
 name: "implementing-riverpod"
 description: "Implements Riverpod (v3.3.x) compile-safe state management for Flutter apps. Use when implementing @riverpod code generation providers, handling AsyncValue loading/error/data states, using ref.watch/ref.read/ref.listen, setting up ProviderScope, writing Notifier/AsyncNotifier classes, using FutureProvider/StreamProvider, applying autoDispose and family modifiers, combining providers, testing providers in isolation, scoping rebuilds with Consumer instead of ConsumerWidget, using ref.watch with select() for field-level precision, migrating from StateNotifierProvider or Riverpod 2.x patterns, handling Notifier resource lifecycle with ref.onDispose, or using experimental Mutation and offline persistence APIs."
 metadata:
-  last_modified: "2026-04-01 15:30:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Riverpod State Management (v3.3.x)
@@ -18,12 +18,12 @@ Implement compile-time safe, context-free state management using Riverpod. Use `
 ```yaml
 dependencies:
   flutter_riverpod: ^3.3.1
-  riverpod_annotation: ^3.3.1
+  riverpod_annotation: ^4.0.2
 
 dev_dependencies:
-  build_runner: ^2.4.0
-  riverpod_generator: ^3.3.1
-  riverpod_lint: ^3.0.0
+  build_runner: ^2.14.1
+  riverpod_generator: ^4.0.3
+  riverpod_lint: ^3.1.3
 ```
 
 **Manual only** (no code generation):

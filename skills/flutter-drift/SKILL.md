@@ -2,7 +2,7 @@
 name: "persisting-data-with-drift"
 description: "Implements type-safe reactive SQL persistence in Flutter using Drift v2.32 (formerly Moor) built on SQLite with automatic code generation. Activates when defining table schemas with Drift DSL, writing type-safe join or subquery operations, handling schema migrations with MigrationStrategy, using reactive watch() streams for live UI updates, implementing ACID transactions, defining foreign key constraints or cascade deletes, enabling WAL mode for write performance, troubleshooting generated .g.dart type mismatches, migrating from sqflite or sqlite3 v2 to v3, using DAOs for query separation, or building offline-first apps requiring strong relational data integrity and compile-time SQL verification."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Drift SQL Database Guide
@@ -17,13 +17,13 @@ Implement type-safe reactive SQL database using Drift (formerly Moor). Drift pro
 ```yaml
 dependencies:
   drift: ^2.32.0
-  sqlite3_flutter_libs: ^0.5.20
+  sqlite3_flutter_libs: ^0.6.0+eol
   path_provider: ^2.1.0
-  path: ^1.8.0
+  path: ^1.9.1
 
 dev_dependencies:
   drift_dev: ^2.32.0
-  build_runner: ^2.4.0
+  build_runner: ^2.14.1
 ```
 
 ### Phase 2: Define Database Schema

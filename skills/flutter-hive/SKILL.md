@@ -2,7 +2,7 @@
 name: "managing-hive-storage"
 description: "Hive CE (Community Edition v2.19.x) NoSQL object database for Flutter providing blazing-fast key-value and object storage with TypeAdapters. Use this skill when implementing offline-first architecture, high-performance local data caching, NoSQL document-style object stores, custom TypeAdapter serialization for complex objects, lazy loading boxes for memory efficiency, encrypted boxes (HiveAES encryption), database compaction for size optimization, storing large datasets without SQL schema overhead, implementing local-first sync patterns, or migrating from SQLite to NoSQL. Supports primitive types, custom objects, lists, and maps. Ideal for apps requiring ultra-fast read/write operations (microsecond latency), object persistence without ORM complexity, or local-first data architecture."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Hive CE NoSQL Database Guide
@@ -16,12 +16,12 @@ Implement high-performance NoSQL object storage using Hive CE (Community Edition
 
 ```yaml
 dependencies:
-  hive_ce: ^2.6.0
-  hive_ce_flutter: ^2.0.0
+  hive_ce: ^2.19.3
+  hive_ce_flutter: ^2.3.4
 
 dev_dependencies:
-  hive_ce_generator: ^1.6.0
-  build_runner: ^2.4.0
+  hive_ce_generator: ^1.11.1
+  build_runner: ^2.14.1
 ```
 
 ### Phase 2: Initialize Hive

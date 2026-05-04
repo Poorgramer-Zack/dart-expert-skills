@@ -2,7 +2,7 @@
 name: "implementing-openapi-in-dart"
 description: "Reads an OpenAPI 3.0 specification and manually implements a type-safe Dart API layer using Dio for HTTP, Freezed or Equatable for models, and json_serializable for serialisation. Use when given an OpenAPI/Swagger file (JSON or YAML) and asked to implement the API in Flutter/Dart, create Dart models from an API schema, build a Dio API client, implement endpoints from a spec, convert openapi to dart, or set up a data/network layer from an API contract. Handles $ref resolution, oneOf union types, enums, query params, request bodies, and DioException error mapping."
 metadata:
-  last_modified: "2026-04-01 16:00:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Implementing OpenAPI 3.0 in Dart
@@ -26,15 +26,15 @@ Given an OpenAPI 3.0 spec, implement a type-safe Dart API layer with:
 
 ```yaml
 dependencies:
-  dio: ^5.4.0
-  freezed_annotation: ^2.4.1   # if using Freezed
-  json_annotation: ^4.9.0
+  dio: ^5.9.2
+  freezed_annotation: ^3.1.0   # if using Freezed
+  json_annotation: ^4.11.0
   equatable: ^2.0.5             # if using Equatable
 
 dev_dependencies:
-  build_runner: ^2.4.0
-  freezed: ^2.5.2               # if using Freezed
-  json_serializable: ^6.8.0
+  build_runner: ^2.14.1
+  freezed: ^3.2.5               # if using Freezed
+  json_serializable: ^6.13.1
 ```
 
 ---
@@ -289,3 +289,16 @@ class ProductRepository {
 - **Equatable vs Freezed**: default to Freezed for domain models; use Equatable for pure request DTOs that don't need `copyWith`.
 - **DioException always caught at repository level** — services throw raw, repositories map to `ApiError`.
 - Run `dart run build_runner build --delete-conflicting-outputs` after generating models.
+
+## Old Patterns (pre-Freezed 3)
+
+Freezed 2.x used `abstract class` instead of `sealed class`. Both patterns still work, but prefer `sealed` for exhaustive pattern matching with Dart 3.
+
+```yaml
+# Freezed 2.x (no longer recommended)
+dependencies:
+  freezed_annotation: ^2.4.1
+
+dev_dependencies:
+  freezed: ^2.5.2
+```

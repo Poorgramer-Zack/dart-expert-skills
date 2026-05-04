@@ -2,7 +2,7 @@
 name: "generating-freezed-models"
 description: "Generates immutable Dart data classes, sealed union types, and deep copyWith using Freezed (v3.2.x) with optional json_serializable integration. Use when creating DTOs, API response models, app state classes, or any model requiring immutability, pattern matching, or JSON serialization. Activates on: @freezed annotation, freezed_annotation import, immutable data class request, copyWith deep nesting, union/sealed types for loading/data/error states, generic response wrappers, or build_runner code generation for models."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # Freezed Guide (v3.2.x)
@@ -18,12 +18,12 @@ Because Freezed relies heavily on code generation, ensure your `pubspec.yaml` is
 ```yaml
 dependencies:
   freezed_annotation: ^3.2.5
-  json_annotation: ^4.9.0 # If mutual conversion with JSON is required
+  json_annotation: ^4.11.0 # If mutual conversion with JSON is required
 
 dev_dependencies:
-  build_runner: ^2.4.0
+  build_runner: ^2.14.1
   freezed: ^3.2.5
-  json_serializable: ^6.8.0 # If mutual conversion with JSON is required
+  json_serializable: ^6.13.1 # If mutual conversion with JSON is required
 ```
 
 ### 2. Defining an Immutable Data Class

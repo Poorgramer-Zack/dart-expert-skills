@@ -2,7 +2,7 @@
 name: "implementing-flutter-bloc"
 description: "Implements BLoC (v9.x) event-driven state management for Flutter with unidirectional data flow using the flutter_bloc package. Use when implementing Bloc/Cubit classes, mapping Events to States, consuming state with BlocBuilder/BlocListener/BlocConsumer, applying event transformers (restartable/droppable/sequential) for concurrency control, setting up BlocProvider/MultiBlocProvider DI, integrating Freezed for sealed union types and exhaustive pattern matching, or testing with blocTest. Ideal for enterprise apps requiring business logic separation, precise concurrency control (search debouncing, form deduplication), or event replay debugging."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
 # BLoC State Management (v9.x)
@@ -23,7 +23,7 @@ dependencies:
   bloc_concurrency: ^0.3.0  # For event transformers
 
 dev_dependencies:
-  bloc_test: ^9.1.0
+  bloc_test: ^10.0.0
 ```
 
 ### 2. Choose Pattern
