@@ -57,9 +57,7 @@ All Hooks **are only allowed to be called at the top level inside the `build` me
       return () => print('Equivalent to dispose (Executes before Widget destruction or before effect re-triggers)');
     }, []); // Passing [] ensures it runs only once
     ```
-*   **`useIsMounted()`**:
-    *   **Purpose**: Following an asynchronous request, ensures the Widget has not yet been destroyed before executing operations like `setState`.
-    *   **Usage**: `final isMounted = useIsMounted(); ... if(isMounted()) { ... }`
+*   **`useIsMounted()`**: Deprecated in flutter_hooks 0.21.x. Inside a `HookWidget` or `HookConsumerWidget`, check `context.mounted` after an `await` instead. Use the effect's cleanup function to cancel timers and subscriptions, which covers most cases.
 
 #### 3.3 Auto-cleaning Controllers (Most Powerful Feature)
 Forget writing `controller.dispose()` manually! The following Hooks automatically create and destroy them behind the scenes for you:
@@ -86,18 +84,14 @@ If multiple parts in your project need an "obtain current App lifecycle state (A
 The simplest and most favored approach is directly writing a function that returns a result.
 
 ```dart
+import 'dart:async';
+
 // Encapsulates a set of "countdown timer" logic
 int useCountdown({required int seconds}) {
   final timeLeft = useState(seconds);
-  final isMounted = useIsMounted();
 
   useEffect(() {
     final timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (!isMounted()) {
-        timer.cancel();
-        return;
-      }
-      
       if (timeLeft.value > 0) {
         timeLeft.value--;
       } else {
