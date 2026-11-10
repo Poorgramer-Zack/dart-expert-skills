@@ -5,7 +5,7 @@ metadata:
   last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
-# Jaspr Web Architecture Guide (v0.22.x)
+# Jaspr Web Architecture Guide (v0.23.x)
 
 ## Goal
 [Jaspr](https://jaspr.site/) is a Dart web framework (current version: **0.22.x**).
@@ -102,7 +102,7 @@ Jaspr’s routing mirrors `go_router` with a declarative API.
 #### 3.1 Installation & Setup
 ```yaml
 dependencies:
-  jaspr_router: ^0.8.2
+  jaspr_router: ^0.9.0
 ```
 
 ```dart
@@ -214,6 +214,11 @@ void main() {
 
 **`testClient` (Browser Hydration and State Syncing Tests)**
 Runs in a headless browser environment, testing whether the client correctly takes over via hydration and handles DOM interactions after receiving `initialStateData` from the server.
+
+### 6. State Management with BlocSignal (`bloc_signals_jaspr`)
+Use `bloc_signals_jaspr` when a Jaspr app needs shared, event-driven state. It provides `BlocSignalProvider`, `BlocSignalBuilder`, `BlocSignalListener`, `BlocSignalSelector`, and `context.read/select`, all as Components. Verified with `jaspr` 0.23.5, `bloc_signals_jaspr` 1.3.0, and `bloc_signals` 1.7.0.
+- **Reference**: [references/bloc-signals.md](references/bloc-signals.md)
+- Keep bloc creation inside a provider in the page component. A top-level bloc is shared across SSR requests.
 
 ## Constraints
 * Only use `AsyncStatelessComponent` on the server side (`jaspr/server.dart`). Never in client UI code.
