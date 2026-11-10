@@ -1,11 +1,11 @@
 ---
 name: "implementing-fl-chart"
-description: "Implements data visualization charts in Flutter using the fl_chart package (v1.2.0). Supports LineChart, BarChart, PieChart, ScatterChart, RadarChart, and CandlestickChart with implicit animations, touch interactivity, and pan/zoom transformations. Use when building any Flutter chart, graph, or data visualization — including line graphs for trends, bar charts for comparisons, pie/donut charts for proportions, scatter plots for distributions, radar charts for multi-axis comparisons, or candlestick charts for financial OHLC data. Also use when customizing chart axes, titles, tooltips, grid lines, touch callbacks, chart animations, or chart zoom/pan behavior."
+description: "Implements data visualization charts in Flutter using the fl_chart package (v1.3.1). Supports LineChart, BarChart, PieChart, ScatterChart, RadarChart, and CandlestickChart with implicit animations, touch interactivity, and pan/zoom transformations. Use when building any Flutter chart, graph, or data visualization — including line graphs for trends, bar charts for comparisons, pie/donut charts for proportions, scatter plots for distributions, radar charts for multi-axis comparisons, or candlestick charts for financial OHLC data. Also use when customizing chart axes, titles, tooltips, grid lines, touch callbacks, chart animations, or chart zoom/pan behavior."
 metadata:
   last_modified: "2026-04-02 17:12:00 (GMT+8)"
 ---
 
-# FL Chart — Flutter Data Visualization (v1.2.0)
+# FL Chart — Flutter Data Visualization (v1.3.1)
 
 ## Goal
 
@@ -17,7 +17,7 @@ Production-ready chart rendering in Flutter with implicit animations, touch inte
 
 ```yaml
 dependencies:
-  fl_chart: ^1.2.0
+  fl_chart: ^1.3.1
 ```
 
 Requires Flutter >=3.27.4, Dart SDK >=3.6.2.
@@ -410,7 +410,7 @@ Each chart has a full API reference with all properties, defaults, and data clas
 
 ## Constraints
 
-* **Version**: fl_chart ^1.2.0. API tables in references reflect this version.
+* **Version**: fl_chart ^1.3.1. The API tables in references were written for 1.2.0; check them against 1.3.1 before relying on exact names.
 * **Import**: `import 'package:fl_chart/fl_chart.dart';` — single import for all chart types.
 * **PieChart padding**: If wrapping PieChart in a padding widget, set `centerSpaceRadius: double.infinity` to prevent layout issues.
 * **Axis bounds**: Explicitly providing `minX/maxX/minY/maxY` improves performance over auto-calculation from data.

@@ -63,7 +63,7 @@ Add development dependencies in `pubspec.yaml`:
 dev_dependencies:
   # Version must EXACTLY MATCH the serverpod version your project uses!
   serverpod_test: ^4.1.1 
-  test: ^1.24.2
+  test: ^1.33.0
 ```
 
 **Execute the following after every Endpoint / Model YAML modification**:
