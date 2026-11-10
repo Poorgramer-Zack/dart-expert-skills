@@ -38,3 +38,8 @@ Refer to these detailed guides for implementation:
 - **Form Safety**: Always use `ShadForm` and unique `id`s for form fields to ensure reliable state management and validation.
 - **Accessibility**: Provide proper labels and descriptions for all interactive elements using built-in properties.
 - **Native Alignment**: When using Material/Cupertino integration, always wrap with `ShadAppBuilder` to ensure overlays (Toasts/Dialogs) render correctly.
+
+## Version Notes (verified)
+- `shadcn_ui` 0.59.0 requires Flutter 3.41+ (Dart 3.11+) for variable font weights.
+- Form fields must use a `String` `id`. `ShadForm` stores values with `String` keys (see the shadcn_ui changelog).
+- Use `ShadFormState.setFieldValue` (not the old `setValue`) when you set a single field programmatically.

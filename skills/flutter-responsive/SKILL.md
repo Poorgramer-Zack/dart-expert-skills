@@ -82,6 +82,7 @@ Widget build(BuildContext context) {
 **Usage Constraints:**
 *   Percentages: Use `.w` and `.h` as raw screen percentages. `100.w` is exactly the full width of the current screen.
 *   Fonts/Density: Use `.dp` (Density Pixel) instead of `.sp` if you want text to scale strictly by physical display density rather than user accessibility settings.
+*   **Verified:** `.dp` exists only in `sizer`, and `.r` exists only in `flutter_screenutil`. `Sizer`'s CHANGELOG has no entries after 2020, so check its maintenance status before you adopt it for new code.
 *   **Crucial Difference:** `50.w` in `sizer` means 50% of screen. `50.w` in `ScreenUtil` means 50 logical pixels relative to the 375 Figma draft. Be acutely aware of which package is active.
 
 ```dart
@@ -144,6 +145,6 @@ double padding = ResponsiveValue(
 ```
 
 ## Constraints
-1.  **Never Mix Scaling Libraries:** Do not use `sizer` and `flutter_screenutil` in the same project. They conflict conceptually.
+1.  **Never Mix Scaling Libraries:** Do not use `sizer` and `flutter_screenutil` in the same project. Verified: importing both in the same file makes `.w`, `.h`, and `.sp` ambiguous, and `flutter analyze` fails with `ambiguous_extension_member_access`.
 2.  **Web/Desktop Prohibition:** NEVER use `flutter_screenutil` to blindly scale a mobile UI up to a Desktop screen. A 375-width design scaled to a 1920-width monitor results in cartoonishly massive text and buttons. Use `responsive_framework` for Desktop/Web.
 3.  **No `MediaQuery` Boilerplate:** When utilizing these libraries, do not write raw `MediaQuery.of(context).size.width * 0.5`. Use the library's native syntax (e.g., `50.w` in `sizer`) to keep code declarative and completely eliminate boilerplate.
