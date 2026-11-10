@@ -106,26 +106,17 @@ Future<AuthResponse?> nativeGoogleSignIn() async {
     serverClientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
   );
 
-  // Attempt silent re-sign-in first (returning users)
-  GoogleSignIn.instance.attemptLightweightAuthentication();
+  // Silent re-sign-in for returning users (no UI).
+  await GoogleSignIn.instance.attemptLightweightAuthentication();
 
-  // For cold sign-in, call authenticate() from a button press
-  await GoogleSignIn.instance.authenticate();
-
-  final account = GoogleSignIn.instance.currentUser;
-  if (account == null) return null;
-
-  final serverAuth = await account.authorizationClient.authorizeServer([]);
-  if (serverAuth?.serverAuthCode == null) return null;
-
-  // Exchange tokens with Supabase
-  final auth = await account.authorizationClient.authorizationForScopes([]);
-  if (auth?.idToken == null) throw const AuthException('No ID token');
+  // Cold sign-in: call from a button press.
+  final account = await GoogleSignIn.instance.authenticate();
+  final idToken = account.authentication.idToken;
+  if (idToken == null) throw const AuthException('No ID token');
 
   return supabase.auth.signInWithIdToken(
     provider: OAuthProvider.google,
-    idToken: auth!.idToken!,
-    accessToken: auth.accessToken,
+    idToken: idToken,
   );
 }
 ```

@@ -81,17 +81,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 Future<UserCredential?> signInWithGoogle() async {
   await GoogleSignIn.instance.initialize();
-  await GoogleSignIn.instance.authenticate();
 
-  // Listen to authenticationEvents stream to get GoogleSignInAccount
-  // Then get the ID token from authorizationClient:
-  final account = GoogleSignIn.instance.currentUser;
-  if (account == null) return null;
+  // google_sign_in 7.x: authenticate() returns the signed-in account. There is no currentUser getter.
+  final account = await GoogleSignIn.instance.authenticate();
+  final idToken = account.authentication.idToken;
 
-  final auth = await account.authorizationClient.authorizationForScopes([]);
+  final authz = await account.authorizationClient.authorizationForScopes(const ['email']);
   final credential = GoogleAuthProvider.credential(
-    idToken: auth?.idToken,
-    accessToken: auth?.accessToken,
+    idToken: idToken,
+    accessToken: authz?.accessToken,
   );
   return FirebaseAuth.instance.signInWithCredential(credential);
 }
