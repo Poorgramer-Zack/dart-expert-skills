@@ -21,7 +21,7 @@ dependencies:
 
 dev_dependencies:
   hive_ce_generator: ^1.12.1
-  build_runner: ^2.14.1
+  build_runner: ^2.17.1
 ```
 
 ### Phase 2: Initialize Hive

@@ -20,7 +20,7 @@ dependencies:
 
 dev_dependencies:
   auto_route_generator: ^10.6.0  # 10.6 needs analyzer <14; incompatible with freezed 4
-  build_runner: ^2.14.1
+  build_runner: ^2.17.1
 ```
 
 ### Phase 2: Annotate Pages
