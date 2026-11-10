@@ -186,7 +186,7 @@ await FacebookAuth.instance.webAndDesktopInitialize(
   appId: "YOUR_APP_ID",
   cookie: true,
   xfbml: true,
-  version: "v15.0",
+  version: "v26.0",
 );
 ```
 
@@ -404,7 +404,7 @@ Future<void> initializeFacebookWeb() async {
     appId: "YOUR_APP_ID",
     cookie: true,
     xfbml: true,
-    version: "v15.0",
+    version: "v26.0",
   );
 }
 ```
@@ -652,7 +652,7 @@ void main() async {
       appId: "YOUR_APP_ID",
       cookie: true,
       xfbml: true,
-      version: "v15.0",
+      version: "v26.0",
     );
   }
   
