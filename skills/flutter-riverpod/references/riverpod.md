@@ -270,9 +270,9 @@ ref.listen<AsyncValue<void>>(saveProvider, (prev, next) {
 
 ```yaml
 dev_dependencies:
-  riverpod_generator: ^3.3.1
-  custom_lint: ^0.6.0
-  riverpod_lint: ^3.0.0 # provides auto-fixes and diagnostic inspections
+  riverpod_generator: ^3.0.3
+  custom_lint: ^0.8.1
+  riverpod_lint: ^3.0.3 # verified lint set; use build_runner ^2.15.1 (generator 4.x conflicts with custom_lint)
 ```
 
 ### Provider and FutureProvider

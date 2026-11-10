@@ -17,20 +17,32 @@ Implement compile-time safe, context-free state management using Riverpod. Use `
 **Code Generation (Recommended)**:
 ```yaml
 dependencies:
-  flutter_riverpod: ^3.3.1
-  riverpod_annotation: ^4.0.2
+  flutter_riverpod: ^3.5.0
+  riverpod_annotation: ^4.0.8
 
 dev_dependencies:
-  build_runner: ^2.14.1
-  riverpod_generator: ^4.0.3
-  riverpod_lint: ^3.1.3
+  build_runner: ^2.17.1
+  riverpod_generator: ^4.0.10
+  # riverpod_lint is not compatible with riverpod_generator 4.x (analyzer conflict); see the lint variant below
 ```
 
 **Manual only** (no code generation):
 ```yaml
 dependencies:
-  flutter_riverpod: ^3.3.1
+  flutter_riverpod: ^3.5.0
 ```
+
+> **Lint variant (verified with `dart pub get` on Flutter 3.47.9):** `riverpod_lint` and `custom_lint` cannot be combined with `riverpod_generator` 4.x. Use this set when you need lint rules:
+> ```yaml
+> flutter_riverpod: ^3.0.3
+> riverpod_annotation: ^3.0.3
+> riverpod_generator: ^3.0.3
+> riverpod_lint: ^3.0.3
+> custom_lint: ^0.8.1
+> build_runner: ^2.15.1   # 2.16+ needs analyzer 14, which conflicts with custom_lint
+> freezed: ^3.2.3
+> json_serializable: ^6.11.2
+> ```
 
 ### Phase 2: Setup ProviderScope
 
