@@ -28,8 +28,12 @@ dev_dependencies:
 ### Phase 2: Define Database Schema
 
 ```dart
-import 'package:drift/drift.dart';
 import 'dart:io';
+
+import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 
 part 'database.g.dart';
 
@@ -235,13 +239,11 @@ LazyDatabase _openConnection() {
   return LazyDatabase(() async {
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'app.db'));
-    
-    final database = NativeDatabase(file);
-    
-    // Enable WAL mode
-    await database.customStatement('PRAGMA journal_mode=WAL;');
-    
-    return database;
+
+    // NativeDatabase has no customStatement; run PRAGMAs in the setup callback
+    return NativeDatabase(file, setup: (rawDb) {
+      rawDb.execute('PRAGMA journal_mode=WAL;');
+    });
   });
 }
 ```
