@@ -71,7 +71,7 @@ Updates and manages Flutter application styling by migrating legacy Material 2 i
    ```
 
 5. **Migrate Buttons and Button Styles**
-   Replace legacy buttons. Use the `styleFrom()` static method for simple overrides, or `ButtonStyle` with `MaterialStateProperty` for state-dependent styling.
+   Replace legacy buttons. Use the `styleFrom()` static method for simple overrides, or `ButtonStyle` with `WidgetStateProperty` for state-dependent styling.
 
    ```dart
    // Simple override using styleFrom
@@ -84,12 +84,12 @@ Updates and manages Flutter application styling by migrating legacy Material 2 i
      child: const Text('TextButton'),
    )
 
-   // State-dependent override using MaterialStateProperty
+   // State-dependent override using WidgetStateProperty
    OutlinedButton(
      style: ButtonStyle(
-       side: MaterialStateProperty.resolveWith<BorderSide>(
-         (Set<MaterialState> states) {
-           if (states.contains(MaterialState.pressed)) {
+       side: WidgetStateProperty.resolveWith<BorderSide>(
+         (Set<WidgetState> states) {
+           if (states.contains(WidgetState.pressed)) {
              return const BorderSide(color: Colors.blue, width: 2);
            }
            return const BorderSide(color: Colors.grey, width: 1);
