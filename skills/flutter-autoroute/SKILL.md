@@ -16,10 +16,10 @@ Implement type-safe routing using AutoRoute with compile-time code generation. A
 
 ```yaml
 dependencies:
-  auto_route: ^11.1.0
+  auto_route: ^11.2.0
 
 dev_dependencies:
-  auto_route_generator: ^11.1.0
+  auto_route_generator: ^10.6.0  # 10.6 needs analyzer <14; incompatible with freezed 4
   build_runner: ^2.14.1
 ```
 

@@ -5,7 +5,10 @@ metadata:
   last_modified: "2026-04-27 17:41:00 (GMT+8)"
 ---
 
-# GoRouter Declarative Navigation Guide (v17.x)
+# GoRouter Declarative Navigation Guide (v18.x)
+
+> **Version notes (go_router 15 to 18, verified against go_router 18.1.4):** 15.0 made URLs case-sensitive (`/Home` and `/home` are different routes). 16.0 changed `GoRouteData` (type-safe routes). 17.0 makes ShellRoute navigation notify `GoRouter` observers by default. 18.0 requires Flutter 3.44+ and Dart 3.12+.
+
 
 ## Goal
 Implement declarative routing using GoRouter, the official Flutter navigation solution. GoRouter provides URL-based navigation, deep linking support, and declarative route configuration ideal for web and mobile apps.
@@ -16,7 +19,7 @@ Implement declarative routing using GoRouter, the official Flutter navigation so
 
 ```yaml
 dependencies:
-  go_router: ^17.2.0
+  go_router: ^18.1.4
 
 dev_dependencies:
   go_router_builder: ^4.3.0  # Optional: for type-safe routes
