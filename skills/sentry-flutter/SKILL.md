@@ -13,6 +13,8 @@ Implement a robust observability and performance monitoring layer using Sentry's
 ## Instructions
 
 ### 1. Core Initialization (`sentry_flutter`)
+> **Version notes (sentry_flutter 10):** Requires Dart 3.12+ / Flutter 3.44+, Android `minSdk` 26, and Swift Package Manager for Apple platforms (CocoaPods removed). SDK profiling (`profilesSampleRate`) was removed. Tracing defaults to streaming: use `Sentry.startSpan` instead of `startTransaction` / `startChild`. Logs and metrics are always enabled (`enableLogs` / `enableMetrics` removed).
+
 You must initialize Sentry as early as possible in your application's lifecycle, wrapping `runApp` with `SentryWidget` to capture AssetBundle transaction times and basic UI interactions natively.
 
 ```dart
@@ -30,9 +32,6 @@ Future<void> main() async {
       // 1.0 = 100%. (Reduce in production to avoid quota exhaustion!)
       options.tracesSampleRate = 0.2; 
       
-      // Profiles provide deep CPU-level insights. Tied to TracesSampleRate.
-      options.profilesSampleRate = 1.0; 
-
       // Replay sessions to visually debug errors.
       options.replay.onErrorSampleRate = 1.0; 
       options.replay.sessionSampleRate = 0.1;
