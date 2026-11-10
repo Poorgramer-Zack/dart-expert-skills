@@ -43,7 +43,7 @@ android {
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
   <!-- Exclude secure storage from Google Drive backups -->
-  <exclude domain="sharedpref" path="FlutterSecureStorage"/>
+  <exclude domain="sharedpref" path="FlutterSecureStorage.xml"/>
 </full-backup-content>
 ```
 
