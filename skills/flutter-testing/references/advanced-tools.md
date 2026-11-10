@@ -149,7 +149,7 @@ Use `patrolTest` for flows that cross the Flutter/OS boundary:
 
 ```yaml
 dev_dependencies:
-  patrol: ^4.5.0
+  patrol: ^4.11.0
 ```
 
 ```bash
