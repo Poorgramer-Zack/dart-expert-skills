@@ -210,7 +210,7 @@ class AuthGuard extends AutoRouteGuard {
     if (AuthService.instance.isLoggedIn) {
       resolver.next(); // Proceed
     } else {
-      resolver.redirect(LoginRoute(
+      resolver.redirectUntil(LoginRoute(
         onResult: (success) {
           if (success) {
             resolver.next();
