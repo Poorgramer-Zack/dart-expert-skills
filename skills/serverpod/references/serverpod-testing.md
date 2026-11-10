@@ -62,7 +62,7 @@ Add development dependencies in `pubspec.yaml`:
 ```yaml
 dev_dependencies:
   # Version must EXACTLY MATCH the serverpod version your project uses!
-  serverpod_test: ^3.4.0 
+  serverpod_test: ^4.1.1 
   test: ^1.24.2
 ```
 
@@ -104,8 +104,8 @@ Since Serverpod tests connect to a real DB to guarantee reliability, the Test Do
 
 ```bash
 cd myapp_server
-# Launch Test and Development databases
-docker compose up --build --detach
+# Start the dev stack (embedded Postgres) in another terminal
+serverpod start
 # Execute native dart testing commands
 dart test
 ```

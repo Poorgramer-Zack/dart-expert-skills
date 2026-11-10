@@ -3,12 +3,16 @@ metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---
 
-# Serverpod Latest Version and Full-Stack Architecture Best Practices (v2.x / v3.0 Industrial)
+# Serverpod Latest Version and Full-Stack Architecture Best Practices (v4.x)
 
 ## Goal
 Implements End-to-end Type Safety and code generation using Serverpod. [Serverpod](https://serverpod.dev/) is an open-source Dart backend framework designed specifically for Flutter. Its greatest strength lies in establishing a seamless, strongly-typed connection from the database (PostgreSQL), through the backend API, down to the Flutter frontend.
 
-Currently, the latest major release is Serverpod 3 (codenamed Industrial), which introduces a brand new Web Server and a refactored Auth module.
+Currently, the latest major release is Serverpod 4. Key changes from v3:
+- `serverpod start` replaces the manual `docker compose` + `serverpod generate --watch` + server + Flutter run combination, with hot reload.
+- Model files must use the `.spy.yaml` extension.
+- `serverpod create --mini` was removed; create a standard project.
+- Minimum versions: Dart 3.12.2, Flutter 3.44.4.
 
 ## Instructions
 

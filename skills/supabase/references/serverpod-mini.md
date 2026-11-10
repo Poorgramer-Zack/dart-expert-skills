@@ -3,23 +3,23 @@ metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---
 
-# Architecture Evolution: Supabase + Serverpod Mini (BFF Pattern)
+# Architecture Evolution: Supabase + Serverpod (BFF Pattern)
 
 Although Supabase provides **RLS (Row Level Security)**, allowing you to establish permission rules natively inside Postgres, deploying a mountain of Postgres rules is excruciating for numerous developers totally unfamiliar with scaling PL/pgSQL architectures resiliently.
 
 If you intend to implement rigid business orchestration directly hiding highly sensitive business operations structurally (and you want to use pure Dart rather than Deno/TypeScript edge functions), the Backend-for-Frontend is required natively.
 
 **The Optimal Solution**:
-**Flutter Client ↔️ Serverpod Mini Server ↔️ Supabase Postgres**
+**Flutter Client ↔️ Serverpod Server ↔️ Supabase Postgres**
 
-We insert Serverpod Mini acting actively navigating as the robust BFF. We embed the pure `supabase` (Dart SDK) internally inside the Serverpod environment, forcefully granting it absolute god-tier privileges leveraging the `SERVICE_ROLE_KEY`.
+We insert Serverpod acting actively navigating as the robust BFF. We embed the pure `supabase` (Dart SDK) internally inside the Serverpod environment, forcefully granting it absolute god-tier privileges leveraging the `SERVICE_ROLE_KEY`.
 
 ### Serverpod SDK Installation
 Do not install the generic Flutter package on the server natively.
 
 ```yaml
 dependencies:
-  supabase: ^2.0.0 # 🌟 Pure Dart client only
+  supabase: ^2.16.5 # 🌟 Pure Dart client only
 ```
 
 ### Server-Side Global Initialization (Server Key)

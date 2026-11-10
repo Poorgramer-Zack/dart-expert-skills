@@ -17,7 +17,7 @@ To ensure modularity and LLM readability, this skill is split into logical chapt
 2. **Read** the corresponding chapter(s) from the `references/` directory.
    - Example: If the user asks about deep linking Magic Links for login, read `01-setup.md` and `02-auth.md`.
 3. Synthesize the guidelines exactly as documented within the chapters. **DO NOT hallucinate third-party packages or outdated practices**.
-4. Maintain the Serverpod Mini BFF (Backend-For-Frontend) architecture whenever the user requires executing high-privilege operations that should bypass Row Level Security (RLS) entirely.
+4. Maintain the Serverpod BFF (Backend-For-Frontend) architecture whenever the user requires executing high-privilege operations that should bypass Row Level Security (RLS) entirely.
 
 ## Reference Files
 

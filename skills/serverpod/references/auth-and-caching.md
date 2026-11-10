@@ -18,7 +18,7 @@ Implement a production-ready authentication system in Serverpod. This includes s
 Add the auth module to your server's `pubspec.yaml`:
 ```yaml
 dependencies:
-  serverpod_auth_idp_server: ^2.3.0 # Match your Serverpod version
+  serverpod_auth_idp_server: ^4.1.1 # Match your Serverpod version
 ```
 
 ### 2. Token Manager — Session vs JWT
@@ -211,8 +211,8 @@ serverpod generate
 # 2. Create the migration SQL
 serverpod create-migration
 
-# 3. Start the database container
-docker compose up --build --detach
+# 3. Start the stack (database, server, Flutter apps) with hot reload
+serverpod start
 
 # 4. Apply the migration (maintenance mode)
 dart run bin/main.dart --role maintenance --apply-migrations
