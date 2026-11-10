@@ -40,15 +40,16 @@ For most small-to-medium projects, packaging Serverpod into a Docker Image and d
 Serverpod internally determines the configuration file via yaml files under `config/`.
 When deploying online, it is imperative to explicitly provide a parameter to the startup command to read `config/production.yaml`:
 ```bash
-./bin/server --mode production --server-id default
+dart bin/main.dart --mode production --server-id default
 ```
 > If running in a clustered environment, the `--server-id` of each Instance must be different, unless you are in an environment like AWS Fargate where specifying the ID is difficult.
 
 #### Password & Environment Variable Secrecy
 **ABSOLUTELY NEVER write your DB password in plaintext inside `config/production.yaml`**.
-Production environment passwords must be passed via the `SERVERPOD_PASSWORDS` environment variable, containing a JSON string:
-```json
-{"database": "YOUR_STRONG_DB_PASSWORD", "redis": "YOUR_REDIS_PASSWORD"}
+Pass production passwords as environment variables. The built-in database and Redis passwords have dedicated names, and any other password uses the `SERVERPOD_PASSWORD_<key>` prefix:
+```bash
+export SERVERPOD_DATABASE_PASSWORD=YOUR_STRONG_DB_PASSWORD
+export SERVERPOD_REDIS_PASSWORD=YOUR_REDIS_PASSWORD
 ```
 
 #### Community Support Tools

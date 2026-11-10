@@ -1,6 +1,6 @@
 ---
 name: "developing-serverpod-backend"
-description: "Develops full-stack Dart backends using the Serverpod framework with PostgreSQL, Redis, and Docker. Use when building type-safe API endpoints, defining YAML data models, configuring Serverpod auth, writing server-side tests, running database migrations, deploying to Docker/AWS/GCP, or using Serverpod Mini for database-less BFF proxy endpoints."
+description: "Develops full-stack Dart backends using the Serverpod framework with PostgreSQL, Redis, and Docker. Use when building type-safe API endpoints, defining YAML data models, configuring Serverpod auth, writing server-side tests, running database migrations, deploying to Docker/AWS/GCP, or creating database-less servers for stateless proxy/BFF endpoints."
 metadata:
   last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
@@ -38,9 +38,8 @@ Implement business logic inside endpoint classes. Use session parameters for aut
 Use the `serverpod_auth` module for token-based authentication. Configure Redis for caching to reduce repeated database queries.
 - [Authentication & Caching Guide](./references/auth-and-caching.md) - `serverpod_auth` setup, endpoint protection, and Redis caching.
 
-#### 2.3 Database-less Backends (Serverpod Mini)
-Use Serverpod Mini when you only need proxy/BFF endpoints without a PostgreSQL database.
-- [Serverpod Mini Guide](./references/serverpod-mini.md) - Lightweight API routing without database dependencies.
+#### 2.3 Database-less Backends
+Serverpod 4 has no separate Mini variant. For stateless proxy/BFF endpoints, create a server without a database: `serverpod create <name> --template server --no-database --no-redis --no-auth`.
 
 ---
 
@@ -62,7 +61,6 @@ Use `docker-compose` to orchestrate local and production environments. Configure
 ### Schema and Logic (Load During Phase 1/2)
 - [Core Architecture & Models Guide](./references/core-and-models.md) - YAML models, database schema, directory structure.
 - [Endpoints & Database Guide](./references/endpoints-and-database.md) - ORM, typed queries, API endpoints.
-- [Serverpod Mini Guide](./references/serverpod-mini.md) - Database-less proxy routing.
 
 ### Security, Scaling & Testing (Load During Phase 2/3)
 - [Authentication & Caching Guide](./references/auth-and-caching.md) - `serverpod_auth`, endpoint protection, Redis caching.
