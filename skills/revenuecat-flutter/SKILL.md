@@ -205,10 +205,10 @@ try {
 ## Old Patterns (pre-v10)
 
 ```yaml
-# purchases_flutter v9.x — supports Android API 21+
+# Pre-v10 line (v9.x, latest 9.16.2). Supports Android API 21+; use only if you cannot raise minSdk to 23.
 dependencies:
-  purchases_flutter: ^11.0.1
-  purchases_ui_flutter: ^11.0.1
+  purchases_flutter: ^9.16.2
+  purchases_ui_flutter: ^9.16.2
 ```
 
 In v9, a workaround allowed restoring consumed one-time products on Android. This workaround is removed in v10. If you relied on it, configure those products as non-consumable in the RevenueCat dashboard before upgrading.

@@ -77,7 +77,7 @@ This is the core defense line of CI (Continuous Integration), and it's recommend
 
       # 🌟 Run static analysis to ensure no warnings or lint errors
       - name: 🚨 Analyze Code
-        run: flutter analyze --no-fatal-warnings
+        run: flutter analyze
 
       # 🌟 Run Unit and Widget Tests (If there are integration tests, set up another job with emulators)
       - name: 🧪 Run Tests

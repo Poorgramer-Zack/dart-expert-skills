@@ -23,10 +23,7 @@ Configures a Windows development environment for building Flutter applications t
 
 2. **Install Windows Tooling**
    To compile Windows desktop applications, Visual Studio (not VS Code) is strictly required. Install Visual Studio with the "Desktop development with C++" workload.
-   If automating via command line, use the following workload ID:
-   ```cmd
-   vs_setup.exe --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended
-   ```
+   After installing, run `flutter doctor -v`. It lists any missing Visual Studio components.
 
 3. **Decision Logic: Target Platform Configuration**
    **STOP AND ASK THE USER:** "Which target platforms are you configuring for this environment? (A) Windows Desktop, (B) Android, or (C) Both?"
