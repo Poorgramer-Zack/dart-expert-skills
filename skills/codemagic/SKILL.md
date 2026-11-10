@@ -61,9 +61,11 @@ Before building, utilize the `scripts` block to execute commands sequentially.
         script: flutter analyze
         
       - name: 🧪 Unit & Widget Tests
-        script: flutter test
-        # 🌟 Codemagic automatically parses the test results and displays them on a sleek Web Dashboard
-        test_report: build/test-results/flutter.json 
+        script: |
+          mkdir -p test-results
+          flutter test --machine > test-results/flutter.json
+        # 🌟 Codemagic parses the Flutter --machine JSON and shows the results in the build overview
+        test_report: test-results/flutter.json
 ```
 
 ### 4. Build Bundle / IPA
