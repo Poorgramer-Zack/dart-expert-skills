@@ -29,7 +29,7 @@ return ShadApp.custom(
 ## Theme Customization
 
 ### Color Schemes
-Supported: `ShadBlue`, `ShadGray`, `ShadGreen`, `ShadNeutral`, `ShadOrange`, `ShadRed`, `ShadRose`, `ShadSlate`, `ShadStone`, `ShadViolet`, `ShadYellow`, `ShadZinc`.
+Supported (class names are `Shad<Name>ColorScheme`, for example `ShadSlateColorScheme`): Blue, Gray, Green, Neutral, Orange, Red, Rose, Slate, Stone, Violet, Yellow, Zinc. Each has `.light()` and `.dark()` constructors.
 
 ```dart
 ShadApp(

@@ -1,6 +1,6 @@
 ---
 name: "building-shadcn-flutter-ui"
-description: "shadcn_flutter UI component library for building accessible, themed Flutter interfaces. Use when integrating shadcn components, configuring design system theming, or building consistent widget layouts."
+description: "shadcn_ui (pub package) component library for building accessible, themed Flutter interfaces. Use when integrating shadcn components, configuring design system theming, or building consistent widget layouts."
 metadata:
   last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
@@ -42,4 +42,4 @@ Refer to these detailed guides for implementation:
 ## Version Notes (verified)
 - `shadcn_ui` 0.59.0 requires Flutter 3.41+ (Dart 3.11+) for variable font weights.
 - Form fields must use a `String` `id`. `ShadForm` stores values with `String` keys (see the shadcn_ui changelog).
-- Use `ShadFormState.setFieldValue` (not the old `setValue`) when you set a single field programmatically.
+- Use `ShadFormState.setFieldValue(id, value)` to set one field programmatically. `ShadFormState.setValue(map)` merges a whole map of values into the form.
