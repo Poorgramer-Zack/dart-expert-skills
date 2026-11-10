@@ -9,7 +9,7 @@ metadata:
 
 ## Overview
 
-Serverpod splits projects into three modules: `server`, `client`, and `shared`. Models defined in `.spy.yaml` files generate type-safe Dart classes and database migrations via `serverpod generate`.
+Serverpod splits projects into modules: `server`, `client`, and (fullstack template) `<name>_flutter`. Models defined in `.spy.yaml` files generate type-safe Dart classes and database migrations via `serverpod generate`.
 
 ---
 
@@ -20,7 +20,7 @@ Serverpod splits projects into three modules: `server`, `client`, and `shared`. 
 ### Phase 1: Research & Modeling
 
 #### 1.1 Understand Project Structure
-Serverpod separates code into `server`, `client`, and `shared` modules. Endpoint logic lives in `server`; generated client code goes into `client`.
+Serverpod separates code into `server` and `client` modules (the fullstack template adds `<name>_flutter`). Endpoint logic lives in `server`; generated client code goes into `client`.
 
 #### 1.2 Define Data Models
 Define database models using `.spy.yaml` files, then run `serverpod generate` to produce Dart classes and database migrations. Use explicit foreign key mappings for relational tables.

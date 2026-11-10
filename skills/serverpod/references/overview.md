@@ -20,7 +20,7 @@ Currently, the latest major release is Serverpod 4. Key changes from v3:
 In traditional development, Flutter frontends and Node.js/Go backends must maintain contracts via Swagger or manually written JSON, which is highly error-prone.
 Serverpod's philosophy:
 1. **Write a single YAML protocol**: Serverpod automatically generates the database tables, the backend ORM models, and the frontend API Client.
-2. **Share a single language (Dart)**: You can even place shared business logic in a `shared` directory to be called by both ends.
+2. **Share a single language (Dart)**: You can even place shared business logic in a separate pure-Dart package to be called by both ends.
 
 ### Deconstructing the Project Architecture
 When you create a project via `serverpod create myapp`, you get three modules:

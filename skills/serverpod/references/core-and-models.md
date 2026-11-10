@@ -42,7 +42,7 @@ table: company
 fields:
   name: String
   # 🌟 Adding the 'relation' keyword generates a list of objects in Dart
-  employees: List<Employee>? relation
+  employees: List<Employee>?, relation
 ```
 
 ```yaml
@@ -53,7 +53,7 @@ fields:
   name: String
   # 🌟 Establish the relation here. Because it is the "Many" side,
   # Serverpod automatically generates a Foreign Key named 'companyId' in the database.
-  company: Company? relation
+  company: Company?, relation
 ```
 
 **Many-to-Many (M:N)**: Cannot be defined directly. You must manually create a **Junction Table / Model** serving as a bridge, just like in a traditional relational database.
@@ -63,8 +63,8 @@ For example, Students and Courses:
 class: Enrollment
 table: enrollment
 fields:
-  student: Student? relation
-  course: Course? relation
+  student: Student?, relation
+  course: Course?, relation
 ```
 
 #### 2.3 Inheritance and Polymorphism

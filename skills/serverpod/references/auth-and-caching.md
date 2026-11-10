@@ -35,14 +35,15 @@ For most production apps, **JWT** is recommended. Use Server-Side Sessions only 
 Initialize authentication services with a Token Manager and Identity Providers.
 
 ```dart
-import 'package:serverpod/serverpod.dart';
+import 'src/generated/serverpod.dart'; // generated Serverpod wrapper: Protocol and Endpoints are pre-wired
 import 'package:serverpod_auth_idp_server/core.dart';
+import 'package:serverpod_auth_idp_server/providers/email.dart';
 import 'package:serverpod_auth_idp_server/providers/google.dart';
 import 'package:serverpod_auth_idp_server/providers/apple.dart';
 import 'package:serverpod_auth_idp_server/providers/facebook.dart';
 
 void run(List<String> args) async {
-  final pod = Serverpod(args, Protocol(), Endpoints());
+  final pod = Serverpod(args); // pre-wired with the generated Protocol and Endpoints
 
   pod.initializeAuthServices(
     tokenManagerBuilders: [

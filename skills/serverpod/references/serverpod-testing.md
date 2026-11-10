@@ -89,10 +89,10 @@ void main() {
     test('Calling hello() should return the correct greeting', () async {
       // 1. Act: Call the backend logic directly via endpoints!
       // sessionBuilder establishes state corresponding to this request's lifecycle
-      final greeting = await endpoints.example.hello(sessionBuilder, 'Zack');
+      final greeting = await endpoints.greeting.hello(sessionBuilder, 'Zack');
       
       // 2. Assert
-      expect(greeting, 'Hello Zack');
+      expect(greeting.message, 'Hello Zack');
     });
 
   });
