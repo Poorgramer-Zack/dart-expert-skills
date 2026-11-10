@@ -77,7 +77,7 @@ class User {
   Map<String, dynamic> toJson() => _$UserToJson(this);
 }
 ```
-*Validate-and-Fix:* Instruct the user to run `dart run build_runner build --delete-conflicting-outputs` to generate the `*.g.dart` file.
+*Validate-and-Fix:* Instruct the user to run `dart run build_runner build` to generate the `*.g.dart` file.
 
 ### 3. Implement Background Parsing (Isolates)
 To prevent UI jank, offload heavy JSON parsing to a background isolate.

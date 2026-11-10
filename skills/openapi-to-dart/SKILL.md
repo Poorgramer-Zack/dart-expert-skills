@@ -288,7 +288,7 @@ class ProductRepository {
 - **Use `@JsonKey(name: ...)` for naming mismatches** — do not rename the JSON key, rename the Dart field.
 - **Equatable vs Freezed**: default to Freezed for domain models; use Equatable for pure request DTOs that don't need `copyWith`.
 - **DioException always caught at repository level** — services throw raw, repositories map to `ApiError`.
-- Run `dart run build_runner build --delete-conflicting-outputs` after generating models.
+- Run `dart run build_runner build` after generating models.
 
 ## Old Patterns (pre-Freezed 3)
 

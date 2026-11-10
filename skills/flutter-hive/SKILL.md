@@ -77,7 +77,7 @@ class User extends HiveObject {
   });
 }
 
-// Generate adapter: flutter pub run build_runner build
+// Generate adapter: dart run build_runner build
 ```
 
 **Manual TypeAdapter**:

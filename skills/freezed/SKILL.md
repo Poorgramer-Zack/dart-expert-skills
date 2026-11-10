@@ -51,7 +51,7 @@ sealed class UserModel with _$UserModel {
 }
 ```
 
-> After every model change, run `dart run build_runner build -d`.
+> After every model change, run `dart run build_runner build`.
 
 ### 3. Custom Getters and Methods
 To add computed properties or methods, add a private parameterless constructor.
@@ -78,8 +78,7 @@ abstract class Product with _$Product {
 ### 4. Generic Types Support
 
 ```dart
-@freezed
-@JsonSerializable(genericArgumentFactories: true) // required for generic JSON parsing
+@Freezed(genericArgumentFactories: true) // lets freezed pass fromJsonT into the generated fromJson
 sealed class PaginatedResponse<T> with _$PaginatedResponse<T> {
   const factory PaginatedResponse({
     required int currentPage,

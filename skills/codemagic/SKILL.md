@@ -55,7 +55,7 @@ Before building, utilize the `scripts` block to execute commands sequentially.
         script: flutter packages pub get
         
       - name: ⚙️ Code Generation (build_runner)
-        script: dart run build_runner build --delete-conflicting-outputs
+        script: dart run build_runner build
         
       - name: 🚨 Static Analysis
         script: flutter analyze

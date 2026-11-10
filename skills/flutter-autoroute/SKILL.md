@@ -103,10 +103,10 @@ class AppRouter extends RootStackRouter {
 ### Phase 4: Generate Routes
 
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 
 # Or watch mode for development
-flutter pub run build_runner watch
+dart run build_runner watch
 ```
 
 ### Phase 5: Initialize Router

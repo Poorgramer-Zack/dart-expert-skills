@@ -60,11 +60,11 @@ jobs:
 If the project uses packages relying on `build_runner` (like Freezed, Riverpod, go_router builder), you must execute code generation before testing or compiling.
 
 **Best Practice:**
-If it is a Pull Request check, use `build_runner build --delete-conflicting-outputs` to ensure a clean generation state.
+If it is a Pull Request check, use `build_runner build` to ensure a clean generation state.
 
 ```yaml
       - name: ⚙️ Run build_runner
-        run: dart run build_runner build --delete-conflicting-outputs
+        run: dart run build_runner build
 ```
 
 ### 3. Analyze & Test

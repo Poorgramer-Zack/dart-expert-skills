@@ -84,7 +84,7 @@ LazyDatabase _openConnection() {
 ### Phase 3: Generate Code
 
 ```bash
-flutter pub run build_runner build --delete-conflicting-outputs
+dart run build_runner build
 ```
 
 ### Phase 4: Initialize Database
@@ -270,7 +270,7 @@ LazyDatabase _openConnection() {
 1. Update table definitions in `.dart` or `.drift` files
 2. Run code generator:
    ```bash
-   dart run build_runner build --delete-conflicting-outputs
+   dart run build_runner build
    ```
 3. Review generated code for warnings
 4. Test migrations thoroughly in development
