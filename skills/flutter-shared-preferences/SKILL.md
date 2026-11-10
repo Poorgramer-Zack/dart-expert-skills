@@ -90,12 +90,11 @@ await Prefs.clear();
 
 **With Riverpod**:
 ```dart
-final darkModeProvider = StateNotifierProvider<DarkModeNotifier, bool>((ref) {
-  return DarkModeNotifier();
-});
+final darkModeProvider = NotifierProvider<DarkModeNotifier, bool>(DarkModeNotifier.new);
 
-class DarkModeNotifier extends StateNotifier<bool> {
-  DarkModeNotifier() : super(Prefs.isDarkMode);
+class DarkModeNotifier extends Notifier<bool> {
+  @override
+  bool build() => Prefs.isDarkMode;
   
   Future<void> toggle() async {
     state = !state;

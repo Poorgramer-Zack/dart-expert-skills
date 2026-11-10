@@ -153,13 +153,13 @@ class ApiClient {
 
 **With Riverpod**:
 ```dart
-final authStateProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
-  return AuthNotifier();
-});
+final authStateProvider = NotifierProvider<AuthNotifier, AuthState>(AuthNotifier.new);
 
-class AuthNotifier extends StateNotifier<AuthState> {
-  AuthNotifier() : super(AuthState.loading()) {
+class AuthNotifier extends Notifier<AuthState> {
+  @override
+  AuthState build() {
     _checkAuthStatus();
+    return AuthState.loading();
   }
   
   Future<void> _checkAuthStatus() async {
