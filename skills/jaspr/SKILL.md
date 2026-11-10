@@ -61,7 +61,7 @@ Jaspr provides official Tailwind CSS integration via `jaspr_tailwind`.
 #### 2.1 Installation & Setup
 ```yaml
 dev_dependencies:
-  jaspr_tailwind: ^0.3.6
+  jaspr_tailwind: ^0.3.6  # does not resolve on Dart 3.13 (build_modules >=5 needs SDK <3.13); use Dart 3.12 or remove
 ```
 
 Create `web/styles.tw.css` with the Tailwind v4 CSS-first syntax:
