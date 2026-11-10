@@ -22,7 +22,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.17.1
-  freezed: ^4.0.3 # 4.x needs analyzer 14: conflicts with custom_lint/riverpod_lint and auto_route_generator
+  freezed: ^4.0.3 # 4.x needs Dart 3.13+ and analyzer 14: conflicts with custom_lint/riverpod_lint and auto_route_generator
   json_serializable: ^6.15.2 # If mutual conversion with JSON is required
 ```
 

@@ -22,7 +22,7 @@ dependencies:
   go_router: ^18.1.4
 
 dev_dependencies:
-  go_router_builder: ^4.5.0  # Optional: for type-safe routes
+  go_router_builder: ^4.5.3  # Optional: for type-safe routes
 ```
 
 ### Phase 2: Define Routes

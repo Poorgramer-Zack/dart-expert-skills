@@ -410,7 +410,7 @@ Each chart has a full API reference with all properties, defaults, and data clas
 
 ## Constraints
 
-* **Version**: fl_chart ^1.3.1. The API tables in references were written for 1.2.0; check them against 1.3.1 before relying on exact names.
+* **Version**: fl_chart ^1.3.1. The class names used in this skill (LineChartData, BarChartData, PieChartData, ScatterChartData, RadarChartData, FlSpot, AxisTitles, SideTitles, FlGridData, FlDotData, touch data classes) exist in the 1.3.1 sources (parameter-level review still pending). The 1.3.0 and 1.3.1 changelogs add GaugeChart and fix bugs without renaming any listed class.
 * **Import**: `import 'package:fl_chart/fl_chart.dart';` — single import for all chart types.
 * **PieChart padding**: If wrapping PieChart in a padding widget, set `centerSpaceRadius: double.infinity` to prevent layout issues.
 * **Axis bounds**: Explicitly providing `minX/maxX/minY/maxY` improves performance over auto-calculation from data.

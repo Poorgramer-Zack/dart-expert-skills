@@ -272,7 +272,7 @@ ref.listen<AsyncValue<void>>(saveProvider, (prev, next) {
 dev_dependencies:
   riverpod_generator: ^3.0.3
   custom_lint: ^0.8.1
-  riverpod_lint: ^3.0.3 # verified lint set; use build_runner ^2.15.1 (generator 4.0.8+ conflicts with custom_lint)
+  riverpod_lint: ^3.0.3 # verified lint set (resolves to 3.0.3); riverpod_lint 3.2.0 does not resolve with custom_lint 0.8.1; use build_runner ^2.15.1 (generator 4.0.8+ conflicts with custom_lint)
 ```
 
 ### Provider and FutureProvider
