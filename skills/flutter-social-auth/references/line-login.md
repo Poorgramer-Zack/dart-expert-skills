@@ -194,11 +194,11 @@ class LineAuthService {
     }
   }
 
-  // Refresh access token
+  // Refresh access token; returns the stored token on success
   Future<StoredAccessToken?> refreshAccessToken() async {
     try {
-      final result = await LineSDK.instance.refreshAccessToken();
-      return result.value;
+      await LineSDK.instance.refreshToken();
+      return LineSDK.instance.currentAccessToken;
     } on PlatformException catch (e) {
       print('Token refresh failed: ${e.message}');
       return null;
@@ -638,13 +638,13 @@ try {
 ```dart
 class ApiClient {
   Future<Response> callApi() async {
-    // Always verify token before API calls
-    final isValid = await LineSDK.instance.verifyAccessToken();
-    
-    if (!isValid.data) {
+    // Verify before API calls. verifyAccessToken() throws a PlatformException when the token is invalid.
+    try {
+      await LineSDK.instance.verifyAccessToken();
+    } on PlatformException {
       // Token expired, try refresh
       try {
-        await LineSDK.instance.refreshAccessToken();
+        await LineSDK.instance.refreshToken();
       } catch (e) {
         // Refresh failed, need to re-login
         await LineSDK.instance.logout();
