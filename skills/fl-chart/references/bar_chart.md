@@ -45,7 +45,7 @@ Enum: `start`, `end`, `center`, `spaceEvenly`, `spaceAround`, `spaceBetween`
 | borderDashArray | Dash pattern for border stroke | `null` |
 | borderSide | Border stroke around rod (null = no stroke) | `null` |
 | backDrawRodData | [BackgroundBarChartRodData](#backgroundbarchartroddata) for background rod | `null` |
-| rodStackItem | List of [BarChartRodStackItem](#barchartrodstackitem) for stacked bars | `[]` |
+| rodStackItems | List of [BarChartRodStackItem](#barchartrodstackitem) for stacked bars | `[]` |
 | toYErrorRange | [FlErrorRange](./base_chart.md#flerrorrange) for error indicator | `null` |
 | label | [BarChartRodLabel](#barchartrodlabel) text label on rod | `null` |
 
@@ -108,7 +108,7 @@ Extends [FlLabel](./base_chart.md#fllabel).
 | tooltipHorizontalAlignment | Alignment relative to bar | `FLHorizontalAlignment.center` |
 | tooltipHorizontalOffset | Horizontal offset | `0` |
 | maxContentWidth | Max width before text wrap | `120` |
-| getTooltipItems | Callback: `(group, groupIndex, rod, rodIndex) → BarTooltipItem` | `defaultBarTooltipItem` |
+| getTooltipItem | Callback: `(group, groupIndex, rod, rodIndex) → BarTooltipItem` | `defaultBarTooltipItem` |
 | fitInsideHorizontally | Force inside bounds | `false` |
 | fitInsideVertically | Force inside bounds | `false` |
 | direction | Tooltip direction (top/bottom/auto) | `auto` |

@@ -352,14 +352,14 @@ BarChart(
   BarChartData(
     barGroups: [
       BarChartGroupData(x: 0, barRods: [
-        BarChartRodData(toY: 70, width: 20, borderRadius: BorderRadius.circular(4), rodStackItem: [
+        BarChartRodData(toY: 70, width: 20, borderRadius: BorderRadius.circular(4), rodStackItems: [
           BarChartRodStackItem(0, 20, Colors.blue),    // Q1
           BarChartRodStackItem(20, 50, Colors.orange),  // Q2
           BarChartRodStackItem(50, 70, Colors.green),   // Q3
         ]),
       ]),
       BarChartGroupData(x: 1, barRods: [
-        BarChartRodData(toY: 75, width: 20, borderRadius: BorderRadius.circular(4), rodStackItem: [
+        BarChartRodData(toY: 75, width: 20, borderRadius: BorderRadius.circular(4), rodStackItems: [
           BarChartRodStackItem(0, 30, Colors.blue),
           BarChartRodStackItem(30, 55, Colors.orange),
           BarChartRodStackItem(55, 75, Colors.green),
@@ -372,7 +372,7 @@ BarChart(
         // response?.spot?.touchedStackItem gives the BarChartRodStackItem
       },
       touchTooltipData: BarTouchTooltipData(
-        getTooltipItems: (group, groupIndex, rod, rodIndex) {
+        getTooltipItem: (group, groupIndex, rod, rodIndex) {
           return BarTooltipItem('Total: ${rod.toY.toInt()}', const TextStyle(color: Colors.white));
         },
       ),
