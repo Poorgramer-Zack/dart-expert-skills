@@ -73,7 +73,7 @@ final message = b.fold(
 ## Async
 
 ```dart
-Future<Either<UserError, String>> fetchName(int id) async => findName(id);
+Future<Either<UserError, String>> fetchName(int id) async => const Either.right('Ada');
 
 // Transform the value inside a Future<Either>
 final length = await fetchName(1).thenMapEither((name) => name.length); // Right(3)
