@@ -18,12 +18,12 @@ Drift’s immense power lies in writing database table structures (Tables) in Da
 #### Dependency Setup
 ```yaml
 dependencies:
-  drift: ^2.32.0
-  drift_flutter: ^0.3.0
+  drift: ^2.35.4
+  drift_flutter: ^0.3.1
 
 dev_dependencies:
-  drift_dev: ^2.32.0
-  build_runner: ^2.4.0
+  drift_dev: ^2.35.3
+  build_runner: ^2.17.1
 ```
 
 ### 2. Two Methods for Defining Tables (Best Practices)

@@ -22,8 +22,8 @@ Hooks are tools used to manage "**local and ephemeral UI state or side effects**
 #### Dependency Installation
 ```yaml
 dependencies:
-  flutter_hooks: ^0.21.3
-  hooks_riverpod: ^3.3.0 # If you are simultaneously using Riverpod
+  flutter_hooks: ^0.21.4
+  hooks_riverpod: ^3.5.0 # If you are simultaneously using Riverpod
 ```
 
 ### 2. Widget Declaration: Replacing StatefulWidget

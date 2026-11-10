@@ -19,12 +19,12 @@ Please comprehensively delete all legacy `hive` and `hive_flutter` dependencies,
 
 ```yaml
 dependencies:
-  hive_ce: ^2.19.3
-  hive_ce_flutter: ^2.0.0
+  hive_ce: ^2.23.3
+  hive_ce_flutter: ^2.5.0
 
 dev_dependencies:
-  hive_ce_generator: ^2.0.0
-  build_runner: ^2.4.0
+  hive_ce_generator: ^1.12.1
+  build_runner: ^2.17.1
 ```
 
 ### 2. Initialization Best Practices
