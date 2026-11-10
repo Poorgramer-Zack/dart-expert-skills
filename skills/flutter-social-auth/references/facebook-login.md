@@ -61,7 +61,7 @@ dependencies:
 #### Deployment Target & Podfile
 ```ruby
 # ios/Podfile
-platform :ios, '12.0'
+platform :ios, '15.0'
 ```
 
 #### `ios/Runner/Info.plist`

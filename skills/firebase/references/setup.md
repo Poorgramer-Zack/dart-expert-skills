@@ -56,7 +56,7 @@ When building for Apple platforms, the massive number of Firebase dependencies c
 
 ```ruby
 # Uncomment this line to define a global platform for your project
-platform :ios, '13.0' # Ensure this matches your project requirements
+platform :ios, '15.0' # Matches the Flutter 3.47 template default; keep it equal to your deployment target
 
 target 'Runner' do
   # CRITICAL for Firebase:

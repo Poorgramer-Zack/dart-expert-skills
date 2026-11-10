@@ -21,7 +21,7 @@ dependencies:
 ### Provider Configuration
 #### iOS (`Info.plist` & Deployment Target)
 1.  **Deployment Target**: Must be iOS **13.0** or higher.
-    - Update `ios/Podfile`: `platform :ios, '13.0'`
+    - Update `ios/Podfile`: `platform :ios, '15.0'`
 2.  **Info.plist**: Add `CFBundleURLTypes` and `LSApplicationQueriesSchemes`.
 ```xml
 <key>CFBundleURLTypes</key>
@@ -487,7 +487,7 @@ class LineTokenManager {
 android {
     defaultConfig {
         minSdk 24  // MUST be 24 or higher
-        targetSdk 34
+        // targetSdk: let Flutter set it (flutter.targetSdkVersion); do not hardcode an old value
     }
 }
 ```
@@ -574,7 +574,7 @@ await LineSDK.instance.setup('1234567890');
 **Cause**: Package name in app doesn't match LINE Console configuration.
 
 **Solution**:
-```kotlin
+```gradle
 // android/app/build.gradle
 android {
     defaultConfig {
@@ -663,12 +663,12 @@ class ApiClient {
 ```
 
 ### 9. **Deployment Target Too Low (iOS)**
-**Cause**: iOS deployment target below 13.0.
+**Cause**: iOS deployment target below 15.0.
 
 **Solution**:
 ```ruby
 # ios/Podfile
-platform :ios, '13.0'  # Minimum required
+platform :ios, '15.0'  # Minimum required by flutter_line_sdk v3
 ```
 
 ```xml
