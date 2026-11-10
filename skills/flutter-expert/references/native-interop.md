@@ -40,13 +40,13 @@ If Scenario A is selected, implement the modern FFI architecture using build hoo
     import 'package:native_toolchain_c/native_toolchain_c.dart';
 
     void main(List<String> args) async {
-      await build(args, (config, output) async {
+      await build(args, (input, output) async {
         final builder = CBuilder.library(
           name: 'native_add',
-          assetId: 'native_add/src/native_add.dart',
+          assetName: 'src/native_add.dart',
           sources: ['src/native_add.c'],
         );
-        await builder.run(config: config, output: output);
+        await builder.run(input: input, output: output);
       });
     }
     ```
@@ -200,7 +200,7 @@ If Scenario D is selected, implement Wasm-compatible web integrations.
 
     void manipulateDOM() {
       final div = web.document.createElement('div') as web.HTMLDivElement;
-      div.text = "Hello from Wasm-compatible Dart!";
+      div.textContent = "Hello from Wasm-compatible Dart!";
       web.document.body?.append(div);
       log("DOM updated".toJS);
     }
@@ -211,7 +211,7 @@ If Scenario D is selected, implement Wasm-compatible web integrations.
     import 'package:web/web.dart' as web;
 
     Widget buildVideoElement() {
-      return HtmlElementView.fromTag('video', onElementCreated: (Object video) {
+      return HtmlElementView.fromTagName(tagName: 'video', onElementCreated: (Object video) {
         final videoElement = video as web.HTMLVideoElement;
         videoElement.src = 'https://example.com/video.mp4';
         videoElement.style.width = '100%';
