@@ -42,7 +42,7 @@ If you want to protect your Firebase backend from unauthorized access using Devi
 
 **8. Advanced Architecture: Serverpod BFF**
 If you are building a highly secure app and need to bypass Firestore Rules or protect third-party API keys (like Stripe) using a Backend-for-Frontend (BFF), you **MUST** read:
-*   [`serverpod-mini.md`](./references/serverpod-mini.md)
+*   [`serverpod-bff.md`](./references/serverpod-bff.md)
 
 **9. Pricing & Cost Optimization**
 If you are designing the database schema or querying massive datasets, to prevent uncontrolled Firebase billing costs, you **MUST** read:

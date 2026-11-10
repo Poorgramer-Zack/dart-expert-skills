@@ -27,4 +27,4 @@ To ensure modularity and LLM readability, this skill is split into logical chapt
 *   **Realtime & Presence**: Read [04-realtime.md](./references/realtime.md) for Postgres CDC subscriptions and User Presence management.
 *   **Storage**: Read [05-storage.md](./references/storage.md) for cross-platform (Mobile vs Web) bucket manipulation.
 *   **Edge Functions**: Read [06-edge-functions.md](./references/edge-functions.md) for executing remote serverless workflows.
-*   **Serverpod Mini (BFF)**: Read [07-serverpod-mini.md](./references/serverpod-mini.md) for leveraging the pure `supabase` Dart library combined with the `SERVICE_ROLE_KEY` inside a secure backend.
+*   **Serverpod BFF**: Read [serverpod-bff.md](./references/serverpod-bff.md) for leveraging the pure `supabase` Dart library combined with the `SERVICE_ROLE_KEY` inside a secure backend.
