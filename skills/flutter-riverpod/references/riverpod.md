@@ -272,7 +272,7 @@ ref.listen<AsyncValue<void>>(saveProvider, (prev, next) {
 dev_dependencies:
   riverpod_generator: ^3.0.3
   custom_lint: ^0.8.1
-  riverpod_lint: ^3.0.3 # verified lint set; use build_runner ^2.15.1 (generator 4.x conflicts with custom_lint)
+  riverpod_lint: ^3.0.3 # verified lint set; use build_runner ^2.15.1 (generator 4.0.8+ conflicts with custom_lint)
 ```
 
 ### Provider and FutureProvider
@@ -557,7 +557,7 @@ Riverpod provides **interfaces only** — it does not bundle a database. Add `ri
 
 ```yaml
 dependencies:
-  riverpod_sqflite: ^0.1.0  # official SQLite storage adapter
+  riverpod_sqflite: ^0.4.8  # official SQLite storage adapter
 ```
 
 Call `persist()` at the start of `build()`. Riverpod will:

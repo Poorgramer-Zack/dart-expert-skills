@@ -23,7 +23,7 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.17.1
   riverpod_generator: ^4.0.10
-  # riverpod_lint is not compatible with riverpod_generator 4.x (analyzer conflict); see the lint variant below
+  # riverpod_lint is not compatible with riverpod_generator 4.0.8+ (analyzer conflict); see the lint variant below
 ```
 
 **Manual only** (no code generation):
@@ -32,7 +32,7 @@ dependencies:
   flutter_riverpod: ^3.5.0
 ```
 
-> **Lint variant (verified with `dart pub get` on Flutter 3.47.9):** `riverpod_lint` and `custom_lint` cannot be combined with `riverpod_generator` 4.x. Use this set when you need lint rules:
+> **Lint variant (verified with `dart pub get` on Flutter 3.47.9):** `riverpod_lint` and `custom_lint` cannot be combined with `riverpod_generator` 4.0.8+. `riverpod_generator` 4.0.0+1 still resolves with `riverpod_lint` 3.1.0 (verified). Use this set when you need lint rules:
 > ```yaml
 > flutter_riverpod: ^3.0.3
 > riverpod_annotation: ^3.0.3
