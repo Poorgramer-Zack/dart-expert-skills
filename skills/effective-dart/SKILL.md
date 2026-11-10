@@ -114,6 +114,27 @@ switch (color) {
 
 Dot shorthands work for: `enum` values, `static` fields, `static` methods, and named constructors — anywhere the context type is known.
 
+#### 1.8 Primary Constructors (Dart 3.13+)
+Declare fields in the class header. Use `final` on each parameter that should become a field. Verified with Dart 3.13.7.
+```dart
+class Point(final int x, final int y) {
+  int get sum => x + y;
+}
+```
+* **Breaking change in 3.13:** `final` and `var` are no longer allowed on non-declaring parameters (such as parameters of ordinary constructors or functions). Remove them there. Use the `parameter_assignments` lint if you want to prevent reassignment.
+* Set `sdk: ^3.13.0` in `pubspec.yaml` before using this syntax.
+
+#### 1.9 Private Named Parameters (Dart 3.12+)
+Initialize a private field directly from a named parameter. Callers still use the public name. Verified with Dart 3.13.7.
+```dart
+class Point {
+  final int _x, _y;
+  Point({required this._x, required this._y});
+}
+
+final p = Point(x: 1, y: 2); // call sites use the public names
+```
+
 ### 2. Effective Dart: Style
 Consistent style enables collaboration.
 
