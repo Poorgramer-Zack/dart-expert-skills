@@ -24,7 +24,7 @@ Place `codemagic.yaml` in the project root. A single file can contain multiple W
 workflows:
   android-release:
     name: Android Release Workflow
-    instance_type: mac_mini_m1 # Specify M1 machine for acceleration
+    instance_type: mac_mini_m2 # Apple M2 build machine (verified against Codemagic docs)
     environment:
       # 🌟 Specify the Flutter version
       flutter: stable 

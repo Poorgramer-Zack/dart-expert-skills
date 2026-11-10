@@ -15,7 +15,7 @@ Implements Fastlane for iOS/Android building, code signing, and deployment. [Fas
 ### 1. Separation of Responsibilities
 In Flutter development, the best way to combine tools is:
 *   **Flutter CLI (`flutter build`)**: Responsible for compiling Dart code into native iOS projects or Android Bundles (AAB).
-*   **Fastlane (`fastlane gym/supply/deliver`)**: Takes over subsequent Xcode/Gradle building, handling complex "Code Signing" and pushing to stores (TestFlight / Google Play Console).
+*   **Fastlane ((`build_app` / `gym`, `upload_to_play_store` / `supply`, `deliver`))**: Takes over subsequent Xcode/Gradle building, handling complex "Code Signing" and pushing to stores (TestFlight / Google Play Console).
 
 ### 2. Solving iOS Certificate Pain Points: `fastlane match` (⭐️ Absolutely Essential)
 The most painful part of iOS development is syncing `Certificates` and `Provisioning Profiles` when a new team member joins.
@@ -52,9 +52,9 @@ lane :release_android do
   play_track_version = google_play_track_version_codes(
     package_name: "com.example.app",
     track: "production"
-  )[0]
+  ).max
   
-  new_build_number = play_track_version + 1
+  new_build_number = (play_track_version || 0) + 1
   # Combine with a script to write back to pubspec.yaml or gradle
 end
 ```

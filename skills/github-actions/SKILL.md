@@ -34,7 +34,7 @@ jobs:
     
     steps:
       - name: 📦 Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🐦 Setup Flutter (Standard or FVM)
         uses: subosito/flutter-action@v2
@@ -93,7 +93,7 @@ If setting up a CD (Continuous Deployment) pipeline, you can automatically build
         
       # Upload the built file to GitHub Actions Artifacts for manual download
       - name: 📤 Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: release-aab
           path: build/app/outputs/bundle/release/app-release.aab
