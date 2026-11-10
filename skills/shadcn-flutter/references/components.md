@@ -422,7 +422,7 @@ const presets = {
 };
 
 ShadDatePicker(
-  header: ShadSelect(
+  header: ShadSelect<int>(
     placeholder: const Text('Select'),
     options: presets.entries
       .map((e) => ShadOption(value: e.key, child: Text(e.value)))
@@ -1006,7 +1006,7 @@ final fruits = {
   'blueberry': 'Blueberry',
 };
 
-ShadSelect(
+ShadSelect<String>(
   placeholder: const Text('Select a fruit'),
   options: fruits.entries
     .map((e) => ShadOption(value: e.key, child: Text(e.value)))
