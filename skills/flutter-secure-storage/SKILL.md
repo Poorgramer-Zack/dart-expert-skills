@@ -23,11 +23,10 @@ dependencies:
 
 **Android (android/app/build.gradle)**:
 ```gradle
+// android/app/build.gradle (Groovy). v11 requires minSdk 24.
 android {
-    compileSdkVersion 34  // Minimum 18
-    
     defaultConfig {
-        minSdkVersion 18
+        minSdk 24
     }
 }
 ```
