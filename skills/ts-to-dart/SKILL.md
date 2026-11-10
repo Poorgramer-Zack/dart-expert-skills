@@ -2,7 +2,7 @@
 name: "converting-ts-to-dart"
 description: "Converts TypeScript to idiomatic Dart 3 code, covering syntax mapping, type system translation, async patterns, and module migration. Activates when translating TypeScript interfaces, classes, enums, generics, union types, async/await patterns, or modules to Dart; migrating frontend or Node.js logic to Flutter/Dart; converting RxJS Observables to Dart Streams; adapting TypeScript utility types to Dart equivalents; or producing idiomatic Dart 3 output (sealed classes, records, pattern matching) from TypeScript source."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-11-10 (GMT+8)"
 ---
 
 # TypeScript to Dart 3 Conversion Guide
@@ -115,8 +115,10 @@ abstract interface class User {
   String? get email;
   String greet();
 }
+```
 
-// Or as a concrete data class (more common)
+Or as a concrete data class (more common):
+```dart
 class User {
   final String id;
   String name;
@@ -146,8 +148,16 @@ typedef Callback = void Function(String data);
 function merge<T extends object>(a: T, b: Partial<T>): T { ... }
 ```
 ```dart
-// Dart 3
-T merge<T extends Object>(T a, T b) { ... }
+// Dart has no Partial<T>. Use a copyWith method with nullable named parameters.
+class Config {
+  final String host;
+  final int port;
+  const Config({required this.host, required this.port});
+
+  Config copyWith({String? host, int? port}) =>
+      Config(host: host ?? this.host, port: port ?? this.port);
+}
+// Usage: base.copyWith(port: 8080) takes the place of passing a Partial<Config>.
 ```
 
 ### 3. Class Features
@@ -199,6 +209,8 @@ class Circle extends Shape {
 }
 ```
 ```dart
+import 'dart:math';
+
 // Dart 3
 abstract class Shape {
   double area();
@@ -207,7 +219,7 @@ class Circle extends Shape {
   final double radius;
   Circle(this.radius);
   @override
-  double area() => pi * radius * radius; // import 'dart:math';
+  double area() => pi * radius * radius;
 }
 ```
 
@@ -236,8 +248,9 @@ createUser({ name: "Zack" });
 ```
 ```dart
 // Dart 3
-void createUser({required String name, int age = 18}) { ... }
-createUser(name: 'Zack');
+void createUser({required String name, int age = 18}) {}
+
+void main() => createUser(name: 'Zack');
 ```
 
 #### 4.3 Async / Await
@@ -251,10 +264,15 @@ async function fetchUsers(): Promise<User[]> {
 }
 ```
 ```dart
-// Dart 3
+// Dart 3 (assumes User.fromJson(Map<String, dynamic>) as in section 2)
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 Future<List<User>> fetchUsers() async {
-  final res = await http.get(Uri.parse('/api/users'));
-  return (jsonDecode(res.body) as List).map(User.fromJson).toList();
+  final res = await http.get(Uri.parse('https://example.com/api/users'));
+  final list = jsonDecode(res.body) as List<dynamic>;
+  return list.cast<Map<String, dynamic>>().map(User.fromJson).toList();
 }
 ```
 
@@ -265,7 +283,9 @@ observable$.pipe(map(x => x * 2), filter(x => x > 5)).subscribe(console.log);
 ```
 ```dart
 // Dart 3
-stream.map((x) => x * 2).where((x) => x > 5).listen(print);
+void listen(Stream<int> stream) {
+  stream.map((x) => x * 2).where((x) => x > 5).listen(print);
+}
 ```
 
 ### 5. Null Safety
@@ -310,7 +330,7 @@ Method mapping:
 | `.reduce()` | `.fold()` (with initial value) / `.reduce()` |
 | `.some()` | `.any()` |
 | `.every()` | `.every()` |
-| `.find()` | `.firstWhere()` |
+| `.find()` | `.firstWhere(test, orElse: () => null)` (without `orElse` it throws `StateError`) |
 | `.findIndex()` | `.indexWhere()` |
 | `.includes()` | `.contains()` |
 | `.flat()` | `.expand((e) => e).toList()` |
@@ -326,8 +346,10 @@ Object.entries(config).forEach(([k, v]) => console.log(k, v));
 ```
 ```dart
 // Dart 3
-final config = <String, int>{'timeout': 30, 'retries': 3};
-config.forEach((k, v) => print('$k $v'));
+void logConfig() {
+  final config = <String, int>{'timeout': 30, 'retries': 3};
+  config.forEach((k, v) => print('$k $v'));
+}
 ```
 
 ### 7. Pattern Matching (Dart 3 Exclusive Power)
@@ -345,7 +367,19 @@ function describe(shape: Shape) {
 }
 ```
 ```dart
-// Dart 3 — exhaustive switch expression
+// Dart 3 — exhaustive switch expression; Shape must be sealed and its subtypes live in the same library
+sealed class Shape {}
+
+final class Circle extends Shape {
+  final double radius;
+  Circle(this.radius);
+}
+
+final class Rect extends Shape {
+  final double w, h;
+  Rect(this.w, this.h);
+}
+
 String describe(Shape shape) => switch (shape) {
   Circle(:final radius)  => 'Circle r=$radius',
   Rect(:final w, :final h) => 'Rect ${w}x$h',
@@ -358,8 +392,8 @@ String describe(Shape shape) => switch (shape) {
 |---|---|
 | `import { X } from './x'` | `import 'x.dart'` (imports all public) |
 | `import * as lib from './x'` | `import 'x.dart' as lib` |
-| `import { X as Y } from './x'` | `import 'x.dart' show X` (rename not needed often) |
-| `export { X }` | Top-level public declarations are auto-exported |
+| `import { X as Y } from './x'` | No per-symbol rename. Use `import 'x.dart' as x;` and refer to `x.X`, or `import 'x.dart' show X;` to limit names |
+| `export { X }` | Declarations are public by default (names starting with `_` are private). To re-export another library, use `export 'x.dart';` |
 | `export default X` | No equivalent; just `import` the library |
 | `import type { X }` | Not needed; Dart imports are already type-aware |
 
@@ -375,12 +409,14 @@ try {
 ```
 ```dart
 // Dart 3
-try {
-  await riskyOp();
-} on HttpError catch (e) {
-  // handle
-} catch (e, stackTrace) {
-  rethrow;
+Future<void> run() async {
+  try {
+    await riskyOp();
+  } on HttpError {
+    // handle
+  } catch (_) {
+    rethrow;
+  }
 }
 ```
 
@@ -390,12 +426,12 @@ try {
 |---|---|
 | `JSON.stringify(obj)` | `jsonEncode(obj)` |
 | `JSON.parse(str)` | `jsonDecode(str)` |
-| `console.log(x)` | `print(x)` / `debugPrint(x)` |
+| `console.log(x)` | `print(x)` (`debugPrint` is in `package:flutter/foundation.dart`) |
 | `typeof x === 'string'` | `x is String` |
 | `x instanceof Foo` | `x is Foo` |
 | `setTimeout(fn, ms)` | `Future.delayed(Duration(milliseconds: ms), fn)` |
 | `setInterval(fn, ms)` | `Timer.periodic(Duration(milliseconds: ms), (_) => fn())` |
-| `Date.now()` | `DateTime.now()` |
+| `Date.now()` | `DateTime.now().millisecondsSinceEpoch` (a number, like JS) |
 | `Math.max(a, b)` | `max(a, b)` (from `dart:math`) |
 | `Object.keys(obj)` | `map.keys.toList()` |
 | `Array.from({length: n}, (_, i) => i)` | `List.generate(n, (i) => i)` |
