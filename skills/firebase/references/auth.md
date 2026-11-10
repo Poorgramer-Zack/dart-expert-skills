@@ -97,7 +97,7 @@ Future<UserCredential?> signInWithGoogle() async {
 }
 ```
 
-#### Apple Sign-In (`sign_in_with_apple ^7.0.1` + `crypto`)
+#### Apple Sign-In (`sign_in_with_apple ^8.2.0` + `crypto`)
 Apple requires a `nonce` to prevent replay attacks. The raw nonce is sent to Apple; its SHA-256 hash is sent to Firebase.
 
 ```dart
@@ -133,7 +133,7 @@ Future<UserCredential?> signInWithApple() async {
 }
 ```
 
-#### Facebook Login (`flutter_facebook_auth ^7.1.5`)
+#### Facebook Login (`flutter_facebook_auth ^7.3.3`)
 ```dart
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';

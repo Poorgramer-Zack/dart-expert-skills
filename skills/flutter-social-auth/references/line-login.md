@@ -15,7 +15,7 @@ Establish a reliable LINE Login implementation for Flutter applications. This gu
 ### Installation
 ```yaml
 dependencies:
-  flutter_line_sdk: ^7.1.2
+  flutter_line_sdk: ^3.0.0  # v3 requires Flutter 3.44+, iOS 15+
 ```
 
 ### Provider Configuration

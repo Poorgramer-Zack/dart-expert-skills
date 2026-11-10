@@ -8,7 +8,7 @@ metadata:
 # Apple Sign-In Best Practices
 
 ## Goal
-Implement a compliant, cross-platform Sign in with Apple using `sign_in_with_apple ^7.0.1`. This guide covers the complete Apple Developer Portal setup, platform-specific native configuration, and the mandatory server-side authorization code validation that many guides omit.
+Implement a compliant, cross-platform Sign in with Apple using `sign_in_with_apple ^8.2.0`. This guide covers the complete Apple Developer Portal setup, platform-specific native configuration, and the mandatory server-side authorization code validation that many guides omit.
 
 > **App Store Policy**: If your iOS/macOS app offers any other 3rd-party social login (Google, Facebook, etc.), Sign in with Apple is **mandatory** to pass App Store review.
 
@@ -19,7 +19,7 @@ Implement a compliant, cross-platform Sign in with Apple using `sign_in_with_app
 ### Installation
 ```yaml
 dependencies:
-  sign_in_with_apple: ^7.0.1
+  sign_in_with_apple: ^8.2.0  # v8 requires Flutter 3.44+ (Dart 3.12+)
 ```
 
 ### Apple Developer Portal Setup

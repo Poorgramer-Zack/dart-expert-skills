@@ -10,6 +10,8 @@ Initialize the Firebase SDK reliably across all Flutter platforms. This chapter 
 
 ## Instructions
 
+> **Version notes:** firebase_core 5 bumps the Firebase iOS SDK to 13 and the Android BoM to 35. firebase_auth 7 requires macOS 11+ for Swift packages and Android minSdk 24.
+
 ### 1. Mandatory CLI Initialization
 Never manually download or move `GoogleService-Info.plist` (iOS) or `google-services.json` (Android). They do not configure Dart-only platforms (Web, macOS, Windows) and frequently break native build processes.
 

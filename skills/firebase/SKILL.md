@@ -40,7 +40,7 @@ If you are logging custom analytical events, setting up global `FlutterError` an
 If you want to protect your Firebase backend from unauthorized access using DeviceCheck (iOS) and Play Integrity (Android), you **MUST** read:
 *   [`app-check.md`](./references/app-check.md)
 
-**8. Advanced Architecture: Serverpod Mini BFF**
+**8. Advanced Architecture: Serverpod BFF**
 If you are building a highly secure app and need to bypass Firestore Rules or protect third-party API keys (like Stripe) using a Backend-for-Frontend (BFF), you **MUST** read:
 *   [`serverpod-mini.md`](./references/serverpod-mini.md)
 

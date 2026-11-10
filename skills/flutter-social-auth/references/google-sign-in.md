@@ -16,7 +16,7 @@ Implement a reliable, cross-platform Google Sign-In using `google_sign_in ^7.2.0
 ```yaml
 dependencies:
   google_sign_in: ^7.2.0
-  firebase_auth: ^5.4.0 # Optional but recommended for backend session
+  firebase_auth: ^7.0.1 # Optional but recommended for backend session
 ```
 
 ### 2. Provider Configuration

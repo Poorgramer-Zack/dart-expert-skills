@@ -3,15 +3,15 @@ metadata:
   last_modified: "2026-03-12 11:18:17 (GMT+8)"
 ---
 
-# 08 - Serverpod Mini (BFF Architecture)
+# 08 - Serverpod (BFF Architecture)
 
 ## Goal
-Completely bypass the limitations of Firestore Security Rules and safely integrate third-party APIs (Stripe, OpenAI) by routing the Flutter app's Firebase interactions through a highly secure Backend-For-Frontend (BFF) built in Dart using Serverpod Mini.
+Completely bypass the limitations of Firestore Security Rules and safely integrate third-party APIs (Stripe, OpenAI) by routing the Flutter app's Firebase interactions through a highly secure Backend-For-Frontend (BFF) built in Dart using Serverpod.
 
 ## The Architecture
 Instead of using the standard Firebase Client SDKs to interact with Firestore, the Flutter app only communicates with Serverpod generated Endpoints. 
 
-Serverpod runs on a cloud server (like Google Cloud Run), initializes the `dart_firebase_admin` SDK, and wields absolute administrative authority to read/write to Firestore.
+Serverpod runs on a cloud server (like Google Cloud Run), initializes the `firebase_admin_sdk` package, and wields absolute administrative authority to read/write to Firestore.
 
 ### Why do this?
 1. **Ditch Security Rules:** Authoring complex authorization logic in `.rules` files is extremely error-prone. With this architecture, you write all authentication checks in standard, debuggable Dart code on the Serverpod backend.
@@ -20,27 +20,30 @@ Serverpod runs on a cloud server (like Google Cloud Run), initializes the `dart_
 
 ## Instructions
 
-### 1. Serverpod Backend Initialization (`myminipod_server`)
-Add the `dart_firebase_admin` package to your Serverpod backend dependencies. Initialize it during server startup.
+### 1. Serverpod Backend Initialization (`myapp_server`)
+Add the `firebase_admin_sdk` package to your Serverpod backend dependencies. Initialize it during server startup.
 
 ```dart
-// myminipod_server/lib/server.dart
-import 'package:dart_firebase_admin/dart_firebase_admin.dart';
+// myapp_server/lib/server.dart
+import 'package:firebase_admin_sdk/firebase_admin_sdk.dart';
 
 void run(List<String> args) async {
   // 1. Initialize the Admin App using a Service Account Key
   // (Store the JSON contents in Serverpod's Passwords.yaml or ENV vars)
-  final admin = FirebaseAdminApp.initializeApp(
-    'your-project-id',
-    Credential.fromServiceAccountParams(
-      clientId: '...',
-      email: '...',
-      privateKey: '...',
+  final admin = FirebaseApp.initializeApp(
+    options: AppOptions(
+      projectId: 'your-project-id',
+      credential: Credential.fromServiceAccountParams(
+        clientId: '...',
+        email: '...',
+        privateKey: '...',
+        projectId: 'your-project-id',
+      ),
     ),
   );
   
   // 2. Instantiate Admin services
-  final firestore = Firestore(admin);
+  final firestore = admin.firestore();
   
   // 3. Inject them into Serverpod's context globally or let endpoints construct them
   final pod = Serverpod(args, ...);
@@ -56,7 +59,7 @@ void run(List<String> args) async {
 In the backend, create an endpoint that handles complex business logic (like processing a payment AND updating Firestore simultaneously).
 
 ```dart
-// myminipod_server/lib/src/endpoints/user_transaction_endpoint.dart
+// myapp_server/lib/src/endpoints/user_transaction_endpoint.dart
 class UserTransactionEndpoint extends Endpoint {
   
   // This endpoint is called from the Flutter Client
@@ -72,7 +75,7 @@ class UserTransactionEndpoint extends Endpoint {
 
     // 3. Write securely to Firestore using ADMIN privileges. No .rules apply here!
     // Initialize Firestore admin (or grab it from session.server.customData)
-    final firestore = Firestore(adminApp);
+    final firestore = admin.firestore(); // `admin` is the FirebaseApp created at startup; share it via a top-level variable or session.server.customData
     
     await firestore.collection('receipts').add({
       'userId': userId,
@@ -88,5 +91,5 @@ class UserTransactionEndpoint extends Endpoint {
 ```
 
 ## Constraints
-*   **Dual Dependency Awareness:** The Flutter Client will STILL use the `firebase_auth` Client SDK to authenticate the user and obtain a JWT token. The Client then passes this JWT Token to the Serverpod Endpoint, which uses `dart_firebase_admin` to verify that the token is legitimate before executing backend code.
+*   **Dual Dependency Awareness:** The Flutter Client will STILL use the `firebase_auth` Client SDK to authenticate the user and obtain a JWT token. The Client then passes this JWT Token to the Serverpod Endpoint, which uses `firebase_admin_sdk` to verify that the token is legitimate before executing backend code.
 *   **Admin Power:** The Admin SDK ignores ALL Firestore Security Rules. Ensure your Dart logic inside the Serverpod Endpoint rigorously checks if the user making the request actually has the authority to modify the targeted documents.

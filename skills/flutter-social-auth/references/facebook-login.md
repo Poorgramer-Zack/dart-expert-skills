@@ -8,7 +8,7 @@ metadata:
 # Facebook Login Best Practices
 
 ## Goal
-Implement a reliable, cross-platform Facebook Login using `flutter_facebook_auth ^7.1.5`. This guide focuses on the critical native configuration steps, iOS 17 privacy requirements, the Limited Login mode behavioral changes, and correct co-existence with other providers.
+Implement a reliable, cross-platform Facebook Login using `flutter_facebook_auth ^7.3.3`. This guide focuses on the critical native configuration steps, iOS 17 privacy requirements, the Limited Login mode behavioral changes, and correct co-existence with other providers.
 
 > **Warning**: The Facebook SDK on Android throws an Exception immediately on startup if `strings.xml` is not configured. This blocks ALL other plugins. Configure Android before running the project.
 
@@ -19,7 +19,7 @@ Implement a reliable, cross-platform Facebook Login using `flutter_facebook_auth
 ### 1. Installation
 ```yaml
 dependencies:
-  flutter_facebook_auth: ^7.1.5
+  flutter_facebook_auth: ^7.3.3
 ```
 > **Swift only**: The iOS plugin is written in Swift. Objective-C Flutter projects are **not supported**. Ensure your Flutter project uses Swift as the default iOS language.
 
