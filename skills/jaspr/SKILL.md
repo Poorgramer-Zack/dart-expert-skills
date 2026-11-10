@@ -29,6 +29,7 @@ Jaspr renders to DOM, so use its HTML tag helpers (`div`, `p`, `img`, etc.) from
 
 ```dart
 import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/dom.dart';
 
 class ProfileCard extends StatelessComponent {
   final String name;
@@ -39,7 +40,7 @@ class ProfileCard extends StatelessComponent {
   Component build(BuildContext context) {
     return div(
       classes: 'profile-card',
-      styles: Styles.box(width: 300.px, backgroundColor: Colors.white),
+      styles: Styles(width: 300.px, backgroundColor: Colors.white),
       [
         h2([.text(name)]), // 🌟 .text() shorthand available since Dart 3.10 (Component.text)
         p([
@@ -75,6 +76,7 @@ In the root component, use `Document.head` to link the compiled stylesheet and c
 
 ```dart
 import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/dom.dart';
 
 class App extends StatelessComponent {
   @override
@@ -137,6 +139,7 @@ Import `jaspr/server.dart` to use `AsyncStatelessComponent`, which allows an `as
 
 ```dart
 import 'package:jaspr/server.dart'; // 🌟 Server-only import
+import 'package:jaspr/dom.dart';
 
 class ArticlePage extends AsyncStatelessComponent {
   final String articleId;
@@ -202,12 +205,12 @@ void main() {
 **`testServer` (Server-Side Rendering Testing)**
 Aimed at testing SSR applications. It directly starts a simulated local HTTP Server. You can send Requests and verify the HTML strings or state properties returned by the Server.
 ```dart
-import 'package:jaspr_test/jaspr_test.dart';
+import 'package:jaspr_test/server_test.dart';
 
 void main() {
   testServer('Verify Server-Side rendered HTML', (tester) async {
     final response = await tester.request('/');
-    expect(response.document.body?.text, contains('Welcome to SSR'));
+    expect(response.document?.body?.text, contains('Welcome to SSR'));
   });
 }
 ```

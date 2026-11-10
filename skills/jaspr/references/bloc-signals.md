@@ -52,6 +52,10 @@ BlocSignalProvider.value(
 ## Read, rebuild, and listen
 
 ```dart
+import 'package:jaspr/dom.dart'; // div, p, button
+import 'package:jaspr/jaspr.dart';
+import 'package:bloc_signals_jaspr/bloc_signals_jaspr.dart';
+
 class CounterView extends StatelessComponent {
   const CounterView({super.key});
 
