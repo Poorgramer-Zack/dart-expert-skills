@@ -145,7 +145,7 @@ _parseJson(String text) {
 
 void setupDioWithIsolate(Dio dio) {
   // 🌟 Inject the computing background function entirely restructuring Dio's default parser
-  (dio.transformer as DefaultTransformer).jsonDecodeCallback = _parseJson;
+  dio.transformer = SyncTransformer(jsonDecodeCallback: _parseJson); // DefaultTransformer is a deprecated typedef of SyncTransformer
 }
 
 // 2. Map the resulting isolated collections
