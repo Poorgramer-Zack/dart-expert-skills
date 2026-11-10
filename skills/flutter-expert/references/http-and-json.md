@@ -165,7 +165,7 @@ Future<List<ItemModel>> fetchLargeItemList(Dio client) async {
 When integrating LLMs (like Gemini), enforce reliable JSON output by passing a strict schema in the generation configuration and system instructions.
 
 ```dart
-import 'package:firebase_vertexai/firebase_vertexai.dart';
+import 'package:firebase_ai/firebase_ai.dart'; // Use FirebaseAI.agentPlatform() or FirebaseAI.googleAI(); FirebaseVertexAI was replaced
 
 // Define the expected JSON schema
 final _responseSchema = Schema(

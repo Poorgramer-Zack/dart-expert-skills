@@ -105,6 +105,7 @@ If Scenario B is selected, implement asynchronous message passing.
     import Flutter
     import UIKit
 
+    > Flutter 3.41+ adopts the `UIScene` lifecycle automatically for unmodified `AppDelegate` projects. Custom `AppDelegate` code and Xcode 27 builds need the manual migration (`FlutterSceneDelegate`, `UIApplicationSceneManifest`). Keep UI-related logic in the scene delegate. Source: official guide `uiscenedelegate`.
     @UIApplicationMain
     @objc class AppDelegate: FlutterAppDelegate {
       override func application(

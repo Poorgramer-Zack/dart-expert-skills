@@ -125,7 +125,7 @@ Configures and implements internationalization (i18n) and localization (l10n) in
    Run `flutter gen-l10n`. Verify that `app_localizations.dart` is generated successfully. If compilation fails with "No MaterialLocalizations found" or "CupertinoTabBar requires a Localizations parent", traverse up the widget tree from the failing widget and ensure `localizationsDelegates` are properly provided.
 
 ## Constraints
-* **No Synthetic Packages:** Ensure `synthetic-package: false` is considered if the user's environment requires direct source generation, or rely on standard `generate: true` behavior for modern Flutter versions. Do not use `package:flutter_gen` imports if `synthetic-package: false` is set.
+* **No Synthetic Packages:** Since Flutter 3.32, generated l10n is written into the source tree. Use `synthetic-package: false` in `l10n.yaml`, keep `flutter: generate: true` in `pubspec.yaml` (required), and never import `package:flutter_gen`. Source: official guide `flutter-generate-i10n-source`.
 * **Widget Requirements:** `TextField` MUST have a `MaterialLocalizations` ancestor. `CupertinoTabBar` MUST have a `Localizations` ancestor.
 * **Complex Locales:** Always use `Locale.fromSubtags` for languages requiring script codes (e.g., Chinese `zh_Hans`, `zh_Hant`).
 * **ARB Syntax:** Ensure all placeholders used in `.arb` strings are explicitly defined in the corresponding `@` metadata object.

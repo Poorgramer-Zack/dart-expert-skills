@@ -193,6 +193,7 @@ class FLNativeViewFactory: NSObject, FlutterPlatformViewFactory {
 }
 
 // 3. Register in AppDelegate
+// Flutter 3.41+ adopts UIScene automatically for unmodified AppDelegates; custom ones need the manual migration (see uiscenedelegate).
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
     override func application(
