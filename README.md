@@ -87,6 +87,17 @@ skills/
 
 ---
 
+## 🔌 Official Flutter Agent Plugins
+
+These skills work well alongside the official plugins and skills from the Flutter and Dart teams:
+
+- **[flutter/agent-plugins](https://github.com/flutter/agent-plugins)**: Agent plugins maintained by the Flutter team. Each plugin bundles skills, MCP server configuration, and rules. Install them for your agent by following [Get started developing with AI](https://docs.flutter.dev/ai/get-started).
+- **[dart-lang/skills](https://github.com/dart-lang/skills)**: Dart-language skills recommended by the agent-plugins README.
+
+Use the official plugins for general Flutter workflows, and the skills in this repository for the specific packages and patterns listed above. If an official skill and a local skill disagree on a package API, check the installed package version first.
+
+---
+
 ## 🎯 Development Philosophy
 
 > "Simplicity is the ultimate sophistication."
