@@ -188,7 +188,8 @@ final _responseSchema = Schema(
 
 // Initialize the model with the schema
 final model = FirebaseAI.googleAI().generativeModel(
-    generationConfig: GenerationConfig(
+  model: 'gemini-2.5-flash',
+  generationConfig: GenerationConfig(
     responseMimeType: 'application/json',
     responseSchema: _responseSchema,
   ),

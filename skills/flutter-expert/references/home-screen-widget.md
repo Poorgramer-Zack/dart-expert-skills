@@ -166,13 +166,13 @@ Implements native home screen widgets (iOS and Android) for a Flutter applicatio
    final _globalKey = GlobalKey();
 
    // Wrap your target widget with a RepaintBoundary/Key
-   // Center(key: _globalKey, child: const LineChart())
+   // Center(key: _globalKey, child: const MyChartWidget())
 
    Future<void> renderAndSaveWidget() async {
      if (_globalKey.currentContext != null) {
        final context = _globalKey.currentContext!;
        var path = await HomeWidget.renderFlutterWidget(
-         const LineChart(),
+         const MyChartWidget(), // Replace with your target widget
          key: 'filename',
          logicalSize: context.size ?? const Size(200, 200),
          pixelRatio: MediaQuery.of(context).devicePixelRatio,
