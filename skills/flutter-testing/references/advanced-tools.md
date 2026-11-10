@@ -19,7 +19,7 @@ dependencies:
   mockito: ^5.8.1
 
 dev_dependencies:
-  build_runner: ^2.17.1
+  build_runner: ^2.16.0  # mockito 5.8.1 needs build <5; build_runner 2.17 (build 5) does not resolve with it
 ```
 
 #### 1.2 Generating Mock Classes
