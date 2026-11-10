@@ -25,11 +25,11 @@ void main() async {
 
   await FirebaseAppCheck.instance.activate(
     // Web: Requires a reCAPTCHA v3 site key
-    webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
-    // Android: Use PlayIntegrity (the modern replacement for SafetyNet)
-    androidProvider: AndroidProvider.playIntegrity,
-    // iOS: Use DeviceCheck or AppAttest
-    appleProvider: AppleProvider.deviceCheck,
+    providerWeb: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+    // Android: Play Integrity (the modern replacement for SafetyNet)
+    providerAndroid: AndroidPlayIntegrityProvider(),
+    // iOS: DeviceCheck (or AppleAppAttestProvider on iOS 14+)
+    providerApple: AppleDeviceCheckProvider(),
   );
 
   runApp(const MyApp());
@@ -47,8 +47,8 @@ import 'package:flutter/foundation.dart';
 // Inside main()
 await FirebaseAppCheck.instance.activate(
   // Use debug providers during local kDebugMode development!
-  androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-  appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.deviceCheck,
+  providerAndroid: kDebugMode ? AndroidDebugProvider() : AndroidPlayIntegrityProvider(),
+  providerApple: kDebugMode ? AppleDebugProvider() : AppleDeviceCheckProvider(),
 );
 ```
 
