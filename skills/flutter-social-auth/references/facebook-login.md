@@ -671,12 +671,9 @@ class TokenRefreshService {
     
     if (token == null) return false;
     
-    // Check if token is near expiration (e.g., within 7 days)
-    final expiresAt = token.expiresAt;
-    if (expiresAt != null) {
-      final daysUntilExpiry = 
-          expiresAt.difference(DateTime.now()).inDays;
-      
+    // ClassicToken has an 'expires' DateTime. LimitedToken (OIDC, default without ATT) does not.
+    if (token is ClassicToken) {
+      final daysUntilExpiry = token.expires.difference(DateTime.now()).inDays;
       if (daysUntilExpiry < 7) {
         // Re-login to get fresh token
         await FacebookAuth.instance.logOut();
