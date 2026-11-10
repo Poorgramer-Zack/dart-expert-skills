@@ -21,8 +21,6 @@ dev_dependencies:
   go_router_builder: ^4.0.0
 ```
 
-> **Version notes (go_router 15 to 18):** 15.0 made URLs case-sensitive (`/Home` and `/home` are different routes; `caseSensitive` defaults to `true`). 16.0 changed `GoRouteData` (type-safe routes). 17.0 makes ShellRoute navigation notify `GoRouter` observers by default (`notifyRootObserver`). 18.0 requires Flutter 3.44 / Dart 3.12.
-
 ### 2. Basic Routing Setup Configurations
 Initialize the `GoRouter` instance directly, deploying raw Dart `GoRoute` components forming the global application routing web cleanly.
 

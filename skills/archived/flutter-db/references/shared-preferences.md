@@ -15,9 +15,9 @@ Provide a simple, persistent storage solution for primitive data types. By encap
 ### 1. Installation
 ```yaml
 dependencies:
-  shared_preferences: ^2.5.6
-  flutter_riverpod: ^3.5.0
-  riverpod_annotation: ^4.0.8
+  shared_preferences: ^2.3.5
+  flutter_riverpod: ^3.0.0-beta.0 # Or latest 3.x
+  riverpod_annotation: ^4.0.0
 ```
 
 ### 2. Static Wrapper Pattern (Encapsulation)

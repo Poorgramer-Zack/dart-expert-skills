@@ -20,11 +20,11 @@ By scanning `@RoutePage()` annotations across pages, AutoRoute automatically gen
 #### Dependency Setup
 ```yaml
 dependencies:
-  auto_route: ^11.2.0
+  auto_route: ^11.1.0
 
 dev_dependencies:
-  auto_route_generator: ^10.6.0  # v10.6 needs analyzer <14; incompatible with freezed 4
-  build_runner: ^2.17.1
+  auto_route_generator: ^11.1.0
+  build_runner: ^2.4.0
 ```
 
 ### 2. Page Definition and Parameter Passing (Best Practices)

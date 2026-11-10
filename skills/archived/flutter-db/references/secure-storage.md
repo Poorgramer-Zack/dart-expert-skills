@@ -15,7 +15,7 @@ Provide an encrypted storage solution for sensitive data like OAuth tokens, priv
 ### 1. Installation
 ```yaml
 dependencies:
-  flutter_secure_storage: ^11.2.0  # v11: Android minSdk 24, removed encryptedSharedPreferences
+  flutter_secure_storage: ^10.0.0
 ```
 
 ### 2. Static Wrapper Pattern (Security Encapsulation)
@@ -33,7 +33,10 @@ class SecurePrefs {
 
   static void init() {
     _storage = const FlutterSecureStorage(
-      aOptions: AndroidOptions(),
+      // Android: use EncryptedSharedPreferences for better security
+      aOptions: AndroidOptions(
+        encryptedSharedPreferences: true,
+      ),
       // iOS: use keychain search and accessibility constants if needed
       iOptions: IOSOptions(
         accessibility: KeychainAccessibility.first_unlock,
@@ -97,7 +100,7 @@ class AuthToken extends _$AuthToken {
 ```
 
 ## Constraints
-* **Encryption Always**: Keep Android encryption enabled (the default). In v11, `encryptedSharedPreferences` was removed; the AES-GCM / RSA-OAEP defaults are used. If you have data from v10 or older, upgrade to v10 first so it migrates. v11 requires Android minSdk 24.
+* **Encryption Always**: On Android, always set `encryptedSharedPreferences: true` for the best security standards.
 * **Sensitive Data ONLY**: Do not store non-sensitive settings (like theme mode) in Secure Storage; it is significantly slower than SharedPreferences due to encryption overhead.
 * **Asynchronous Integrity**: All `read`, `write`, and `delete` operations are `Future` based. Never ignore the results of these operations in critical flows.
 * **Keychain Strategy**: On iOS, be aware of `KeychainAccessibility` levels; `first_unlock` is usually the best balance for background operations.
