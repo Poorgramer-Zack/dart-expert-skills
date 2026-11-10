@@ -388,3 +388,11 @@ Your Flutter environment is properly configured when:
 - Hot reload works (press `r` during debug session)
 
 If any issues persist after following this guide, consult platform-specific references or Flutter's official troubleshooting documentation.
+
+## Version Requirements (verified)
+- Flutter 3.44+ and Dart 3.12+ are required by the current major versions of `go_router` 18, `sign_in_with_apple` 8, `flutter_line_sdk` 3, `sentry_flutter` 10, and `serverpod` 4.
+- `google_mobile_ads` 9.2 and `app_links` 7.2 require Flutter 3.38.1+.
+- Check the installed version with `flutter --version`. Local check on Flutter 3.47.9 stable: about 45 main packages resolve together and `flutter analyze` passes. Not every package in every skill was checked.
+- **Android (Flutter 3.44+):** AGP 9 uses built-in Kotlin by default. Apps and plugins that still apply `kotlin-android` (KGP) must migrate, or temporarily set `android.builtInKotlin=false`. See the official `migrate-to-built-in-kotlin` guide.
+- **iOS (Flutter 3.41+):** Xcode 27 requires the `UIScene` lifecycle. Unmodified `AppDelegate` projects are migrated automatically. Custom `AppDelegate` projects need the manual migration.
+- **Upcoming (Flutter 3.50):** the in-framework `material` and `cupertino` libraries are deprecated. Standalone `material_ui` and `cupertino_ui` 1.x packages are available now, and `go_router` 18 already depends on them.
