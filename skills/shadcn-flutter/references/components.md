@@ -217,7 +217,7 @@ ShadButton(
   gradient: const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
   shadows: [
     BoxShadow(
-      color: Colors.blue.withOpacity(.4),
+      color: Colors.blue.withValues(alpha: .4),
       spreadRadius: 4,
       blurRadius: 10,
       offset: const Offset(0, 2),
@@ -609,7 +609,7 @@ ShadIconButton(
   gradient: const LinearGradient(colors: [Colors.cyan, Colors.indigo]),
   shadows: [
     BoxShadow(
-      color: Colors.blue.withOpacity(.4),
+      color: Colors.blue.withValues(alpha: .4),
       spreadRadius: 4,
       blurRadius: 10,
       offset: const Offset(0, 2),

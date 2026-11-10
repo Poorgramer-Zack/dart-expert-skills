@@ -121,7 +121,7 @@ Evaluate the target application using the following decision tree to determine t
    )
 
    // GOOD: Semitransparent color
-   Container(color: Colors.red.withOpacity(0.5))
+   Container(color: Colors.red.withValues(alpha: 0.5))
    ```
 
 4. **Fix Layout and Intrinsic Passes**
