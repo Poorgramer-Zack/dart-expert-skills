@@ -5,7 +5,7 @@ metadata:
   last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
 
-# Flutter Responsive Implementations (v5.9.x / v3.1.x / v1.1.x)
+# Flutter Responsive Implementations (v5.9.x / v3.1.x / v1.5.x)
 
 ## Goal
 Implement layout adaptability and responsive UI across varying device screens. This skill provides a decision matrix to choose the right responsiveness package and strict instructions on how to use `flutter_screenutil`, `sizer`, and `responsive_framework` natively.
