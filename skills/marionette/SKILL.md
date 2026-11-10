@@ -1,299 +1,117 @@
 ---
 name: "testing-with-marionette"
-description: "AI-driven Flutter E2E testing via VM Service CLI. Control running Flutter apps in debug mode for smoke tests, regression checks, exploratory testing, and UI automation. Trigger when user mentions E2E testing, UI automation, smoke tests, integration testing, test automation, controlling Flutter apps, VM Service interaction, debugging UI flows, automated regression testing, CI sanity checks, or testing native dialogs/permissions/WebViews. Supports stateful named instances or stateless direct URI connections. Ideal for rapid test feedback, AI agent workflows, element discovery, screenshot capture, log collection, and scriptable UI interactions (tap, scroll, enterText). Use for troubleshooting flaky tests, automating repetitive manual tests, verifying app behavior after merges, or setting up automated QA pipelines."
+description: "AI-driven Flutter E2E testing with Marionette (marionette_flutter in the app, marionette_cli or marionette_mcp to drive it). Control running Flutter apps in debug mode for smoke tests, regression checks, exploratory testing, and UI automation. Trigger when the user mentions E2E testing, UI automation, smoke tests, controlling a running Flutter app, VM Service interaction, tapping or entering text in an app, screenshots, log collection, session reports, or testing native dialogs, permissions, or WebViews. Supports named instances, direct VM service URIs, and MCP. Use for troubleshooting flaky UI flows, automating repetitive manual tests, verifying behavior after merges, and AI-agent-driven QA."
 metadata:
-  last_modified: "2026-04-01 14:35:00 (GMT+8)"
+  last_modified: "2026-11-10"
+  package_versions: "marionette_cli 0.7.0, marionette_flutter 0.7.0, marionette_mcp 0.7.0 (verified against the CLI help-ai reference)"
 ---
 
-# Marionette CLI — AI Agent Reference
+# Marionette — AI Agent Reference
 
-Marionette CLI controls Flutter apps running in debug mode. It supports
-multiple simultaneous app instances via a named instance registry, or direct
-URI connections for fully stateless operation.
+Marionette lets an agent drive a Flutter app that runs in debug mode. It has three parts:
 
-## Workflow
+| Part | Where | Purpose |
+|---|---|---|
+| `marionette_flutter` | your app (`dev_dependencies` or `dependencies` with a debug guard) | Exposes the widget tree and actions over the VM service |
+| `marionette_cli` | your terminal | Commands such as `tap`, `enter-text`, `take-screenshots` |
+| `marionette_mcp` | MCP host (Claude Code, Cursor, Copilot, Gemini CLI) | The same actions as MCP tools, without shell calls |
 
-### Option A: Named Instances (stateful)
+## 1. Prepare the app
 
-1. Start your Flutter app(s) in debug mode and note VM service URI(s)
-   (printed in console, e.g., ws://127.0.0.1:XXXXX/ws).
-2. Register each app: `marionette register <name> <uri>`
-3. Interact using: `marionette -i <name> <command> [args]`
-4. Clean up when done: `marionette unregister <name>`
+```bash
+flutter pub add marionette_flutter
+```
 
-### Option B: Direct URI (stateless)
+```dart
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:marionette_flutter/marionette_flutter.dart';
 
-1. Start your Flutter app in debug mode and note the VM service URI.
-2. Interact directly: `marionette --uri <ws-uri> <command> [args]`
+void main() {
+  if (kDebugMode) {
+    MarionetteBinding.ensureInitialized(
+      const MarionetteConfiguration(enableSessionReports: true), // optional
+    );
+  } else {
+    WidgetsFlutterBinding.ensureInitialized();
+  }
+  runApp(const MaterialApp(home: Scaffold(body: Center(child: Text('hi')))));
+}
+```
 
-No registration, no cleanup, no files on disk. Each command opens a fresh
-WebSocket connection, executes, and disconnects.
+- Guard the binding with `kDebugMode` so release builds never use it. This snippet was analyzed with `flutter analyze` against `marionette_flutter` 0.7.0.
+- Standard Material widgets work without configuration. A custom design system needs `MarionetteConfiguration` (`isInteractiveElement`, `shouldStopTraversalAtElement`, `extractText`). Note: `isInteractiveWidget` and `shouldStopTraversal` are deprecated.
+- `enableSessionReports: true` lets each CLI call write a step log (see Session reports below).
+- `set-device-config` requires the root widget to be wrapped: `runApp(const MarionetteDeviceConfig(child: MyApp()));`.
 
-## Global Options
+## 2. Run the app and connect
 
-  -i, --instance <name>    Target instance (required unless --uri is used)
-      --uri <ws-uri>       VM service WebSocket URI — bypasses registry,
-                           mutually exclusive with --instance
-      --timeout <seconds>  Connection timeout (default: 5)
+1. Run the app in debug mode (`flutter run`) and copy the VM service URI from the console (for example `ws://127.0.0.1:8181/ws`).
+2. Choose a connection style:
+   - **Named instance (stateful):** `marionette register <name> <uri>`, then `marionette -i <name> <command>`, and `marionette unregister <name>` when done.
+   - **Direct URI (stateless):** `marionette --uri <ws-uri> <command>`. Each call opens its own connection. Nothing is stored on disk.
 
-## Commands
+Global options (all commands): `-i, --instance <name>`, `--uri <ws-uri>` (mutually exclusive with `-i`), `--timeout <seconds>` (default 5), `--session <title>`, `--session-dir <path>`.
 
-### register <name> <uri>
+## 3. Commands
 
-Register a Flutter app instance.
+Use `marionette help <command>` for the current options. All commands except `register`, `unregister`, `list`, `doctor`, `mcp`, and `help-ai` need `-i <instance>` or `--uri <ws-uri>`.
 
-  Arguments:
-    name   Alphanumeric identifier [a-zA-Z0-9_-]+
-    uri    VM service WebSocket URI (e.g., ws://127.0.0.1:8181/ws)
+### Discovery
 
-  Example:
-    marionette register my-app ws://127.0.0.1:8181/ws
+- `marionette list`: lists registered instances with URI and registration time.
+- `marionette doctor`: checks connectivity of every registered instance. Exit 0 when all are reachable, 1 when any is not.
+- `marionette get-interactive-elements [--ancestor-keys <str>] [--compaction compact|none]`: prints one line per interactive element with type, key, identifier, and text. Use the key, identifier, or text as the matcher in later commands.
+- `marionette get-logs`: prints the app's collected logs.
+- `marionette help-ai`: prints the full CLI reference for AI agents.
 
-  Output (stdout):
-    Registered instance "my-app" → ws://127.0.0.1:8181/ws
+### Interaction
 
-  Output if overwriting (stderr):
-    Updated existing instance "my-app" → ws://127.0.0.1:8181/ws
+Element matchers: `--key <str>` (ValueKey), `--identifier <str>` (Semantics identifier, stable), `--text <str>`, `--type <str>` (widget type name). Pass exactly one primary matcher. `--ancestor-keys <str>` limits the search to the subtree of the named element.
 
-  Exit codes: 0 success, 64 invalid name/usage
+- `tap`: matchers, or `--x <n> --y <n>` for a coordinate tap.
+- `secondary-tap`: right mouse button tap, with the same matchers as `tap`. Desktop only. It triggers `onSecondaryTap` (for example context menus).
+- `double-tap`, `long-press`, `pinch-zoom`: same matcher rules as `tap`. Their help text is in `marionette help <command>`. They are not described in `help-ai`.
+- `enter-text --input <str>`: matches a text field with `--key`, `--identifier`, or `--text`, or uses `--focused` for the focused field. `--input` is required.
+- `press-key --key <str> [--modifiers <list>]`: sends a real key event to the focused element. Named keys include `enter`, `tab`, and `escape`. Modifiers are comma-separated (`control`, `shift`, ...). Example: `--key a --modifiers control`. Use it for submit, focus moves, and shortcuts. Use `enter-text` to type text.
+- `press-back-button`: Android back or iOS swipe-back.
+- `swipe`: matchers plus `--direction left|right|up|down` (required in this mode), `--distance <px>` (default 200). Or give explicit `--start-x --start-y --end-x --end-y`.
+- `scroll-to`: scrolls until a matcher is visible.
 
----
+### Evidence
 
-### unregister <name>
+- `marionette take-screenshots -o <file.png> [--open]`: saves a PNG.
+- `marionette record-video [--width <px>] [--height <px>] [--open] [--ffmpeg-path <path>] [--transport auto|tcp|ws] [--frame-port <port>]`: records video. Requires `ffmpeg`. Exit 1 when ffmpeg is missing or recording fails.
 
-Remove a registered instance.
+### App control
 
-  Arguments:
-    name   Instance name to remove
+- `marionette hot-reload`: hot reload.
+- `marionette hot-restart`: hot restart. Resets app state.
+- `marionette set-device-config [--text-scale <n>] [--bold-text true|false] [--platform-brightness light|dark] [--reset]`: simulates device settings. Requires the `MarionetteDeviceConfig` wrapper described above. Without it the command exits 1.
 
-  Example:
-    marionette unregister my-app
+### MCP
 
-  Output (stdout):
-    Unregistered instance "my-app".
+- `marionette mcp [--log-file <path>] [--sse-port <port>]`: runs the MCP server over stdio (default) or SSE. Use this when the agent host speaks MCP. The app is still driven through the same VM service.
 
-  Output if not found (stderr, exit 1):
-    Instance "my-app" not found.
+## 4. Session reports
 
----
+With `enableSessionReports: true` in the app, every command writes a step to `.marionette/sessions/<title>-<timestamp>/steps.md`. Use `--session <title>` (under about 60 characters) to name the directory and `--session-dir <path>` (or `MARIONETTE_SESSION_DIR`) to change where it is stored.
 
-### list
-
-List all registered instances.
-
-  Example:
-    marionette list
-
-  Output (stdout):
-    Registered instances:
-
-      my-app
-        URI: ws://127.0.0.1:8181/ws
-        Registered: 2026-02-12 15:30:00.000
-
-  Output if empty (stdout):
-    No instances registered.
-
----
-
-### get-interactive-elements
-
-List interactive UI elements in the app's widget tree.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Examples:
-    marionette -i my-app get-interactive-elements
-    marionette --uri ws://127.0.0.1:8181/ws get-interactive-elements
-
-  Output (stdout), one line per element:
-    Found 3 interactive element(s):
-
-    Type: ElevatedButton, Key: "submit_button", Text: "Submit"
-    Type: TextField, Key: "email_field"
-    Type: IconButton, Text: ""
-
-  Each element may have: type, key, text, and additional properties.
-  Use the key or text values as matchers for tap, enter-text, scroll-to.
-
----
-
-### tap
-
-Tap an element. Provide exactly one matching strategy.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Options:
-    --key <string>    Match by ValueKey<String> (most reliable)
-    --text <string>   Match by visible text content
-    --type <string>   Match by widget type name (e.g., ElevatedButton)
-    --x <number>      X screen coordinate (use with --y)
-    --y <number>      Y screen coordinate (use with --x)
-
-  Examples:
-    marionette -i my-app tap --key submit_button
-    marionette -i my-app tap --text "Submit"
-    marionette --uri ws://127.0.0.1:8181/ws tap --key submit_button
-    marionette -i my-app tap --x 100 --y 200
-
-  Output (stdout):
-    Tapped element matching {key: submit_button}
-
----
-
-### enter-text
-
-Enter text into a text field.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Options (all required):
-    --key <string>      Match text field by key (or use --text)
-    --text <string>     Match text field by visible text
-    --input <string>    Text to enter (mandatory)
-
-  Example:
-    marionette -i my-app enter-text --key email_field --input "user@example.com"
-
-  Output (stdout):
-    Entered text into element matching {key: email_field}
-
----
-
-### scroll-to
-
-Scroll until an element becomes visible.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Options:
-    --key <string>    Match by ValueKey<String>
-    --text <string>   Match by visible text content
-
-  Example:
-    marionette -i my-app scroll-to --text "Bottom Item"
-
-  Output (stdout):
-    Scrolled to element matching {text: Bottom Item}
-
----
-
-### take-screenshots
-
-Capture screenshots and save to PNG files.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Options:
-    -o, --output <path>   Output file path (mandatory)
-    --open                Open the file after saving
-
-  Example:
-    marionette -i my-app take-screenshots --output ./screenshot.png
-
-  Output (stdout):
-    Saved screenshot: ./screenshot.png
-
-  Multi-view apps produce numbered files:
-    Saved screenshot: ./screenshot.png
-    Saved screenshot: ./screenshot_1.png
-
----
-
-### get-logs
-
-Retrieve collected application logs.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Example:
-    marionette -i my-app get-logs
-
-  Output (stdout):
-    Collected 5 log entries:
-
-    [INFO] App started
-    [DEBUG] Loading data...
-    ...
-
-  Output if empty (stdout):
-    No logs collected.
-
----
-
-### hot-reload
-
-Perform a hot reload of the Flutter app.
-
-  Requires: -i <instance> or --uri <ws-uri>
-
-  Example:
-    marionette -i my-app hot-reload
-
-  Output (stdout, exit 0):
-    Hot reload completed successfully.
-
-  Output on failure (stderr, exit 1):
-    Hot reload failed. The app may need a full restart.
-
----
-
-### doctor
-
-Check connectivity of all registered instances.
-
-  Example:
-    marionette doctor
-
-  Output (stdout):
-    Checking 2 instance(s)...
-
-      my-app (ws://127.0.0.1:8181/ws) ... OK
-      other-app (ws://127.0.0.1:9090/ws) ... FAILED
-
-    Some instances are unreachable. Use "marionette unregister <name>" to remove stale entries.
-
-  Exit codes: 0 all reachable, 1 any unreachable
-
----
-
-### mcp
-
-Run the Marionette MCP server (preserves original marionette_mcp behavior).
-
-  Options:
-    -l, --log-level <level>   FINEST|FINER|FINE|CONFIG|INFO|WARNING|SEVERE (default: INFO)
-    --log-file <path>         Log file path (default: stderr)
-    --sse-port <port>         Use SSE transport on this port (default: stdio)
-
-  Example:
-    marionette mcp
-    marionette mcp --sse-port 3000
-
----
-
-## Exit Codes
+## 5. Exit codes and error recovery
 
   0    Success
-  1    Runtime error (connection failed, command failed, app unreachable)
+  1    Runtime error (connection failed, command failed, app unreachable, ffmpeg missing)
   64   Usage error (missing arguments, invalid options)
-
-## Error Recovery
 
 If a command fails with a connection error, the app may have stopped.
 
-- **--instance mode**: Run `marionette doctor` to check all instances, then
-  `marionette unregister <name>` to clean up stale entries.
-- **--uri mode**: Verify the URI is correct and the app is still running.
-  Re-run `flutter run` if needed and use the new URI.
+- **Named instance:** run `marionette doctor`, then `marionette unregister <name>` to remove stale entries. Re-run `flutter run` and register the new URI.
+- **Direct URI:** check that the URI is still correct and the app is running. Re-run `flutter run` if needed.
 
-## Tips
+## 6. Constraints
 
-- Prefer --uri for one-off interactions (no setup/cleanup overhead)
-- Prefer --instance for repeated interactions with the same app (shorter commands)
-- Prefer --key over --text for matching elements (keys are stable, text may change)
-- Run `get-interactive-elements` first to discover what's on screen before interacting
-- Instance names are alphanumeric with hyphens/underscores: [a-zA-Z0-9_-]+
-- Commands are stateless — each opens a fresh connection, so no session management needed
-
+- Debug mode only. Keep the `kDebugMode` guard so the binding never ships.
+- Prefer `--key` or `--identifier` over `--text` and coordinates. Text changes with locale, and coordinates change with layout.
+- Use `press-key` for keyboard events and `enter-text` for typing. They behave differently.
+- Do not rely on `set-device-config` unless the app wraps its root in `MarionetteDeviceConfig`.
+- For a custom design system, configure `MarionetteConfiguration` before you start testing. Otherwise the agent cannot see your custom buttons.
