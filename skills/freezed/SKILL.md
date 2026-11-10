@@ -17,12 +17,12 @@ Because Freezed relies heavily on code generation, ensure your `pubspec.yaml` is
 
 ```yaml
 dependencies:
-  freezed_annotation: ^3.2.5
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0 # If mutual conversion with JSON is required
 
 dev_dependencies:
   build_runner: ^2.14.1
-  freezed: ^3.2.5
+  freezed: ^4.0.3 # 4.x needs analyzer 14: conflicts with custom_lint/riverpod_lint and auto_route_generator
   json_serializable: ^6.13.1 # If mutual conversion with JSON is required
 ```
 

@@ -33,7 +33,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.14.1
-  freezed: ^3.2.5               # if using Freezed
+  freezed: ^4.0.3               # if using Freezed (4.x conflicts with custom_lint/riverpod_lint)
   json_serializable: ^6.13.1
 ```
 
