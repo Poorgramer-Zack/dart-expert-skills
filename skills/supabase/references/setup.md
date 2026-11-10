@@ -16,7 +16,7 @@ void main() async {
 
   await Supabase.initialize(
     url: 'YOUR_SUPABASE_URL', // Get from Project Settings -> API
-    anonKey: 'YOUR_SUPABASE_ANON_KEY', // Public privileges only; safe to embed!
+    publishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY', // Public key; safe to embed. anonKey is deprecated.
   );
 
   runApp(const MyApp());
