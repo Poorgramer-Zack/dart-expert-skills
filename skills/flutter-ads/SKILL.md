@@ -8,6 +8,8 @@ metadata:
 # Flutter Ads Implementation (`google_mobile_ads` v7.x)
 
 ## Goal
+> Verified against `google_mobile_ads` 9.2.0 (requires Flutter 3.38.1+). The `InterstitialAd.load` and `RewardedAd.load` callback signatures below match this version.
+
 Integrate Google Mobile Ads securely and efficiently. Prevent memory leaks by strictly managing `AdWidget` lifecycles and ensure high fill-rates by pre-loading full-screen ads before they are needed.
 
 ## Instructions

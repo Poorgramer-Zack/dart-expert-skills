@@ -16,10 +16,10 @@ Implements advanced testing tools and frameworks to resolve common pain points i
 #### 1.1 Installation and Configuration
 ```yaml
 dependencies:
-  mockito: ^5.4.4
+  mockito: ^5.8.1
 
 dev_dependencies:
-  build_runner: ^2.4.0
+  build_runner: ^2.17.1
 ```
 
 #### 1.2 Generating Mock Classes
@@ -60,7 +60,7 @@ Run `dart run build_runner build` to generate the files.
 #### 2.1 Installation and Basic Configuration
 ```yaml
 dev_dependencies:
-  mocktail: ^1.0.4
+  mocktail: ^1.0.5
 ```
 
 #### 2.2 Core Syntax and Usage

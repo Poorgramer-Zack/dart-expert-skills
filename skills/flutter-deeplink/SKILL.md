@@ -93,6 +93,8 @@ final router = GoRouter(
 ```
 **No external third-party plugins (like `uni_links` or `app_links`) are required** strictly for navigation if `go_router` governs the `MaterialApp.router`. 
 
+> If you do need `app_links` directly (for example, to receive links outside `go_router`), use `app_links` 7.2.x. It requires Flutter 3.38.1+ and iOS 13+ (verified against `app_links` 7.2.2).
+
 *Constraint*: If migrating an older codebase heavily utilizing legacy plugins, verify `flutter_deeplinking_enabled` is NOT manually disabled natively inside `AndroidManifest.xml` or `Info.plist`.
 
 ## Verification & Testing
