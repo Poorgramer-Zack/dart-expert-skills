@@ -16,7 +16,7 @@ Implement lightweight key-value storage for non-sensitive app settings and user 
 
 ```yaml
 dependencies:
-  shared_preferences: ^2.5.5
+  shared_preferences: ^2.5.6
 ```
 
 ### Phase 2: Create Static Wrapper (Best Practice)

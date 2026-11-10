@@ -16,13 +16,13 @@ Implement type-safe reactive SQL database using Drift (formerly Moor). Drift pro
 
 ```yaml
 dependencies:
-  drift: ^2.32.0
+  drift: ^2.35.4
   sqlite3_flutter_libs: ^0.6.0+eol
   path_provider: ^2.1.0
   path: ^1.9.1
 
 dev_dependencies:
-  drift_dev: ^2.32.0
+  drift_dev: ^2.35.3
   build_runner: ^2.14.1
 ```
 
@@ -223,7 +223,7 @@ await database.transaction(() async {
 **Migration checklist:**
 ```yaml
 dependencies:
-  drift: ^2.32.0
+  drift: ^2.35.4
   sqlite3_flutter_libs: ^0.5.20  # Update to latest
 ```
 

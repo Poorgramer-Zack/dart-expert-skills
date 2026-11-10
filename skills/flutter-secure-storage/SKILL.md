@@ -16,7 +16,7 @@ Implement encrypted key-value storage for sensitive data using flutter_secure_st
 
 ```yaml
 dependencies:
-  flutter_secure_storage: ^10.0.0
+  flutter_secure_storage: ^11.2.0  # v11: Android minSdk 24; the encryptedSharedPreferences option was removed
 ```
 
 ### Phase 2: Platform Configuration
@@ -58,7 +58,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class SecureStorage {
   static const _storage = FlutterSecureStorage(
     aOptions: AndroidOptions(
-      encryptedSharedPreferences: true,
       resetOnError: true, // Auto-reset on biometric change invalidation
     ),
     iOptions: IOSOptions(

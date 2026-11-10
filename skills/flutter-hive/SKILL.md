@@ -16,11 +16,11 @@ Implement high-performance NoSQL object storage using Hive CE (Community Edition
 
 ```yaml
 dependencies:
-  hive_ce: ^2.19.3
-  hive_ce_flutter: ^2.3.4
+  hive_ce: ^2.23.3
+  hive_ce_flutter: ^2.5.0
 
 dev_dependencies:
-  hive_ce_generator: ^1.11.1
+  hive_ce_generator: ^1.12.1
   build_runner: ^2.14.1
 ```
 
