@@ -82,6 +82,7 @@ Specialized reference documents for each topic:
 ### Systems, Network & Data
 - [🌐 HTTP & JSON Parsing](./references/http-and-json.md)
 - [🗄️ Advanced Caching](./references/caching.md)
+- [🧯 Error Handling with Either (`dart_either`)](./references/error-handling.md)
 
 ### Native Devices & Platform Enhancements
 - [🔌 Native Interop (FFI/Channels)](./references/native-interop.md)
