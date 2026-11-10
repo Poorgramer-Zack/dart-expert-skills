@@ -176,17 +176,17 @@ enum ProductStatus { active, draft, archived }
 // OpenAPI: oneOf: [{$ref: Cat}, {$ref: Dog}]
 @freezed
 sealed class Pet with _$Pet {
-  const factory Pet.cat(Cat data) = _PetCat;
-  const factory Pet.dog(Dog data) = _PetDog;
+  const factory Pet.cat(Cat data) = PetCat;
+  const factory Pet.dog(Dog data) = PetDog;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 }
 
-// Exhaustive pattern matching at the call site:
-switch (pet) {
-  case Pet(:final cat): ...
-  case Pet(:final dog): ...
-}
+// Exhaustive pattern matching at the call site (the variant classes are public):
+final label = switch (pet) {
+  PetCat(:final data) => 'cat: ${data.name}',
+  PetDog(:final data) => 'dog: ${data.name}',
+};
 ```
 
 ### $ref Resolution
