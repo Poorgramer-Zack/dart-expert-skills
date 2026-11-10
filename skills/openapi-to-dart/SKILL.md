@@ -26,15 +26,15 @@ Given an OpenAPI 3.0 spec, implement a type-safe Dart API layer with:
 
 ```yaml
 dependencies:
-  dio: ^5.9.2
+  dio: ^5.11.1
   freezed_annotation: ^3.1.0   # if using Freezed
-  json_annotation: ^4.11.0
-  equatable: ^2.0.5             # if using Equatable
+  json_annotation: ^4.12.0
+  equatable: ^3.0.0             # if using Equatable (3.0 removed EquatableMixin)
 
 dev_dependencies:
-  build_runner: ^2.14.1
+  build_runner: ^2.17.1
   freezed: ^4.0.3               # if using Freezed (4.x conflicts with custom_lint/riverpod_lint)
-  json_serializable: ^6.13.1
+  json_serializable: ^6.15.2
 ```
 
 ---
@@ -294,11 +294,4 @@ class ProductRepository {
 
 Freezed 2.x used `abstract class` instead of `sealed class`. Both patterns still work, but prefer `sealed` for exhaustive pattern matching with Dart 3.
 
-```yaml
-# Freezed 2.x (no longer recommended)
-dependencies:
-  freezed_annotation: ^2.4.1
-
-dev_dependencies:
-  freezed: ^2.5.2
-```
+Freezed 2.x is no longer recommended. Use the freezed 4.x pins shown above.

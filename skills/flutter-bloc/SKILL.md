@@ -19,7 +19,7 @@ Choose **Cubit** (lightweight, no events) for simple state, or full **Bloc** (ev
 ```yaml
 dependencies:
   flutter_bloc: ^9.1.1
-  equatable: ^2.0.5
+  equatable: ^3.0.0
   bloc_concurrency: ^0.3.0  # For event transformers
 
 dev_dependencies:

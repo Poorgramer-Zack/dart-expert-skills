@@ -18,12 +18,12 @@ Because Freezed relies heavily on code generation, ensure your `pubspec.yaml` is
 ```yaml
 dependencies:
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.11.0 # If mutual conversion with JSON is required
+  json_annotation: ^4.12.0 # If mutual conversion with JSON is required
 
 dev_dependencies:
-  build_runner: ^2.14.1
+  build_runner: ^2.17.1
   freezed: ^4.0.3 # 4.x needs analyzer 14: conflicts with custom_lint/riverpod_lint and auto_route_generator
-  json_serializable: ^6.13.1 # If mutual conversion with JSON is required
+  json_serializable: ^6.15.2 # If mutual conversion with JSON is required
 ```
 
 ### 2. Defining an Immutable Data Class
