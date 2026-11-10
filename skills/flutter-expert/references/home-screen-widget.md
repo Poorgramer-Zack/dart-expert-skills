@@ -170,12 +170,12 @@ Implements native home screen widgets (iOS and Android) for a Flutter applicatio
 
    Future<void> renderAndSaveWidget() async {
      if (_globalKey.currentContext != null) {
+       final context = _globalKey.currentContext!;
        var path = await HomeWidget.renderFlutterWidget(
          const LineChart(),
-         fileName: 'screenshot',
          key: 'filename',
-         logicalSize: _globalKey.currentContext!.size,
-         pixelRatio: MediaQuery.of(_globalKey.currentContext!).devicePixelRatio,
+         logicalSize: context.size ?? const Size(200, 200),
+         pixelRatio: MediaQuery.of(context).devicePixelRatio,
        );
        await HomeWidget.updateWidget(iOSName: iOSWidgetName, androidName: androidWidgetName);
      }
