@@ -71,7 +71,7 @@ Create `web/styles.tw.css` with the Tailwind v4 CSS-first syntax:
 ```
 
 #### 2.2 Loading Compiled CSS in the Root Component
-In the root component, use `Document` to link the compiled stylesheet and consume Tailwind classes via the `classes` parameter:
+In the root component, use `Document.head` to link the compiled stylesheet and consume Tailwind classes via the `classes` parameter:
 
 ```dart
 import 'package:jaspr/jaspr.dart';
@@ -79,19 +79,19 @@ import 'package:jaspr/jaspr.dart';
 class App extends StatelessComponent {
   @override
   Component build(BuildContext context) {
-    return Document(
-      head: [
-        // 🌟 jaspr_tailwind auto-compiles styles.tw.css → styles.css
+    return Component.fragment([
+      // 🌟 jaspr_tailwind auto-compiles styles.tw.css → styles.css. Head content goes in Document.head.
+      Document.head(children: [
         link(href: 'styles.css', rel: 'stylesheet'),
-      ],
-      body: div(
-        // Use Tailwind classes directly; jaspr_tailwind auto-refreshes during development
+      ]),
+      // Use Tailwind classes directly; jaspr_tailwind auto-refreshes during development
+      div(
         classes: 'bg-gray-100 min-h-screen flex items-center justify-center',
         [
-          h1(classes: 'text-4xl font-bold text-blue-600', [.text('Hello Tailwind!')]),
-        ]
+          h1(classes: 'text-4xl font-bold text-blue-600', [Component.text('Hello Tailwind!')]),
+        ],
       ),
-    );
+    ]);
   }
 }
 ```
