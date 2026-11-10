@@ -90,7 +90,7 @@ switch (ref.watch(userProvider)) {
   case AsyncError(:final error):
     return Text('Error: $error');
   case AsyncLoading(:final progress):
-    return LinearProgressIndicator(value: progress); // optional progress 0.0–1.0
+    return LinearProgressIndicator(value: progress?.toDouble()); // progress is num?, indicator expects double?
 }
 ```
 
