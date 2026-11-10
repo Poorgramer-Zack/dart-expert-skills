@@ -38,8 +38,8 @@ Configures and implements internationalization (i18n) and localization (l10n) in
    arb-dir: lib/l10n
    template-arb-file: app_en.arb
    output-localization-file: app_localizations.dart
-   synthetic-package: false
    ```
+   Do not add `synthetic-package`. The option was removed: `true` fails the build, and `false` only prints a warning.
 
 3. **Define Supported Locales**
    **STOP AND ASK THE USER:** "Which languages and regions do you want to support? Please provide a list of language codes (e.g., 'en', 'es', 'zh_Hans_CN')."
