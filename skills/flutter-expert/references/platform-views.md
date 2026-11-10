@@ -285,7 +285,7 @@ If the user chose **Embedded/Multi-view mode**, implement the JS and Dart config
 
 **JavaScript Implementation (`flutter_bootstrap.js` or HTML script):**
 ```javascript
-_flutter.loader.load({
+_flutter.loader.loadEntrypoint({
   onEntrypointLoaded: async function onEntrypointLoaded(engineInitializer) {
     let engine = await engineInitializer.initializeEngine({
       multiViewEnabled: true, // Enables embedded mode.
