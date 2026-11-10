@@ -504,6 +504,7 @@ class LoginPage extends StatelessWidget {
           Navigator.push(...);
         }
       },
+      child: const Text('Login'),
     );
   }
 }
@@ -519,6 +520,7 @@ class LoginPage extends StatelessWidget {
       onPressed: () {
         context.read<LoginBloc>().add(LoginSubmitted(email, password));
       },
+      child: const Text('Login'),
     );
   }
 }
