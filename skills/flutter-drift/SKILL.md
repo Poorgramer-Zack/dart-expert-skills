@@ -17,13 +17,12 @@ Implement type-safe reactive SQL database using Drift (formerly Moor). Drift pro
 ```yaml
 dependencies:
   drift: ^2.35.4
-  sqlite3_flutter_libs: ^0.6.0+eol
-  path_provider: ^2.1.0
+  path_provider: ^2.1.6
   path: ^1.9.1
 
 dev_dependencies:
   drift_dev: ^2.35.3
-  build_runner: ^2.14.1
+  build_runner: ^2.17.1
 ```
 
 ### Phase 2: Define Database Schema
@@ -218,13 +217,13 @@ await database.transaction(() async {
 **Migrated to sqlite3 package v3.x:**
 - Web apps **must update** `sqlite3.wasm` file in `web/` directory
 - Encrypted databases need PRAGMA adjustments
-- Native platforms may require sqlite3_flutter_libs update
+- Native platforms: `drift_flutter` already depends on the `sqlite3_flutter_libs` placeholder (EOL). Do not add it yourself.
 
 **Migration checklist:**
 ```yaml
 dependencies:
   drift: ^2.35.4
-  sqlite3_flutter_libs: ^0.5.20  # Update to latest
+  drift_flutter: ^0.3.1  # brings in the sqlite3 3.x native setup
 ```
 
 ### WAL Mode Performance Optimization
