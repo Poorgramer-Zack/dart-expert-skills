@@ -117,7 +117,7 @@ Drop-in enhancement for widget tests. Use `patrolWidgetTest` instead of `testWid
 
 ```yaml
 dev_dependencies:
-  patrol_finders: ^3.2.0
+  patrol_finders: ^3.7.0
 ```
 
 ```dart
@@ -254,256 +254,74 @@ void main() {
 
 ### Golden Tests (Visual Regression Testing)
 
-Golden tests (also known as snapshot tests) capture pixel-perfect screenshots of widgets and compare them against baseline images to detect unintended visual regressions. They are particularly valuable for:
-- Design system components (buttons, cards, typography)
-- Complex layouts sensitive to CSS-like changes
-- Cross-platform UI consistency verification
-- Preventing accidental visual breaking changes
+Golden tests capture a widget as an image and compare it with a stored baseline, so unintended visual changes fail the build. Use them for design-system components, complex layouts, and cross-platform consistency.
+
+> **Package:** use `alchemist`. `golden_toolkit` is discontinued. The steps below were verified with `alchemist` 0.14.1 and `flutter test`.
 
 #### 5.1 Basic Golden Test Workflow
 
-**Step 1: Add `golden_toolkit` dependency**
+**Step 1: Add the dependency**
 ```yaml
 dev_dependencies:
-  golden_toolkit: ^0.15.0
+  alchemist: ^0.14.1
   flutter_test:
     sdk: flutter
 ```
 
-**Step 2: Create test configuration for font loading**
+**Step 2: Configure the test runner** (`test/flutter_test_config.dart`)
 ```dart
-// test/flutter_test_config.dart
 import 'dart:async';
-import 'package:golden_toolkit/golden_toolkit.dart';
 
-Future<void> testExecutable(FutureOr<void> Function() testMain) async {
-  // ⚠️ CRITICAL: Load fonts BEFORE tests to ensure consistency
-  await loadAppFonts();
-  return testMain();
+import 'package:alchemist/alchemist.dart';
+
+Future<void> testExecutable(FutureOr<void> Function() testMain) {
+  return AlchemistConfig.runWithConfig(
+    config: const AlchemistConfig(),
+    run: () async => await testMain(),
+  );
 }
 ```
 
 **Step 3: Write golden tests**
 ```dart
-import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
+import 'package:alchemist/alchemist.dart';
+import 'package:flutter/material.dart';
 
 void main() {
-  testGoldens('Login button golden test', (tester) async {
-    await tester.pumpWidgetBuilder(
-      LoginButton(label: 'Sign In'),
-      surfaceSize: Size(200, 50), // ✅ Explicit size for consistency
-    );
-    
-    await screenMatchesGolden(tester, 'login_button_default');
-  });
-
-  testGoldens('Login button states', (tester) async {
-    final builder = GoldenBuilder.column()
-      ..addScenario('Default', LoginButton(label: 'Sign In'))
-      ..addScenario('Disabled', LoginButton(label: 'Sign In', enabled: false))
-      ..addScenario('Loading', LoginButton(label: 'Sign In', isLoading: true));
-
-    await tester.pumpWidgetBuilder(builder.build());
-    await screenMatchesGolden(tester, 'login_button_states');
-  });
-}
-```
-
-**Step 4: Generate baseline goldens**
-```bash
-flutter test --update-goldens --tags golden
-```
-
-**Step 5: Run golden tests**
-```bash
-flutter test --tags golden
-```
-
-#### 5.2 Cross-Platform Reliability Best Practices
-
-**⚠️ CRITICAL: Font Rendering Consistency**
-
-Golden tests are notorious for producing pixel differences across different operating systems (macOS vs Linux vs Windows) and CI/CD environments due to font rendering, antialiasing, and subpixel rendering variations.
-
-**✅ Best Practice: Use Custom Comparator with Tolerance Threshold**
-
-```dart
-// test/golden_test_helper.dart
-import 'dart:io';
-import 'dart:typed_data';
-import 'package:flutter_test/flutter_test.dart';
-
-class LocalFileComparatorWithThreshold extends LocalFileComparator {
-  final double threshold;
-  
-  LocalFileComparatorWithThreshold(Uri testFile, this.threshold)
-      : super(testFile);
-  
-  @override
-  Future<bool> compare(Uint8List imageBytes, Uri golden) async {
-    final ComparisonResult result = await GoldenFileComparator.compareLists(
-      imageBytes,
-      await File.fromUri(golden).readAsBytes(),
-    );
-    
-    if (!result.passed && result.diffPercent <= threshold) {
-      print('✅ Golden diff ${result.diffPercent}% within threshold $threshold%');
-      return true;
-    }
-    
-    return result.passed;
-  }
-}
-```
-
-**Usage in tests:**
-```dart
-void main() {
-  setUp(() {
-    // ✅ Set 1% tolerance for antialiasing differences
-    final testUri = Uri.parse(Platform.script.toString());
-    goldenFileComparator = LocalFileComparatorWithThreshold(testUri, 0.01);
-  });
-
-  testGoldens('Button with tolerance', (tester) async {
-    await tester.pumpWidgetBuilder(
-      ElevatedButton(onPressed: () {}, child: Text('Click Me')),
-      surfaceSize: Size(150, 50),
-    );
-    await screenMatchesGolden(tester, 'button_golden');
-  });
-}
-```
-
-**Recommended Tolerance Thresholds:**
-- **0.001 (0.1%)**: Strict mode for solid colors, icons, geometric shapes
-- **0.01 (1%)**: Standard for text-heavy UIs with minor antialiasing variations
-- **0.05 (5%)**: Permissive for complex layouts with shadows, gradients, images
-
-#### 5.3 Device Configuration for Multi-Platform Testing
-
-**✅ Best Practice: Always Specify Device and Surface Size**
-
-```dart
-import 'package:golden_toolkit/golden_toolkit.dart';
-
-void main() {
-  testGoldens('Multi-device dashboard', (tester) async {
-    final builder = DeviceBuilder()
-      ..overrideDevicesForAllScenarios(devices: [
-        Device.phone,           // iPhone 11: 414x896
-        Device.iphone11,
-        Device.tabletPortrait,  // iPad: 768x1024
-        Device.tabletLandscape, // iPad landscape: 1024x768
-      ])
-      ..addScenario(
-        widget: DashboardScreen(),
-        name: 'default',
-      )
-      ..addScenario(
-        widget: DashboardScreen(hasNotifications: true),
-        name: 'with_notifications',
-      );
-
-    await tester.pumpDeviceBuilder(builder);
-    await screenMatchesGolden(tester, 'dashboard_multi_device');
-  });
-}
-```
-
-**For single-device tests with custom theme:**
-```dart
-testGoldens('Profile card golden', (tester) async {
-  await tester.pumpWidgetBuilder(
-    ProfileCard(user: mockUser),
-    surfaceSize: Size(400, 600), // ✅ Explicit dimensions
-    wrapper: materialAppWrapper(
-      theme: ThemeData.light(),
-      platform: TargetPlatform.android, // ✅ Lock platform behavior
+  goldenTest(
+    'renders a button in light theme',
+    fileName: 'button_light',
+    builder: () => GoldenTestGroup(
+      children: [
+        GoldenTestScenario(
+          name: 'default',
+          child: const SizedBox(
+            width: 200,
+            height: 50,
+            child: ElevatedButton(onPressed: null, child: Text('Sign In')),
+          ),
+        ),
+      ],
     ),
   );
-  
-  await screenMatchesGolden(tester, 'profile_card');
-});
-```
-
-#### 5.4 CI/CD Golden Test Configuration
-
-**⚠️ CRITICAL: Ensure Consistent CI Environment**
-
-**Problem:** Golden tests pass locally (macOS) but fail in CI (Linux Docker) with pixel diffs.
-
-**✅ Solution Checklist:**
-
-1. **Use identical Docker image for all CI runners**
-```dockerfile
-# Dockerfile
-FROM cirrusci/flutter:stable
-
-# Install fonts matching development environment
-RUN apt-get update && apt-get install -y \
-    fonts-roboto \
-    fonts-noto \
-    fonts-liberation
-
-WORKDIR /app
-COPY . .
-RUN flutter pub get
-```
-
-2. **ALWAYS call `loadAppFonts()` in test config** (already shown in 5.1)
-
-3. **Set tolerance threshold in CI configuration**
-```dart
-// test/flutter_test_config.dart
-Future<void> testExecutable(FutureOr<void> Function() testMain) async {
-  await loadAppFonts();
-  
-  // ✅ Set tolerance for CI environment
-  if (Platform.environment['CI'] == 'true') {
-    final testUri = Uri.parse(Platform.script.toString());
-    goldenFileComparator = LocalFileComparatorWithThreshold(testUri, 0.02);
-  }
-  
-  return testMain();
 }
 ```
 
-4. **Use `pumpAndSettle()` before golden capture**
-```dart
-testGoldens('Animated widget golden', (tester) async {
-  await tester.pumpWidget(MaterialApp(home: AnimatedWidget()));
-  await tester.pumpAndSettle(); // ✅ Wait for all animations
-  await screenMatchesGolden(tester, 'animated_widget');
-});
-```
-
-5. **Regenerate goldens on CI platform ONLY**
-```yaml
-# .github/workflows/test.yml
-- name: Generate Golden Baselines
-  run: flutter test --update-goldens --tags golden
-  if: github.event_name == 'workflow_dispatch' # Manual trigger only
-```
-
-**❌ Anti-pattern: Mixing Platform Goldens**
+**Step 4: Generate baselines, then run**
 ```bash
-# ❌ Developer on macOS updates goldens
 flutter test --update-goldens
-
-# ❌ CI on Linux detects pixel diffs
-# FAILURE: Expected pixel-perfect match, got 0.8% difference
+flutter test
 ```
 
-**✅ Best Practice: Single Platform for Goldens**
-```bash
-# ✅ Use Docker locally to match CI environment
-docker run --rm -v $(pwd):/app -w /app cirrusci/flutter:stable \
-  flutter test --update-goldens --tags golden
+Alchemist writes one baseline per variant: `test/goldens/ci/` (Ahem font, for CI) and `test/goldens/<os>/` (the local platform font). Verified: both folders are created on the first `--update-goldens` run.
 
-# ✅ CI uses same image - no diffs!
-```
+#### 5.2 Cross-Platform Reliability
+- Font rendering differs between macOS, Linux, Windows, and Docker. The CI variant renders with the Ahem font, so CI results do not depend on system fonts.
+- Keep the test surface explicit (an explicit `SizedBox` size in each scenario) so the output does not depend on the default test size.
+- Commit the CI baselines. Generate platform baselines only on the matching OS.
+
+#### 5.3 Several States in One Baseline
+Put several `GoldenTestScenario` entries in one `GoldenTestGroup(children: [...])` to cover default, disabled, and loading states in a single test.
 
 ## Constraints
 * Prefer `Mocktail` when rapid iteration speed is the top priority and manual fallback configuration is acceptable. Use `Mockito` when type-safety and automatic generation are preferred.
