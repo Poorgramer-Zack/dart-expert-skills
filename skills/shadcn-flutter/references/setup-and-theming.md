@@ -13,7 +13,7 @@ metadata:
 ```dart
 import 'package:shadcn_ui/shadcn_ui.dart';
 
-void main() => runApp(ShadApp(child: HomePage()));
+void main() => runApp(ShadApp(home: HomePage()));
 ```
 
 ### Shadcn + Material Integration
@@ -37,7 +37,7 @@ ShadApp(
     brightness: Brightness.dark,
     colorScheme: const ShadSlateColorScheme.dark(),
   ),
-  child: HomePage(),
+  home: HomePage(),
 )
 ```
 

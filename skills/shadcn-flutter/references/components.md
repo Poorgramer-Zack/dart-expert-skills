@@ -651,7 +651,7 @@ ShadInput(
     width: 24,
     height: 24,
     padding: EdgeInsets.zero,
-    icon: Icon(obscure ? LucideIcons.eyeOff : LucideIcons.eye),
+    child: Icon(obscure ? LucideIcons.eyeOff : LucideIcons.eye),
     onPressed: () => setState(() => obscure = !obscure),
   ),
 )
