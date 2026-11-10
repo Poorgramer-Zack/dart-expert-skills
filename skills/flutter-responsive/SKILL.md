@@ -1,6 +1,6 @@
 ---
 name: "implementing-responsive-layouts"
-description: "Implements responsive and adaptive layouts in Flutter using flutter_screenutil v5.9.x (pixel-perfect scaling from Figma), sizer v3.1.x (percentage-based viewport), and responsive_framework v1.1.x (breakpoint-driven structure changes). Use this skill when building apps for multiple screen sizes (phones, tablets, foldables, desktop, web), fixing layout overflow or sizing issues, implementing breakpoint-based adaptive UI, creating pixel-perfect designs from Figma specs, handling orientation changes, supporting Flutter web or desktop responsive layouts, or any time the words 'responsive', 'screenutil', 'sizer', 'breakpoint', 'adaptive layout', or 'screen size' appear in the request. Includes a decision matrix for selecting the correct package per scenario."
+description: "Implements responsive and adaptive layouts in Flutter using flutter_screenutil v5.9.x (pixel-perfect scaling from Figma), sizer v3.1.x (percentage-based viewport), and responsive_framework v1.5.x (breakpoint-driven structure changes). Use this skill when building apps for multiple screen sizes (phones, tablets, foldables, desktop, web), fixing layout overflow or sizing issues, implementing breakpoint-based adaptive UI, creating pixel-perfect designs from Figma specs, handling orientation changes, supporting Flutter web or desktop responsive layouts, or any time the words 'responsive', 'screenutil', 'sizer', 'breakpoint', 'adaptive layout', or 'screen size' appear in the request. Includes a decision matrix for selecting the correct package per scenario."
 metadata:
   last_modified: "2026-04-01 14:35:00 (GMT+8)"
 ---
@@ -82,7 +82,7 @@ Widget build(BuildContext context) {
 **Usage Constraints:**
 *   Percentages: Use `.w` and `.h` as raw screen percentages. `100.w` is exactly the full width of the current screen.
 *   Fonts/Density: Use `.dp` (Density Pixel) instead of `.sp` if you want text to scale strictly by physical display density rather than user accessibility settings.
-*   **Verified:** `.dp` exists only in `sizer`, and `.r` exists only in `flutter_screenutil`. `Sizer`'s CHANGELOG has no entries after 2020, so check its maintenance status before you adopt it for new code.
+*   **Verified:** `.dp` exists only in `sizer`, and `.r` exists only in `flutter_screenutil`. The latest `sizer` release (3.1.3) was published on 2025-08-26; check its maintenance activity before you adopt it for new code.
 *   **Crucial Difference:** `50.w` in `sizer` means 50% of screen. `50.w` in `ScreenUtil` means 50 logical pixels relative to the 375 Figma draft. Be acutely aware of which package is active.
 
 ```dart
@@ -99,7 +99,7 @@ Container(
 Best for Tablet/Desktop/Web where components shift layout structures at specific breakpoints. 
 
 **Setup (`main.dart`):**
-Wrap the router or `MaterialApp` builder with `ResponsiveBreakpoints.builder()`. Do NOT use the deprecated `ResponsiveWrapper`.
+Wrap the router or `MaterialApp` builder with `ResponsiveBreakpoints.builder()`. Do NOT use `ResponsiveWrapper`; it is not in responsive_framework 1.5.1.
 
 ```dart
 return MaterialApp(
